@@ -18,7 +18,7 @@ $debug = new Debug();
 if ($query == "create") {
 
   // We need to create a config file from scratch
-  echo $debug->generate(); // this will combine all default config files from the src/ directory into a valid config.json file in /app/
+  echo $debug->generate(); // this will combine all default config files from the dev/ directory into a valid config.json file in /app/
 
 }
 
@@ -28,13 +28,13 @@ if ($query == "create") {
 // Debug extends the Config class because it mostly manipulates the config file and needs the read/write functions of it
 class Debug {
 
-  // Combine all config files in app/src/ to create a valid config.json.dist file in /app/
+  // Combine all config files in app/dev/ to create a valid config.json.dist file in /app/
   function generate() {
 
-    $configSrc = Files::read("src/config.config.json"); // all paths start at the /app/ folder. so ../ will be the apps folder
-    $appSrc = Files::read("src/config.apps.json");
-    $toolSrc = Files::read("src/config.tools.json");
-    $themeSrc = Files::read("src/config.themes.json");
+    $configSrc = Files::read("dev/config.config.json"); // all paths start at the /app/ folder. so ../ will be the apps folder
+    $appSrc = Files::read("dev/config.apps.json");
+    $toolSrc = Files::read("dev/config.tools.json");
+    $themeSrc = Files::read("dev/config.themes.json");
 
     $configs = ["config" => $configSrc, "themes" => $themeSrc, "apps" => $appSrc, "tools" => $toolSrc, "version" => $GLOBALS['newVersion'], "versionLast" => $GLOBALS['newVersion']];
 
