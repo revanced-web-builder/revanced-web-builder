@@ -22,20 +22,38 @@ if ($query == "configCreate") {
 
 if ($query == "prepareRelease") {
 
-  echo "Deleting app/config.json...<br />";
-  unlink("../config.json");
+  // Check what user wants to keep
+  $keepConfig = (isset($_GET['keepConfig'])) ? 1 : 0;
+  $keepAPKs = (isset($_GET['keepAPKs'])) ? 1 : 0;
+  $keepBuilds = (isset($_GET['keepBuilds'])) ? 1 : 0;
+  $keepTools = (isset($_GET['keepTools'])) ? 1 : 0;
 
-  echo "Emptying builds/ folder<br />";
-  $debug->emptyDir("../../builds"); // Delete everything in /builds folder
+  if ($keepConfig !== 1) {
+    echo "Deleting app/config.json...<br />";
+    unlink("../config.json");
+  }
 
-  echo "Emptying app/apk/ folder<br />";
-  $debug->emptyDir("../apk"); // Delete all APKs
+  if ($keepAPKs !== 1) {
+    echo "Emptying app/apk/ folder<br />";
+    $debug->emptyDir("../apk"); // Delete all APKs
+  }
 
-  echo "Emptying app/tools/ folder<br />";
-  $debug->emptyDir("../tools"); // Delete all ReVanced Tools
+  if ($keepBuilds !== 1) {
+    echo "Emptying builds/ folder<br />";
+    $debug->emptyDir("../../builds"); // Delete everything in /builds folder
+  }
+
+  if ($keepTools !== 1) {
+    echo "Emptying app/tools/ folder<br />";
+    $debug->emptyDir("../tools"); // Delete all ReVanced Tools
+  }
 
 }
 
+if ($query == "emptyBuilds") {
+  echo "Emptying builds/ folder<br />";
+  $debug->emptyDir("../../builds"); // Delete everything in /builds folder
+}
 ?>
 
 <h1>ReVanced Web Builder: Dev Tools</h1>
@@ -47,10 +65,19 @@ if ($query == "prepareRelease") {
 </form>
 
 <h2>Prepare for Release</h2>
-<p>Note: This will delete config.json, apks, tools, builds, etc.</p>
 <form method="get" action="index.php">
   <input type="hidden" name="q" value="prepareRelease" />
+  <p><label><input type="checkbox" name="keepConfig" value="1" /> Keep config.json</label></p>
+  <p><label><input type="checkbox" name="keepAPKs" value="1" /> Keep APKs</label></p>
+  <p><label><input type="checkbox" name="keepTools" value="1" /> Keep Tools</label></p>
+  <p><label><input type="checkbox" name="keepBuilds" value="1" /> Keep Builds</label></p>
   <p><input type="submit" value="Prepare for Release" /></p>
+</form>
+
+<h2>Empty Builds Folder</h2>
+<form method="get" action="index.php">
+  <input type="hidden" name="q" value="emptyBuilds" />
+  <p><input type="submit" value="Empty Builds" /></p>
 </form>
 
 <?php
