@@ -43,5 +43,6 @@ sudo apt install opendjk-18-jdk-headless openjdk-18-jdk
 
 
 640 OR AT LEAST 644 TO NOT BE WORLD WRITABLE.
-sudo find /var/www/ -type d -exec chmod 755 {} \;
-sudo find /var/www/ -type f -exec chmod 644 {} \;
+sudo find /var/www/html/rwb/ -type d -exec chmod 755 {} \;
+sudo find /var/www/html/rwb/ -type f -exec chmod 644 {} \;
+sudo chmod 0777 -R /var/www/html/rwb/builds; sudo chmod 0777 -R /var/www/html/rwb/app; sudo chmod 0777 -R /var/www/html/rwb/app/apk; sudo chmod 0777 -R /var/www/html/rwb/app/tools

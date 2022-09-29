@@ -19,6 +19,23 @@ if ($query == "configCreate") {
   echo $debug->configCreate($version); // this will combine all default config files from the dev/ directory into a valid config.json file in /app/
 
 }
+
+if ($query == "prepareRelease") {
+
+  echo "Deleting app/config.json...<br />";
+  unlink("../config.json");
+
+  echo "Emptying builds/ folder<br />";
+  $debug->emptyDir("../../builds"); // Delete everything in /builds folder
+
+  echo "Emptying app/apk/ folder<br />";
+  $debug->emptyDir("../apk"); // Delete all APKs
+
+  echo "Emptying app/tools/ folder<br />";
+  $debug->emptyDir("../tools"); // Delete all ReVanced Tools
+
+}
+
 ?>
 
 <h1>ReVanced Web Builder: Dev Tools</h1>
@@ -27,6 +44,13 @@ if ($query == "configCreate") {
 <form method="get" action="index.php">
   <input type="hidden" name="q" value="configCreate" />
   <p>Version: <input name="version" size="8" type="text" /> <input type="submit" value="Create" /></p>
+</form>
+
+<h2>Prepare for Release</h2>
+<p>Note: This will delete config.json, apks, tools, builds, etc.</p>
+<form method="get" action="index.php">
+  <input type="hidden" name="q" value="prepareRelease" />
+  <p><input type="submit" value="Prepare for Release" /></p>
 </form>
 
 <?php
@@ -76,6 +100,12 @@ class Debug {
   public function save($fileContents=null) {
     Files::write("config.json", $fileContents);
   }
+
+  // Remove all files in a directory
+  public function emptyDir($directory) {
+    array_map( 'unlink', array_filter((array) glob($directory."/*") ) );
+  }
+
 
 }
 
