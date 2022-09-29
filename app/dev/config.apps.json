@@ -1,6 +1,6 @@
 {
   "YouTube": {
-    "size": "140 MB",
+    "size": "130 MB",
     "versions": {
       "17.36.37": {
         "enabled": 0
@@ -189,7 +189,7 @@
     }
   },
   "YouTubeMusic": {
-    "size": "32 MB",
+    "size": "30 MB",
     "fullName": "YouTube Music",
     "versions": {
       "5.21.52": {
@@ -251,7 +251,7 @@
     }
   },
   "Reddit": {
-    "size": "215 MB",
+    "size": "205 MB",
     "versions": {
       "2022.34.0": {
         "enabled": 0,
@@ -282,7 +282,7 @@
     }
   },
   "Spotify": {
-      "size": "75 MB",
+      "size": "70 MB",
       "versions": {
           "8.7.68.568": {
               "enabled": 0,
@@ -305,7 +305,7 @@
       }
   },
   "TikTok": {
-    "size": "165 MB",
+    "size": "160 MB",
     "versions": {
       "25.8.2": {
         "enabled": 0,
@@ -352,7 +352,7 @@
     }
   },
   "Twitter": {
-    "size": "115 MB",
+    "size": "110 MB",
     "versions": {
       "9.58.1": {
         "enabled": 0,
@@ -399,7 +399,7 @@
     }
   },
   "WarnWetter": {
-    "size": "52 MB",
+    "size": "50 MB",
     "versions": {
       "3.7.2": {
         "enabled": 0,

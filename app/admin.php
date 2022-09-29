@@ -983,7 +983,7 @@ if ($query == "config") {
 
           echo "<div class='col-12 col-md-6 col-lg-3 mb-3 mt-2 p-0'>";
 
-          echo "<p>{$app}</p>";
+          echo "<p>{$app}&nbsp;&nbsp;[{$val['size']}]</p>";
 
           $disabledCount = count($val['versions']);
 
