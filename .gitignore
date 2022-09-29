@@ -1,6 +1,7 @@
 
 *.apk
 app/config.json
-app/tools/revanced-patches.json
-app/tools/revanced-patches.jar
-app/tools/revanced-cli.jar
+app/apk/*
+app/tools/*
+builds/*
+*.toml
