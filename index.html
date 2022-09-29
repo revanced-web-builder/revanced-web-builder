@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<head>
+
+  <meta charset="utf-8">
+  <title>ReVanced Web Builder</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="app/css/bootstrap.min.css">
+  <link rel="stylesheet" href="app/css/builder.css">
+
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="app/img/favicons/.ico">
+	<link rel="icon" sizes="16x16 32x32 64x64" href="app/img/favicons/.ico">
+	<link rel="icon" type="image/png" sizes="196x196" href="app/img/favicons/favicon-192.png">
+	<link rel="icon" type="image/png" sizes="160x160" href="app/img/favicons/favicon-160.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="app/img/favicons/favicon-96.png">
+	<link rel="icon" type="image/png" sizes="64x64" href="app/img/favicons/favicon-64.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="app/img/favicons/favicon-32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="app/img/favicons/favicon-16.png">
+	<link rel="apple-touch-icon" href="app/img/favicons/favicon-57.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="app/img/favicons/favicon-114.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="app/img/favicons/favicon-72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="app/img/favicons/favicon-144.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="app/img/favicons/favicon-60.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="app/img/favicons/favicon-120.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="app/img/favicons/favicon-76.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="app/img/favicons/favicon-152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="app/img/favicons/favicon-180.png">
+	<meta name="msapplication-TileColor" content="#FFFFFF">
+	<meta name="msapplication-TileImage" content="app/img/favicons/favicon-144.png">
+	<meta name="msapplication-config" content="app/img/favicons/browserconfig.xml">
+
+</head>
+
+<body>
+
+<div id="buildOffline">
+  <span id="buildOfflineMsg">Builder is offline. No new builds can be made.</span>
+  <span id="downloadsOfflineMsg">Downloads are currently disabled.</span>
+</div>
+
+<div id="instructions" class="container patchContainer">
+  <div class="row" style="margin-bottom: 0px">
+    <div class="col-12">
+
+      <h1>Installation Instructions</h1>
+
+      <p>ReVanced Web Builder is a tool that injects patches into the official Android Apps (APKs) of apps like YouTube, YouTube Music, TikTok, Twitter, and Reddit to block advertisements and bring additional features to the apps.</p>
+      <p>This is a frontend for the official <a href="https://github.com/revanced/revanced-cli" target="_blank">ReVanced CLI builder</a> and uses all official ReVanced tools.</p>
+
+      <p>Because the APKs built with this web builder are modified versions of the official applications, their signatures will not match the official ones and you may get a couple warnings on your device while installing a ReVanced app.</p>
+
+      <hr />
+
+      <br /><h2>Install MicroG</h2>
+
+      <p>To use the YouTube and YouTube Music apps, you will need to install Vanced MicroG. <a href="https://microg.org/" target="_blank">MicroG is a free and open-source implementation of proprietary Google libraries</a> used to safely sign into the modified apps.
+      <p><strong>Non-YouTube apps do not need to install MicroG</strong>.</p>
+
+      <p>Your browser will likely warn you that the file may be harmful because you are downloading a .apk file which is a direct installer similar to downloading a .exe file on Windows.</p>
+      <p>Press <strong>Download Anyway</strong> to continue.</p>
+      <p><img src="app/img/instructions/microg1.png" /></p>
+      <p>Once MicroG is done downloading, open it and you will likely see this window if this is your first time installing an APK from your browser.</p>
+      <p>If so, click on <strong>Settings</strong>.</p>
+      <p><img src="app/img/instructions/microg2.png" /></p>
+      <p>Enable <strong>Allow from this source</strong>.</p>
+      <p><img src="app/img/instructions/microg3.png" /></p>
+      <p>Press the <strong>Back</strong> button and you should see a window now allowing you to install MicroG.</p>
+      <p><img src="app/img/instructions/microg4.png" /></p>
+
+      <br /><h2>Install ReVanced Application</h2>
+
+      <p>Once MicroG is done installing, go back to your browser to download and open the ReVanced application of your choice.</p>
+      <p>When installing a ReVanced application, you may see a Play Protect warning that the developer of this app is not recognized.</p>
+      <p>Press <strong>Install Anyway</strong> to continue.</p>
+      <p><img src="app/img/instructions/revanced1.png" /></p>
+
+      <p>During or after installation, you may see another window asking if you would like to send the app for a security scan.</p>
+      <p>Press <strong>Don't Send</strong> and you're all ready to go with your ReVanced app!</p>
+      <p><img src="app/img/instructions/revanced2.png" /></p>
+
+      <h2>Disable Battery Optimizations</h2>
+
+      <p>MicroG leaves a persistent notification letting you know that you should disable battery optimizations for the app so it can remain in the background.</p>
+
+      <p><img src="app/img/instructions/battery1.png" /></p>
+      <p><img src="app/img/instructions/battery2.png" /></p>
+      <p><img src="app/img/instructions/battery3.png" /></p>
+      <p><img src="app/img/instructions/battery4.png" /></p>
+
+      <p><input type="button" class="instructionsToggle btn btn-primary" value="Back to Builder" /></p>
+      <div id="instructionsClose"><input type="button" class="instructionsToggle btn btn-primary" value="Close Instructions" /></div>
+    </div>
+  </div>
+</div>
+
+<div id="header" class="container">
+  <div class="row" style="margin-bottom: 0px">
+    <div class="col-12">
+      <h1>ReVanced Web Builder</h1>
+    </div>
+  </div>
+</div>
+
+<form id="patchesForm" action="app/builder/build.php" method="post">
+
+<div id="patchesGeneral" class="container">
+
+  <div class="row my-3">
+
+    <div id="generalApp" class="col-auto">
+      <label class="form-label" for="appName"><strong>Application</strong></label>
+      <select class="form-select" name="appName" id="appName">
+      </select>
+    </div>
+
+    <div id="generalVersion" class="col-auto">
+      <label class="form-label" for="appVersion"><strong>Version</strong></label>
+      <select class="form-select" name="appVersion" id="appVersion">
+      </select>
+    </div>
+
+  </div>
+
+</div> <!-- end #patchesGeneral -->
+
+<div id="generatePatches"></div>
+
+<div id="buildNewContainer" class="container">
+
+  <div class="row">
+
+    <hr />
+    <div id="buildNew" class="col-md-12">
+      <h3 style="margin-bottom: 7px">Package Build</h3>
+      <p><span class="appName"></span> <span class="appVersion"></p>
+      <p>Build ID: <span id="buildIDText"></span>&nbsp;&nbsp;<a class="buildSave" data-exists="0">Save</a></p>
+      <p>You have created a build that doesn't currently exist!</p>
+      <p>All unique builds are packaged as requested, and usually take about <span id="buildAverages"></span> to complete.</p>
+      <p>Building will continue even if you leave this page.</p>
+      <p class="d-block d-lg-none">Your mobile device will be prevented from falling asleep for the duration of the build process.</p>
+
+      <div id="buildBusy" style="display: none">
+        <p style="font-weight: bold; text-decoration: underline;">It appears that the builder is currently busy. This page will automatically check when the builder is ready again.</p>
+        <p><input id="buildBusyButton" type="button" class="btn btn-warning" value="Waiting..." /></p>
+      </div>
+
+      <div id="buildReady">
+        <p><input id="buildButton" type="submit" name="submitted" class="btn btn-primary" value="Build" /></p>
+      </div>
+
+      <p id="buildTime" style="display: none">Elapsed Time: <span id="buildTimeElapsed">0</span> seconds</p>
+      <p id="buildError" style="display: none">ERROR: Sorry, it seems that the builder failed. </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div id="buildComplete" class="container" style="display: none">
+  <div class="row">
+    <div id="buildCompleteData" class="col-12"></div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <p><input id="buildInstructionsButton" type="button" class="btn btn-secondary instructionsToggle" value="Install Instructions" /></p>
+    </div>
+  </div>
+</div>
+
+<div id="myBuildsContainer" class="container">
+  <div class="row">
+    <hr />
+    <div id="myBuilds" class="col-md-12">
+      <h3 style="margin-bottom: 7px">My Builds</h3>
+    </div>
+    <div id="myBuildsData" class="col-md-12">
+
+      <p><a id="myBuildsShowHidden" class="buildHiddenToggle underline" style="display: none">Toggle Hidden</a></p>
+    </div>
+  </div>
+</div>
+
+<!--<div id="footer" style="margin-top: 150px;">Something about ReVanced project and licenses here</div>-->
+
+<div id="debugMenuToggle" class="debugMenuToggle"></div>
+<div id="debugMenu" class="" style="display: none">
+  <span>Debug (<a class="debugMenuToggle">Hide</a>)</span><br />
+  <label><input type="checkbox" id="debugShowJava" name="debugShowJava" value="1" /> Show Java command instead of building.</label><br />
+  <a id="debugClearMyBuilds" class="underline">Clear My Builds</a>
+</div>
+
+</form>
+
+<div id="footer" class="container mt-3">
+  <div class="row">
+    <hr />
+    <div class="col-12 col-md-11 pt-1">
+      <p>ReVanced Web Builder is not an official <a href="https://github.com/revanced" target="_blank">ReVanced Project</a>, but thankfully uses their open source tools to make this all happen!</p>
+    </div>
+    <div class="col-12 col-md-1" style="text-align: right">
+      <a href="https://twitter.com/rewebbuilder" target="_blank" class="me-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a> <a href="https://github.com/revanced-web-builder/revanced-web-builder" target="_blank" title="ReVanced Web Builder GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentcolor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<div id="themeSwitcher" class="darkTheme" title="Change Theme"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="rwbModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rwbModalTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="rwbModalContent" class="modal-body">
+        ...
+      </div>
+      <div id="rwbModalFooter" class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="app/js/jquery-3.6.1.min.js"></script>
+<script src="app/js/bootstrap.min.js"></script>
+<script src="app/js/md5.min.js"></script>
+<script src="app/js/NoSleep.min.js"></script>
+<script src="app/js/jquery.deserialize.js"></script>
+<script src="app/js/builder.js"></script>

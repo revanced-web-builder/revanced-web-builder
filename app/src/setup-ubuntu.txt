@@ -1,0 +1,47 @@
+NOTE: /app shouldn't be viewable..........
+
+# Ubuntu 22.04 LTS and 22.10
+
+# Install Apache2 Web Server
+sudo apt install -y apache2 apache2-utils
+
+# Install MariaDB/MySQL (Optional)
+sudo apt install -y mariadb-server mariadb-client
+sudo mysql_secure_installation
+
+# Install PHP (8.1)
+sudo apt install -y php php-mysql libapache2-mod-php
+
+# Install PHP-curl
+sudo apt install php-curl
+
+# MOD_REWRITE (optional?)
+sudo a2enmod rewrite
+
+<Directory /var/www/html/>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+</Directory>
+
+
+# Restart Apache
+sudo systemctl restart apache2
+
+# Give HTML folder proper privs
+sudo usermod -a -G www-data $USER
+sudo chown root:root /var/www
+sudo chmod -R 755 /var/www
+sudo chown -R www-data:www-data /var/www/*
+
+# Install Java 18
+sudo apt install openjdk-18-jre-headless
+(nope ^)
+sudo apt install opendjk-18-jdk-headless
+or
+sudo apt install opendjk-18-jdk-headless openjdk-18-jdk
+
+
+
+640 OR AT LEAST 644 TO NOT BE WORLD WRITABLE.
+sudo find /var/www/ -type d -exec chmod 755 {} \;
+sudo find /var/www/ -type f -exec chmod 644 {} \;

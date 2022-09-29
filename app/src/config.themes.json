@@ -1,0 +1,119 @@
+{
+  "dark": {
+    "name": "Dark",
+    "main": {
+      "bg": "#212121",
+      "font": "#e9e5e5",
+      "accent": "#393939",
+      "url": "#e9e5e5"
+    },
+    "input": {
+      "bg": "#303030",
+      "font": "#e9e5e5",
+      "border": "#e9e5e5",
+      "radius": "6"
+    },
+    "primary": {
+      "bg": "#2e79e8",
+      "font": "#e9e5e5",
+      "border": "#2e79e8",
+      "radius": "6"
+    },
+    "secondary": {
+      "bg": "#198754",
+      "font": "#e9e5e5",
+      "border": "#198754",
+      "radius": "6"
+    },
+    "warning": {
+      "bg": "#ffc107",
+      "font": "#e9e5e5",
+      "border": "#ffc107",
+      "radius": "6"
+    },
+    "danger": {
+      "bg": "#dc3545",
+      "font": "#e9e5e5",
+      "border": "#dc3545",
+      "radius": "6"
+    }
+  },
+  "light": {
+    "name": "Light",
+    "main": {
+      "bg": "#eeeeee",
+      "font": "#000000",
+      "accent": "#cccccc",
+      "url": "#000000"
+    },
+    "input": {
+      "bg": "#cccccc",
+      "font": "#000000",
+      "border": "#bbbbbb",
+      "radius": "6"
+    },
+    "primary": {
+      "bg": "#2e79e8",
+      "font": "#e9e5e5",
+      "border": "#2e79e8",
+      "radius": "6"
+    },
+    "secondary": {
+      "bg": "#198754",
+      "font": "#e9e5e5",
+      "border": "#198754",
+      "radius": "6"
+    },
+    "warning": {
+      "bg": "#ffc107",
+      "font": "#e9e5e5",
+      "border": "#ffc107",
+      "radius": "6"
+    },
+    "danger": {
+      "bg": "#dc3545",
+      "font": "#e9e5e5",
+      "border": "#dc3545",
+      "radius": "6"
+    }
+  },
+  "custom": {
+    "name": "Custom",
+    "main": {
+      "bg": "#212121",
+      "font": "#e9e5e5",
+      "accent": "#4f4f4f",
+      "url": "#e9e5e5"
+    },
+    "input": {
+      "bg": "#303030",
+      "font": "#e9e5e5",
+      "border": "#e9e5e5",
+      "radius": "6"
+    },
+    "primary": {
+      "bg": "#2e79e8",
+      "font": "#ffffff",
+      "border": "#2e79e8",
+      "radius": "6"
+    },
+    "secondary": {
+      "bg": "#198754",
+      "font": "#e9e5e5",
+      "border": "#198754",
+      "radius": "6"
+    },
+    "warning": {
+      "bg": "#ffc107",
+      "font": "#ffffff",
+      "border": "#ffc107",
+      "radius": "6"
+    },
+    "danger": {
+      "bg": "#dc3545",
+      "font": "#ffffff",
+      "border": "#dc3545",
+      "radius": "6"
+    }
+  }
+}
