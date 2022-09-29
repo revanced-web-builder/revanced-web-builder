@@ -322,7 +322,7 @@ class Config {
 
     $return .= "<h3 class='mb-3'>Updating from version {$cur['versionLast']} to {$new['version']}</h3>";
 
-    $return .= "<p>Making backup of apps/builder/config.json to apps/builder/config-{$cur['versionLast']}.json</p>";
+    $return .= "<p>Making backup of apps/config.json to apps/config-{$cur['versionLast']}.json</p>";
     $backupConfig = copy("config.json", "config-{$cur['versionLast']}.json");
 
     $return .= "<p>Updating apps and tools section of config.json</p>";
@@ -495,7 +495,7 @@ function statsUpdate() {
 
   $getConfig = new Config();
   $appData = $getConfig->apps;
-  $dir = "../../{$getConfig->buildDirectory}/";
+  $dir = "../{$getConfig->buildDirectory}/";
   $files = scandir($dir);
   $stats = [];
 

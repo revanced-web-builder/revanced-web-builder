@@ -9,7 +9,7 @@ var config
 $.ajax({
   dataType: "json",
   type: "GET",
-  url: "app/builder/config.json",
+  url: "app/config.json",
   cache: false
 }).done(function (data, textStatus, errorThrown) {
 
@@ -311,7 +311,7 @@ function buildStart() {
 
   window.buildAjax = $.ajax({
     type: "POST",
-    url: "app/builder/build.php",
+    url: "app/build.php",
     data: dataString,
     beforeSend: function() {
       $("#buildError").slideUp()
@@ -430,7 +430,7 @@ function checkIn() {
 
   $.ajax({
     type: "GET",
-    url: "app/builder/build.php?q=checkin",
+    url: "app/build.php?q=checkin",
     success: function (isBusy) {
       if (isBusy == 1) { // Builder is busy. Disable Build button.
         $("#buildButton").prop({disabled: true})

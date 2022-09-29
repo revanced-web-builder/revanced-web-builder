@@ -9,10 +9,10 @@ $config = new Config();
 $appData = $config->apps;
 date_default_timezone_set($config->timezone); // Default Timezone
 
-// Get the full URL of the currently running script and remove "/app/builder/build.php" from it
+// Get the full URL of the currently running script and remove "/app/build.php" from it
 // This guarantees the script will direct the user to the correct finished build location
 $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://';
-$urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -22); // Remove "/app/builder/build.php"
+$urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -22); // Remove "/app/build.php"
 
 // Make sure something was submitted
 if (!$_POST) die("NO POST");
@@ -91,19 +91,19 @@ $buildSuffix = ($config->buildSuffix != "") ? " ".$config->buildSuffix : "";
 
 // Check if file already exists with this build name
 // If it does, send the user the build information instead
-if (file_exists("../../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk")) {
-  $cur = Files::read("../../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.txt");
+if (file_exists("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk")) {
+  $cur = Files::read("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.txt");
   die(json_encode($cur));
 }
 
 // Directly execute the revanced-cli.jar file using a command built with all the selected info and patches
 if ($buildApp == "YouTube" || $buildApp == "YouTubeMusic") {
 
-  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" -m \"tools/revanced-integrations.apk\" --temp-dir=\"cache\" --keystore=\"../../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$exclusive}";
+  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" -m \"tools/revanced-integrations.apk\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$exclusive}";
 
 } else if ($buildApp == "Reddit" || $buildApp == "Spotify" || $buildApp == "Twitter" || $buildApp == "TikTok" || $buildApp == "Pflotsh" || $buildApp == "WarnWetter") { // These apps don't need integrations or resource patching
 
-  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} --exclusive";
+  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} --exclusive";
 
 }
 
@@ -118,8 +118,8 @@ $execJava = exec($javaCMD, $javaOutput);
 if ($execJava == "INFO: Finished") { // Success!
 
   $timeTotal = time() - $buildDate; // Calculate how long build took to make
-  $fileMD5 = md5_file("../../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get MD5 hash of generated build
-  $filesize = filesize("../../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get APK file size
+  $fileMD5 = md5_file("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get MD5 hash of generated build
+  $filesize = filesize("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get APK file size
 
   // Don't include MicroG for any version of Twitter or Reddit
   $microg = ($buildApp == "YouTube" || $buildApp == "YouTubeMusic") ? "vanced-microg.apk":"";
@@ -138,7 +138,7 @@ if ($execJava == "INFO: Finished") { // Success!
     'patches' => substr( str_replace(" -i ", "|", $include), 1 ) // convert -i to | and remove the first one
   );
 
-  Files::write("../../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.txt", json_encode($txtData, JSON_PRETTY_PRINT)); // Write text file with all the build information
+  Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.txt", json_encode($txtData, JSON_PRETTY_PRINT)); // Write text file with all the build information
 
   statsUpdate(); // Update duration averages for each app
 
@@ -176,7 +176,7 @@ if ($execJava == "INFO: Finished") { // Success!
   // Write javaOutput as an error message to the build's txt file so we know it failed
   // Edit: Don't do this yet, because the real errors show up after PHP quts.
   //$errorLog = array("error" => true, "javaOutput" => $javaOutput);
-  //Files::write("../../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.txt", json_encode($errorLog, JSON_PRETTY_PRINT)); // Write text file with all the build information
+  //Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.txt", json_encode($errorLog, JSON_PRETTY_PRINT)); // Write text file with all the build information
   $fullJava = "";
   foreach($javaOutput as $line) {
     $fullJava .= $line."<br />";

@@ -7,18 +7,17 @@ error_reporting(E_ALL);
 
 require_once("functions.php"); // import classes/functions
 
-// Check if user is using the mod_rewrite page (/admin) or the full path (/app/builder/admin.php)
+// Check if user is using the mod_rewrite page (/admin) or the full path (/app/admin.php)
 $dirPrefix = (substr(trim($_SERVER['REQUEST_URI'], "/"), -5) == "admin") ? "app/" : "..";
 
-// Get the full URL of the currently running script and remove "/app/builder/build.php" from it
+// Get the full URL of the currently running script and remove "/app/build.php" from it
 // This guarantees the script will direct the user to the correct finished build location
 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https://' : 'http://';
-$urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -22); // Remove "/app/builder/admin.php"
+$urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -14); // Remove "/app/admin.php"
 
 $setupErrors = []; // Array of errors that will stop the script from continuing at certain points
 
-
-// Detect if we're using the mod_rewrite page (/admin) or the full path (/app/builder/admin.php)
+// Detect if we're using the mod_rewrite page (/admin) or the full path (/app/admin.php)
 //$apacheModules = apache_get_modules();
 //$isRewrite = (in_array('mod_rewrite', $apacheModules)) ? "Detected" : "../";
 
@@ -31,15 +30,15 @@ if (isset($_GET['logout'])) {
 
 set_time_limit(0); // if the file is large set the timeout.
 
-// First of all, the app/builder folder has to be writable. End the script because we can't do anything without this.
-if (!is_writable("../builder")) {
-  die("<h2>ReVanced Web Builder</h2><p>app/builder folder needs to be writable to install and configure RWB.</p>");
+// First of all, the app/ folder has to be writable. End the script because we can't do anything without this.
+if (!is_writable(".")) {
+  die("<h2>ReVanced Web Builder</h2><p>app/ folder needs to be writable to install and configure RWB.</p>");
 }
 
 // Make sure config.json.dist exist and is readable so we can create the config file for user
 if (!file_exists("config.json.dist") || !is_readable("config.json.dist")) {
-  echo "<h2>ReVanced Web Builder</h2><p>app/builder/config.json.dist needs to exist and be readable to continue installation.</h2>";
-  echo "<p>Download it at <a href='https://rwb.frwd.app/app/builder/config.json.dist' target='_blank'>https://rwb.frwd.app/app/builder/config.json.dist</a> and place it in the app/builder/ folder.</p>";
+  echo "<h2>ReVanced Web Builder</h2><p>app/config.json.dist needs to exist and be readable to continue installation.</h2>";
+  echo "<p>Download it at <a href='https://rwb.frwd.app/app/config.json.dist' target='_blank'>https://rwb.frwd.app/app/config.json.dist</a> and place it in the app/ folder.</p>";
   die();
 }
 
@@ -50,9 +49,9 @@ if (!file_exists("config.json")) {
   $copyConfig = copy("config.json.dist", "config.json"); // copy bundled config file as the active config.json
   if ($copyConfig) { // config.json created
     $created = "<span class='badge bg-light'>Created</span> ";
-  } else { // Config file creation failed (it shouldn't if app/builder is writable, right?)
-    die("<h2>ReVanced Web Builder</h2><p>Failed to create app/builder/config.json</p>
-    <p>Manually copy app/builder/config.json.dist to app/builder/config.json and make it writable.</p>");
+  } else { // Config file creation failed (it shouldn't if app/ is writable, right?)
+    die("<h2>ReVanced Web Builder</h2><p>Failed to create app/config.json</p>
+    <p>Manually copy app/config.json.dist to app/config.json and make it writable.</p>");
     // Server owner will have to manually create a valid config.json file before the script will continue
   }
 } else {
@@ -86,7 +85,7 @@ $tools = array(
   "CLI" => ["version" => $verCLI, "output" => "tools/revanced-cli.jar", "download" => "https://github.com/revanced/revanced-cli/releases/download/v{$verCLI}/revanced-cli-{$verCLI}-all.jar"],
   "Patches" => ["version" => $verPat, "output" => "tools/revanced-patches.jar", "download" => "https://github.com/revanced/revanced-patches/releases/download/v{$verPat}/revanced-patches-{$verPat}.jar"],
   "Integrations" => ["version" => $verInt, "output" => "tools/revanced-integrations.apk", "download" => "https://github.com/revanced/revanced-integrations/releases/download/v{$verInt}/app-release-unsigned.apk"],
-  "MicroG" => ["version" => $toolData['MicroG']['latest'], "output" => "../../{$config->buildDirectory}/vanced-microg.apk", "download" => "https://v.frwd.app/revanced/vanced-microg.apk"]
+  "MicroG" => ["version" => $toolData['MicroG']['latest'], "output" => "../{$config->buildDirectory}/vanced-microg.apk", "download" => "https://v.frwd.app/revanced/vanced-microg.apk"]
 );
 
 // Check if there are any queries in case user is trying to download files
@@ -205,7 +204,7 @@ if ($query == "config") {
   }
 
   // Write new .htaccess file in builds directory
-  Files::write("../../{$config->buildDirectory}/.htaccess", $write);
+  Files::write("../{$config->buildDirectory}/.htaccess", $write);
 
   // Build the new config.json
   $configs = array(
@@ -256,7 +255,7 @@ if ($query == "config") {
     // User is trying to reset custom theme. Grab it from config.json.dist file
     // Download config.json.dist if it doesn't exist
     if (file_exists("config.json.dist")) {
-      $getDist = fileDownload("https://rwb.frwd.app/app/builder/config.json.dist", "config.json.dist");
+      $getDist = fileDownload("https://rwb.frwd.app/app/config.json.dist", "config.json.dist");
     }
 
     $distFile = Files::read("config.json.dist");
@@ -332,7 +331,7 @@ if ($query == "config") {
 
   function loadConfig() {
 
-    $.getJSON("<?php echo $urlPrefix; ?>/app/builder/config.json", function(json) {
+    $.getJSON("<?php echo $urlPrefix; ?>/app/config.json", function(json) {
       configAll = json
       config = json['config']
       appData = json['apps']
@@ -396,7 +395,7 @@ if ($query == "config") {
 
     $.ajax({
       type: "GET",
-      url: "<?php echo $urlPrefix; ?>/app/builder/admin.php?q=toggle&file="+file+"&name="+name+"&version="+version,
+      url: "<?php echo $urlPrefix; ?>/app/admin.php?q=toggle&file="+file+"&name="+name+"&version="+version,
       success: function (data) {
 
       }
@@ -422,7 +421,7 @@ if ($query == "config") {
 
     $.ajax({
       type: "GET",
-      url: "<?php echo $urlPrefix; ?>/app/builder/admin.php?q="+query+"&file="+file+"&name="+name+"&version="+version,
+      url: "<?php echo $urlPrefix; ?>/app/admin.php?q="+query+"&file="+file+"&name="+name+"&version="+version,
       beforeSend: function(b) {
         $(button).removeClass("btn-primary btn-secondary btn-warning btn-danger btn-info btn-orange").addClass("btn-warning")
       },
@@ -469,7 +468,7 @@ if ($query == "config") {
 
     $.ajax({
       type: "GET",
-      url: "<?php echo $urlPrefix; ?>/app/builder/admin.php?q=del&file="+file+"&name="+name+"&version="+version,
+      url: "<?php echo $urlPrefix; ?>/app/admin.php?q=del&file="+file+"&name="+name+"&version="+version,
       beforeSend: function(b) {
         $(button).removeClass("btn-primary btn-info btn-danger btn-secondary btn-orange").addClass("btn-warning")
       },
@@ -542,7 +541,7 @@ if ($query == "config") {
     // Verify changes with server and write to config.json
     $.ajax({
       type: "POST",
-      url: "<?php echo $urlPrefix; ?>/app/builder/admin.php?q=config",
+      url: "<?php echo $urlPrefix; ?>/app/admin.php?q=config",
       data: configFinal,
       beforeSend: function(b) {
       },
@@ -668,7 +667,7 @@ if ($query == "config") {
 
   <!-- Back button -->
   <div id="adminBack" title="Back to RWP">
-    <a href="../../index.html" title="Back to RWP">
+    <a href="../index.html" title="Back to RWP">
       <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
     </svg></a>
@@ -749,15 +748,15 @@ if ($query == "config") {
         </svg>';
 
         // We've already declared that this folder is writable because it's required for anything to work
-        echo "<p>{$folderIcon} app/builder: <span class='badge bg-secondary'>Writable</span></p>";
+        echo "<p>{$folderIcon} app/: <span class='badge bg-secondary'>Writable</span></p>";
 
         // Show info about the Config.json (whether it was created at beginning of the script)
         $permConfig = (is_writable("config.json")) ? "{$created}<span class='badge bg-secondary'>Writable</span>" : "{$created}<span class='badge bg-warning'>Not Writable</span>";
-        echo "<p>{$fileIcon} app/builder/config.json {$permConfig}</p>";
+        echo "<p>{$fileIcon} app/config.json {$permConfig}</p>";
 
         // Loop through folders and check if they exist. Try to create them if they don't.
         // "relativePath" -> "rootPath"
-        $folders = array("apk" => "app/builder/apk", "tools" => "app/builder/tools", "../../{$config->buildDirectory}" => $config->buildDirectory);
+        $folders = array("apk" => "app/apk", "tools" => "app/tools", "../{$config->buildDirectory}" => $config->buildDirectory);
 
         foreach ($folders as $f => $rootDir) {
 
