@@ -389,6 +389,12 @@
         "desc": "Add monochrome Twitter icon.",
         "section": "Patches",
         "checked": 0
+      },
+      "dynamic-color": {
+        "name": "Dynamic Color",
+        "desc": "Replaces the default Twitter Blue with the users Material You palette.",
+        "section": "Patches",
+        "checked": 0
       }
     }
   },
