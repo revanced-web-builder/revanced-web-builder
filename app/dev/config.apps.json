@@ -161,6 +161,11 @@
         "desc": "Disable automatic popups (playlist or live chat) on videos.",
         "section": "Appearance"
       },
+      "disable-startup-shorts-player": {
+        "name": "Disable Shorts on Startup",
+        "desc": "Disables playing YouTube Shorts when launching YouTube.",
+        "section": "Advanced"
+      },
       "custom-video-buffer": {
         "name": "Custom Video Buffer",
         "desc": "Lets you change the buffers of videos.",
@@ -299,6 +304,12 @@
           "spotify-theme": {
               "name": "Theme",
               "desc": "Applies a custom theme.",
+              "section": "Patches",
+              "checked": 0
+          },
+          "disable-capture-restriction": {
+              "name": "Disable Capture Restriction",
+              "desc": "Allows capturing Spotify's audio output while screen sharing or screen recording.",
               "section": "Patches",
               "checked": 0
           }
