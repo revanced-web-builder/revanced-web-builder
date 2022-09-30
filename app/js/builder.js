@@ -749,7 +749,7 @@ $(document).on("click", ".selectButton", function(e) {
 // When a column/patch is clicked, check/uncheck the box instead of using a label
 $(document).on("click", ".col-md-6", function(e) {
 
-  if (e.target.type != "checkbox") { // Ignore this if the checkbox itself was clicked
+  if (e.target.type != "checkbox" && e.target.type != "text") { // Ignore this if the checkbox or textbox was clicked
     var input = $(this).find("input")
     if ($(input).prop("checked") == true) {
       $(input).prop({checked: false})
@@ -759,6 +759,22 @@ $(document).on("click", ".col-md-6", function(e) {
   }
 
   checkBuildID()
+
+
+  // MOVE THIS SOON
+  // Check to see if special patches have been clicked (to show extra input boxes)
+  var $branding = $("input[value='custom-branding']")
+  if ($branding.prop("checked") == true) {
+    if ($(".custom-brandingOption").length == 1) {
+      $(".custom-brandingOption").slideDown()
+    } else {
+      $($branding).parent().append('<p class="custom-brandingOption mt-3" style="display: none">App Name: <input type="text" class="btn-input" placeholder="YouTube ReVanced" /></p>')
+      $(".custom-brandingOption").slideDown()
+    }
+  } else {
+    $(".custom-brandingOption").slideUp()
+  }
+
 
 })
 

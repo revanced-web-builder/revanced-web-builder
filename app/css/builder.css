@@ -94,6 +94,7 @@ a {
 body .patchContainer .col-md-6:hover { /* Dark theme column hover */
   background: var(--main-accent);
   transition: all 1.0s ease;
+  cursor: pointer;
 }
 
 #buildCompleteData p, #buildNew p {

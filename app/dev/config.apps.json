@@ -66,6 +66,11 @@
         "desc": "Download music and videos (<a href='#' id='instructDownloads'>Requires Setup<\/a>)",
         "section": "Essentials"
       },
+      "custom-branding": {
+        "name": "Custom Branding",
+        "desc": "Customize YouTube's App Name.",
+        "section": "Appearance"
+      },
       "hide-watermark": {
         "name": "Hide Watermarks",
         "desc": "Hides creator's watermarks on videos.",
@@ -109,11 +114,6 @@
       "premium-heading": {
         "name": "Premium Heading",
         "desc": "Shows premium branding on the home screen.",
-        "section": "Appearance"
-      },
-      "custom-branding": {
-        "name": "Custom Branding",
-        "desc": "Changes the YouTube launcher icon to be ReVanced's.",
         "section": "Appearance"
       },
       "hide-time-and-seekbar": {
