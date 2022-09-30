@@ -749,7 +749,7 @@ $(document).on("click", ".selectButton", function(e) {
 // When a column/patch is clicked, check/uncheck the box instead of using a label
 $(document).on("click", ".col-md-6", function(e) {
 
-  if (e.target.type != "checkbox" && e.target.type != "text") { // Ignore this if the checkbox or textbox was clicked
+  if (e.target.type != "checkbox" && e.target.type != "text" && e.target.type != "color") { // Ignore this if the checkbox or textbox was clicked
     var input = $(this).find("input")
     if ($(input).prop("checked") == true) {
       $(input).prop({checked: false})
@@ -763,16 +763,31 @@ $(document).on("click", ".col-md-6", function(e) {
 
   // MOVE THIS SOON
   // Check to see if special patches have been clicked (to show extra input boxes)
+
+  // CUSTOM BRANDING (YouTube)
   var $branding = $("input[value='custom-branding']")
   if ($branding.prop("checked") == true) {
-    if ($(".custom-brandingOption").length == 1) {
+    if ($(".custom-brandingOption").length == 2) {
       $(".custom-brandingOption").slideDown()
     } else {
-      $($branding).parent().append('<p class="custom-brandingOption mt-3" style="display: none">App Name: <input type="text" class="btn-input" value="YouTube ReVanced" name="custom-branding-appname" /></p>')
+      $($branding).parent().append('<p class="custom-brandingOption mt-2" style="display: none">Note: YouTube App icon will be changed to ReVanced\'s.</p><p class="custom-brandingOption mt-2" style="display: none">App Name: <input type="text" class="btn-input" value="YouTube ReVanced" name="custom-branding-appname" /></p>')
       $(".custom-brandingOption").slideDown()
     }
   } else {
     $(".custom-brandingOption").slideUp()
+  }
+
+  // THEME (YouTube)
+  var $branding = $("input[value='theme']")
+  if ($branding.prop("checked") == true) {
+    if ($(".themeOption").length == 2) {
+      $(".themeOption").slideDown()
+    } else {
+      $($branding).parent().append('<p class="themeOption mt-2" style="display: none">Dark Background: <input type="color" class="btn-input ms-2" value="#000000" name="theme-bg-dark" /></p><p class="themeOption mt-2" style="display: none">Light Background: <input type="color" class="btn-input ms-2" value="#FFFFFF" name="theme-bg-light" /></p>')
+      $(".themeOption").slideDown()
+    }
+  } else {
+    $(".themeOption").slideUp()
   }
 
 

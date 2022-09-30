@@ -52,8 +52,8 @@
         "checked": 1
       },
       "theme": {
-        "name": "AMOLED Theme",
-        "desc": "Enables pure black theme.",
+        "name": "Custom Theme",
+        "desc": "Change light and dark backgrounds.",
         "section": "Essentials"
       },
       "return-youtube-dislike": {

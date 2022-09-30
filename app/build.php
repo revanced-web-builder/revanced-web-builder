@@ -40,6 +40,7 @@ $buildVersionNoBeta = (substr($buildVersion, -5) == " Beta") ? substr($_POST['ap
 $buildID = $buildApp.$buildVersion; // Start build ID with app info. patches will be added to the build_id later
 $buildDirectory = $config->buildDirectory; // this will be $urlPrefix/$buildDirectory (can also be app/builds, etc)
 $include = ""; // Leave blank to begin
+$options = ""; // this too
 
 // Make sure this app and version is enabled
 if ($appData[$buildApp]['versions'][$buildVersionNoBeta]['enabled'] != 1) {
@@ -106,25 +107,36 @@ if (file_exists("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk")
 // Check for patch options
 if ($buildApp == "YouTube") {
 
-  // Check for the custom-branding patch
+  // custom-branding (YouTube)
   if (in_array("custom-branding", $patches)) {
     $custAppName = $_POST['custom-branding-appname'];
-    $custAppName = "['custom-branding']\nappName = \"{$custAppName}\"";
-    $appN = Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt", $custAppName);
-    $include .= " --options=\"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt\"";
+    $options .= "['custom-branding']\nappName = \"{$custAppName}\"\n";
   }
-  //$_POST['custom-branding-appname'])
+
+  // theme (YouTube)
+  if (in_array("theme", $patches)) {
+    $bgDark = $_POST['theme-bg-dark'];
+    $bgLight = $_POST['theme-bg-light'];
+    $options .= "[theme]\ndarkThemeBackgroundColor = \"{$bgDark}\"\nlightThemeBackgroundColor = \"{$bgLight}\"";
+  }
+
+  if ($options != "") {
+    $createOptions = Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt", $options);
+    $optionsFile = "--options=\"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt\"";
+  } else {
+    $optionsFile = "";
+  }
 
 }
 
 // Directly execute the revanced-cli.jar file using a command built with all the selected info and patches
 if ($buildApp == "YouTube" || $buildApp == "YouTubeMusic") {
 
-  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" -m \"tools/revanced-integrations.apk\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$exclusive}";
+  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" -m \"tools/revanced-integrations.apk\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} {$exclusive}";
 
 } else if ($buildApp == "Reddit" || $buildApp == "Spotify" || $buildApp == "Twitter" || $buildApp == "TikTok" || $buildApp == "Pflotsh" || $buildApp == "WarnWetter") { // These apps don't need integrations or resource patching
 
-  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} --exclusive";
+  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$options} --exclusive";
 
 }
 
