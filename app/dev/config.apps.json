@@ -392,7 +392,7 @@
       },
       "dynamic-color": {
         "name": "Dynamic Color",
-        "desc": "Replaces the default Twitter Blue with the users Material You palette.",
+        "desc": "Replace the default Twitter Blue with your Android/Material You palette.",
         "section": "Patches",
         "checked": 0
       }
