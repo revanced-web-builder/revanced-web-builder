@@ -54,15 +54,21 @@ if ($buildSupported !== 1 && $config->buildUnsupported != 1) die("ERROR:UNSUPPOR
 $patches = $_POST["patches_{$buildApp}"]; // Form names we'll be using for this app's patches
 
 // These names will be appended to the buildID that will be put at the end of the apk name so we can detect if someone has already built this exact APK.
+/*
+This patchesAllowed system needs to be rewritten to be automated with the patches.json
+
+Until then, it's a bit insecure because anything can be input/included..
+
 $patchesAllowed = array(
   'swipe-controls', 'seekbar-tapping', 'minimized-playback', 'theme', 'hide-create-button', 'hide-cast-button', 'return-youtube-dislike', 'hide-autoplay-button', 'premium-heading', 'custom-branding', 'disable-fullscreen-panels', 'old-quality-layout', 'hide-shorts-button', 'hide-watermark', 'sponsorblock', 'enable-wide-searchbar', 'always-autorepeat', 'microg-support', 'enable-debugging', 'custom-playback-speed', 'hdr-auto-brightness', 'remember-video-quality', 'video-ads', 'general-ads', 'hide-infocard-suggestions', 'settings', 'custom-video-buffer', 'minimized-playback-music', 'tasteBuilder-remover', 'hide-get-premium', 'compact-header', 'upgrade-button-remover', 'background-play', 'music-video-ads', 'codecs-unlock', 'exclusive-audio-playback', 'timeline-ads', 'general-reddit-ads', 'tablet-mini-player', 'tiktok-ads', 'pflotsh-ecmwf-subscription-unlock', 'promo-code-unlock', 'downloads', 'premium-icon-reddit', 'client-spoof', 'tiktok-seekbar', 'tiktok-download', 'hide-premium-navbar', 'spotify-theme', 'hide-time-and-seekbar', 'disable-auto-captions', 'disable-auto-player-popup-panels', 'tiktok-settings', 'tiktok-feed-filter', 'tiktok-force-login', 'upgrade-button-remover', 'hide-email-address', 'monochrome-icon');
+  */
 
 // Loop through each selected patch and make sure it's an allowed patch
 foreach ($patches as $id => $name) {
 
-  // Kill script if an invalid patch was found
-  if (!in_array($name, $patchesAllowed))
-    die("ERROR:NOPATCH");
+  // Kill script if an invalid patch was found (This system needs to be automated/updated)
+  //if (!in_array($name, $patchesAllowed))
+  //  die("ERROR:NOPATCH");
 
   $include .= " -i ".$name; // append this patch to the included patches array
 
