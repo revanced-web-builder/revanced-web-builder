@@ -277,7 +277,7 @@ function buildSetup(urlHash) {
 
   $.ajax({
     type: "GET",
-    url: config.buildDirectory+"/"+appName+buildSuffix+"-"+urlHash+".txt",
+    url: config.buildDirectory+"/"+appName+buildSuffix+"-"+urlHash+".info.txt",
     cache: false
   }).done(function (data, textStatus, errorThrown) {
 
@@ -514,7 +514,7 @@ function checkBuildID(buildID=undefined, updateStatus=undefined) {
 
   var checkBuild = $.ajax({
     type: "GET",
-    url: config.buildDirectory+"/"+appName+buildSuffix+"-"+buildID+".txt",
+    url: config.buildDirectory+"/"+appName+buildSuffix+"-"+buildID+".info.txt",
     cache: false
   }).done(function (data, textStatus, errorThrown) {
     // only update the page if updateStatus is false
@@ -686,7 +686,7 @@ function buildCompleteMessage(data) {
   <p class="buildInfo">Build Date: `+data.buildDateFull+`</p>
   <p class="buildInfo">Build Size: `+data.buildSize+` bytes (`+buildSize+` MB)</p>
   <p class="buildInfo">Keystore: <a href="`+rootDir+buildDir+`/RWB-`+data.app+`.keystore">Download</a></p>
-  <p class="buildInfo">JSON: <a href="`+rootDir+buildDir+`/`+data.app+buildSuffix+`-`+data.id+`.txt" target="_blank">View</a></p>
+  <p class="buildInfo">JSON: <a href="`+rootDir+buildDir+`/`+data.app+buildSuffix+`-`+data.id+`.info.txt" target="_blank">View</a></p>
   <p>Patches: `+patches+`</p>`
 
   if (data.microG != "") {
@@ -768,7 +768,7 @@ $(document).on("click", ".col-md-6", function(e) {
     if ($(".custom-brandingOption").length == 1) {
       $(".custom-brandingOption").slideDown()
     } else {
-      $($branding).parent().append('<p class="custom-brandingOption mt-3" style="display: none">App Name: <input type="text" class="btn-input" placeholder="YouTube ReVanced" /></p>')
+      $($branding).parent().append('<p class="custom-brandingOption mt-3" style="display: none">App Name: <input type="text" class="btn-input" value="YouTube ReVanced" name="custom-branding-appname" /></p>')
       $(".custom-brandingOption").slideDown()
     }
   } else {

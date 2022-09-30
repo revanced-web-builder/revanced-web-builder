@@ -502,7 +502,7 @@ function statsUpdate() {
   // Get every File that starts with appName and ends with .txt, open it, and add its duration to the average
   foreach ($files as $key => $file) {
 
-    if (substr($file, -4) != ".txt") continue; // only look at .txt files
+    if (substr($file, -9) != ".info.txt") continue; // only look at .txt files
 
     $json = Files::read($dir.$file);
     $currentApp = explode("-", $file)[0]; // Split filename by first hyphen

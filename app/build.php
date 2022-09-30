@@ -98,8 +98,23 @@ $buildSuffix = ($config->buildSuffix != "") ? " ".$config->buildSuffix : "";
 // Check if file already exists with this build name
 // If it does, send the user the build information instead
 if (file_exists("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk")) {
-  $cur = Files::read("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.txt");
+  $cur = Files::read("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.info.txt");
   die(json_encode($cur));
+}
+
+// Patch Options
+// Check for patch options
+if ($buildApp == "YouTube") {
+
+  // Check for the custom-branding patch
+  if (in_array("custom-branding", $patches)) {
+    $custAppName = $_POST['custom-branding-appname'];
+    $custAppName = "['custom-branding']\nappName = \"{$custAppName}\"";
+    $appN = Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt", $custAppName);
+    $include .= " --options=\"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt\"";
+  }
+  //$_POST['custom-branding-appname'])
+
 }
 
 // Directly execute the revanced-cli.jar file using a command built with all the selected info and patches
@@ -144,7 +159,7 @@ if ($execJava == "INFO: Finished") { // Success!
     'patches' => substr( str_replace(" -i ", "|", $include), 1 ) // convert -i to | and remove the first one
   );
 
-  Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.txt", json_encode($txtData, JSON_PRETTY_PRINT)); // Write text file with all the build information
+  Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.info.txt", json_encode($txtData, JSON_PRETTY_PRINT)); // Write text file with all the build information
 
   statsUpdate(); // Update duration averages for each app
 
