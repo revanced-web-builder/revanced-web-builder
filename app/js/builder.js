@@ -791,6 +791,19 @@ $(document).on("click", ".col-md-6", function(e) {
     $(".themeOption").slideUp()
   }
 
+  // SPOTIFY THEME
+  var $branding = $("input[value='spotify-theme']")
+  if ($branding.prop("checked") == true) {
+    if ($(".spotify-themeOption").length == 3) {
+      $(".spotify-themeOption").slideDown()
+    } else {
+      $($branding).parent().append('<p class="spotify-themeOption mt-2" style="display: none">Background: <input type="color" class="btn-input ms-2" value="#000000" name="spotify-theme-bg" /></p><p class="spotify-themeOption mt-2" style="display: none">Accent: <input type="color" class="btn-input ms-2" value="#ff1ed7" name="spotify-theme-accent" /></p><p class="spotify-themeOption mt-2" style="display: none">Accent Pressed: <input type="color" class="btn-input ms-2" value="#ff169c" name="spotify-theme-accent2" /></p>')
+      $(".spotify-themeOption").slideDown()
+    }
+  } else {
+    $(".spotify-themeOption").slideUp()
+  }
+
 
 })
 

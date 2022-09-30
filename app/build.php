@@ -105,7 +105,7 @@ if (file_exists("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk")
 
 // Patch Options
 // Check for patch options
-if ($buildApp == "YouTube") {
+if ($buildApp == "YouTube" || $buildApp == "Spotify") {
 
   // custom-branding (YouTube)
   if (in_array("custom-branding", $patches)) {
@@ -117,7 +117,15 @@ if ($buildApp == "YouTube") {
   if (in_array("theme", $patches)) {
     $bgDark = $_POST['theme-bg-dark'];
     $bgLight = $_POST['theme-bg-light'];
-    $options .= "[theme]\ndarkThemeBackgroundColor = \"{$bgDark}\"\nlightThemeBackgroundColor = \"{$bgLight}\"";
+    $options .= "[theme]\ndarkThemeBackgroundColor = \"{$bgDark}\"\nlightThemeBackgroundColor = \"{$bgLight}\"\n";
+  }
+
+  // spotify-theme
+  if (in_array("spotify-theme", $patches)) {
+    $spotBg = $_POST['spotify-theme-bg'];
+    $spotAccent = $_POST['spotify-theme-accent'];
+    $spotAccentPressed = $_POST['spotify-theme-accent2'];
+    $options .= "['spotify-theme']\nbackgroundColor = \"{$spotBg}\"\naccentColor = \"{$spotAccent}\"\naccentPressedColor = \"{$spotAccentPressed}\"\n";
   }
 
   if ($options != "") {
@@ -136,7 +144,7 @@ if ($buildApp == "YouTube" || $buildApp == "YouTubeMusic") {
 
 } else if ($buildApp == "Reddit" || $buildApp == "Spotify" || $buildApp == "Twitter" || $buildApp == "TikTok" || $buildApp == "Pflotsh" || $buildApp == "WarnWetter") { // These apps don't need integrations or resource patching
 
-  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$options} --exclusive";
+  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} --exclusive";
 
 }
 
