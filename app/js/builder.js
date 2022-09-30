@@ -38,6 +38,7 @@ $(document).ready(function() {
   //setTimeout("startup()", 600)
 
   //alert(config['buildDirectory'])
+  $('[data-bs-toggle="tooltip"]').tooltip({trigger: "hover"}) // enable tooltips
 
 })
 
