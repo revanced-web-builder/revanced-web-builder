@@ -22,25 +22,16 @@ $.ajax({
 
   startup()
 
-
 }).fail(function (jqXHR, textStatus, errorThrown) {
   console.log("CONFIG Not Found")
-
   $("body").html("<p class='mt-2 ms-4'>ReVanced Web Builder needs to be installed.<br /><br /><a href='admin'>Admin Panel</a>")
 })
 
 
-
-
-
 $(document).ready(function() {
-
-  //setTimeout("startup()", 600)
-
-  //alert(config['buildDirectory'])
   $('[data-bs-toggle="tooltip"]').tooltip({trigger: "hover"}) // enable tooltips
-
 })
+
 
 function startup() {
 
@@ -77,7 +68,6 @@ function startup() {
     `
     $("#generatePatches").append(mainDiv)
 
-
     var patchDivs = ""
 
     // Loop through the "patches" part of the object to get the categories
@@ -104,7 +94,6 @@ function startup() {
       `+thisPatch.desc+`
       </div>
       `
-
 
       $("#section"+appNames+thisPatch.section).append(patchDivs)
       patchDivs = ""
@@ -133,16 +122,11 @@ function startup() {
   // Set page title
   $("title").text(config.pageTitle)
 
-  themeSet(config.themeDefault) // theme the page
-
   // Theme Switcher, Default Theme, and Debug Menu
-
+  themeSet(config.themeDefault) // theme the page
   //if (data.themeDefault != "dark" || (localStorage.themeOverride && localStorage.themeOverride == "light")) themeToggle() // Toggle theme to light if themeDefault isn't dark
-
   if (config.themeSwitcher == 1) $("#themeSwitcher").show() // Show theme switcher?
-
   if (config.debugMenu == 0) $("#debugMenu,#debugMenuToggle").remove() // Remove debugMenu if it's not enabled
-
   if (config.footer == 0) $("#footer").hide() // Hide footer based on config
 
   // If builder is online, set interval for checkIn() to repeatedly see if the builder is busy
@@ -163,8 +147,6 @@ function startup() {
   } else {
     setTimeout("checkBuildID()") // check if default build ID exists
   }
-
-
 
   // Get user's current builds and their status
   var myBuilds = localStorage.get("myBuilds")
@@ -330,8 +312,6 @@ function buildStart() {
 
       // Delete existing build from My Builds (in case it was a saved build) and add this one to the top
       $("#myBuild"+thisBuild).remove()
-
-
 
       $("#myBuildsData").prepend("<p id='myBuild"+thisBuild+"'>"+$('#appName').val()+" "+$('#appVersion').val()+" [<span class='myBuildID'>"+thisBuild+"</span>]<span class='myBuildStatus ms-3'>Building...</span></p>")
     },

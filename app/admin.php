@@ -336,11 +336,8 @@ if ($query == "config") {
   })
 
   function startupAdmin() {
-    // Focus on password field if admin is not logged in
-    if ($("#adminLoginForm").is(":visible")) {
-      $("#adminHeader").addClass("text-center")
-      $("#adminPass").focus()
-    }
+
+    if ($("#adminLoginForm").is(":visible")) $("#adminHeader").addClass("text-center")
 
     // Show custom theme inputs if set to custom
     if ($("#themeDefault").val() == "custom") {
@@ -364,6 +361,9 @@ if ($query == "config") {
 
     if (config.buildUnsupported != 1) $("p[data-support='0']").hide() // Hide unsupported builds (if necessary)
     if (config.buildBeta != 1) $("p[data-beta='1']").hide() // Hide beta builds (if necessary)
+
+    // Focus on password field if admin is not logged in
+    if ($("#adminLoginForm").is(":visible")) $("#adminPass").focus()
   }
 
   function toggleSection(element) {
@@ -739,7 +739,7 @@ if ($query == "config") {
         </svg>';
 
         // We've already declared that this folder is writable because it's required for anything to work
-        echo "<p>{$folderIcon} app/: <span class='badge bg-secondary'>Writable</span></p>";
+        echo "<p>{$folderIcon} app <span class='badge bg-secondary'>Writable</span></p>";
 
         // Show info about the Config.json (whether it was created at beginning of the script)
         $permConfig = (is_writable("config.json")) ? "{$created}<span class='badge bg-secondary'>Writable</span>" : "{$created}<span class='badge bg-warning'>Not Writable</span>";
@@ -747,7 +747,7 @@ if ($query == "config") {
 
         // Loop through folders and check if they exist. Try to create them if they don't.
         // "relativePath" -> "rootPath"
-        $folders = array("apk" => "app/apk", "tools" => "app/tools", "../{$config->buildDirectory}" => $config->buildDirectory);
+        $folders = array("apk" => "app/apk", "tools" => "app/tools", "../".$config->buildDirectory => $config->buildDirectory);
 
         foreach ($folders as $f => $rootDir) {
 
@@ -785,7 +785,6 @@ if ($query == "config") {
           echo "<p>{$isFolder} {$rootDir} {$isWritable}</p>";
 
         }
-
 
         echo "</div> <!--end Permission section -->
         <div class='col-12 col-lg-4'>
