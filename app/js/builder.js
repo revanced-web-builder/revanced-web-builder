@@ -475,6 +475,13 @@ function checkBuildID(buildID=undefined, updateStatus=undefined) {
   var buildString = appName+appVersion
   var buildSuffix = (config.buildSuffix != "") ? " "+config.buildSuffix : ""
 
+  $("#patches"+appName+" div.patch").show() // Show all patches that may be hidden
+  // Hide all patches that don't belong to this version
+  $("#patches"+appName+" div.patch:not([data-versions*='"+appVersion+"'])").each(function(key,val) {
+    // Only hide if it's a patch that has supported versions (otherwise it supports all versions)
+    if ($(this).data("versions") != "") $(this).hide()
+  })
+
   // Loop through the patches of the currently selected App that are checked
   $("#patches"+appName+" input[type='checkbox']:checked").each(function(index, value) {
     buildString = buildString+$(this).val()
