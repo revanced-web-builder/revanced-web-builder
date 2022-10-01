@@ -104,46 +104,43 @@ if (file_exists("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk")
 }
 
 // Patch Options
-// Check for patch options
-if ($buildApp == "YouTube" || $buildApp == "Spotify") {
 
-  // spotify-theme
-  if (in_array("spotify-theme", $patches)) {
-    $spotBg = $_POST['spotify-theme-bg'];
-    $spotAccent = $_POST['spotify-theme-accent'];
-    $spotAccentPressed = $_POST['spotify-theme-accent2'];
-    $options .= "['spotify-theme']\nbackgroundColor = \"{$spotBg}\"\naccentColor = \"{$spotAccent}\"\naccentPressedColor = \"{$spotAccentPressed}\"\n";
-  }
-
-  // custom-playback-speed
-  if (in_array("custom-playback-speed", $patches)) {
-    $speedGran = $_POST['playback-speed-granularity'];
-    $speedMin = $_POST['playback-speed-min'];
-    $speedMax = $_POST['playback-speed-max'];
-    $options .= "['custom-playback-speed']\ngranularity = \"{$speedGran}\"\nmin = \"{$speedMin}\"\nmax = \"{$speedMax}\"\n";
-  }
-
-  // custom-branding (YouTube)
-  if (in_array("custom-branding", $patches)) {
-    $custAppName = $_POST['custom-branding-appname'];
-    $options .= "['custom-branding']\nappName = \"{$custAppName}\"\n";
-  }
-
-  // theme (YouTube)
-  if (in_array("theme", $patches)) {
-    $bgDark = $_POST['theme-bg-dark'];
-    $bgLight = $_POST['theme-bg-light'];
-    $options .= "[theme]\ndarkThemeBackgroundColor = \"{$bgDark}\"\nlightThemeBackgroundColor = \"{$bgLight}\"\n";
-  }
-
-  if ($options != "") {
-    $createOptions = Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt", $options);
-    $optionsFile = "--options=\"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt\"";
-  } else {
-    $optionsFile = "";
-  }
-
+// spotify-theme
+if (in_array("spotify-theme", $patches)) {
+  $spotBg = $_POST['spotify-theme-bg'];
+  $spotAccent = $_POST['spotify-theme-accent'];
+  $spotAccentPressed = $_POST['spotify-theme-accent2'];
+  $options .= "['spotify-theme']\nbackgroundColor = \"{$spotBg}\"\naccentColor = \"{$spotAccent}\"\naccentPressedColor = \"{$spotAccentPressed}\"\n";
 }
+
+// custom-playback-speed
+if (in_array("custom-playback-speed", $patches)) {
+  $speedGran = $_POST['playback-speed-granularity'];
+  $speedMin = $_POST['playback-speed-min'];
+  $speedMax = $_POST['playback-speed-max'];
+  $options .= "['custom-playback-speed']\ngranularity = \"{$speedGran}\"\nmin = \"{$speedMin}\"\nmax = \"{$speedMax}\"\n";
+}
+
+// custom-branding (YouTube)
+if (in_array("custom-branding", $patches)) {
+  $custAppName = $_POST['custom-branding-appname'];
+  $options .= "['custom-branding']\nappName = \"{$custAppName}\"\n";
+}
+
+// theme (YouTube)
+if (in_array("theme", $patches)) {
+  $bgDark = $_POST['theme-bg-dark'];
+  $bgLight = $_POST['theme-bg-light'];
+  $options .= "[theme]\ndarkThemeBackgroundColor = \"{$bgDark}\"\nlightThemeBackgroundColor = \"{$bgLight}\"\n";
+}
+
+if ($options != "") {
+  $createOptions = Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt", $options);
+  $optionsFile = "--options=\"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt\"";
+} else {
+  $optionsFile = "";
+}
+
 
 // Directly execute the revanced-cli.jar file using a command built with all the selected info and patches
 if ($buildApp == "YouTube" || $buildApp == "YouTubeMusic") {
