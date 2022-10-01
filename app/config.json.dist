@@ -344,11 +344,20 @@
             "fullName": "YouTube Music",
             "versions": {
                 "5.26.52": {
+                    "enabled": 1,
+                    "rec": 1
+                },
+                "5.25.52": {
+                    "enabled": 0
+                },
+                "5.25.51": {
+                    "enabled": 0
+                },
+                "5.23.50": {
                     "enabled": 0
                 },
                 "5.21.52": {
-                    "enabled": 0,
-                    "rec": 1
+                    "enabled": 0
                 }
             },
             "patches": {
