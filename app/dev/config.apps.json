@@ -5,6 +5,12 @@
       "17.36.37": {
         "enabled": 0
       },
+      "17.34.36": {
+        "enabled": 0
+      },
+      "17.34.35": {
+        "enabled": 0
+      },
       "17.33.42": {
         "enabled": 0
       },
@@ -197,6 +203,9 @@
     "size": "30 MB",
     "fullName": "YouTube Music",
     "versions": {
+      "5.26.52": {
+        "enabled": 0
+      },
       "5.21.52": {
         "enabled": 0,
         "rec": 1
