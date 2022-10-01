@@ -453,8 +453,7 @@ function appChange() {
   $("strong.buildAvg").hide()
   $("#buildAvg"+$("#appName").val()).show() // Show the build time of the currently selected App
 
-
-  if ($("#appName").val() != "YouTube") $("div.patchContainer").slideUp()
+  $("div.patchContainer").slideUp()
   $("#patches"+appName).slideDown()
 
   // Show appName and Version in Package Build section
@@ -464,7 +463,6 @@ function appChange() {
   checkBuildID()
 
 }
-
 
 
 // Check if a current build already exists
