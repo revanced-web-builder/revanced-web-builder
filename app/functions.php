@@ -178,6 +178,26 @@ class Config {
 
   }
 
+  public function toolArray() {
+
+    // Information needed for downloading ReVanced tools
+    $json = $this->json;
+    $toolData = $json['tools'];
+    $verCLI = $toolData['CLI']['latest'];
+    $verPat = $toolData['Patches']['latest'];
+    $verInt = $toolData['Integrations']['latest'];
+    //$verMic = $toolData['MicroG']['latest'];
+    $toolsArray = array(
+      "CLI" => ["version" => $verCLI, "output" => "tools/revanced-cli.jar", "download" => "https://github.com/revanced/revanced-cli/releases/download/v{$verCLI}/revanced-cli-{$verCLI}-all.jar"],
+      "Patches" => ["version" => $verPat, "output" => "tools/revanced-patches.jar", "download" => "https://github.com/revanced/revanced-patches/releases/download/v{$verPat}/revanced-patches-{$verPat}.jar"],
+      "Integrations" => ["version" => $verInt, "output" => "tools/revanced-integrations.apk", "download" => "https://github.com/revanced/revanced-integrations/releases/download/v{$verInt}/app-release-unsigned.apk"],
+      "MicroG" => ["version" => $toolData['MicroG']['latest'], "output" => "../{$this->buildDirectory}/vanced-microg.apk", "download" => "https://v.frwd.app/revanced/vanced-microg.apk"]
+    );
+
+    return $toolsArray;
+
+  }
+
   public function setStats($statsArray) {
 
     $json = $this->json;

@@ -74,19 +74,8 @@ $appData = $config->apps;
 $toolData = $config->tools;
 $themeData = $config->themes;
 
-
-
 // Information needed for downloading ReVanced tools
-$verCLI = $toolData['CLI']['latest'];
-$verPat = $toolData['Patches']['latest'];
-$verInt = $toolData['Integrations']['latest'];
-//$verMic = $toolData['MicroG']['latest'];
-$tools = array(
-  "CLI" => ["version" => $verCLI, "output" => "tools/revanced-cli.jar", "download" => "https://github.com/revanced/revanced-cli/releases/download/v{$verCLI}/revanced-cli-{$verCLI}-all.jar"],
-  "Patches" => ["version" => $verPat, "output" => "tools/revanced-patches.jar", "download" => "https://github.com/revanced/revanced-patches/releases/download/v{$verPat}/revanced-patches-{$verPat}.jar"],
-  "Integrations" => ["version" => $verInt, "output" => "tools/revanced-integrations.apk", "download" => "https://github.com/revanced/revanced-integrations/releases/download/v{$verInt}/app-release-unsigned.apk"],
-  "MicroG" => ["version" => $toolData['MicroG']['latest'], "output" => "../{$config->buildDirectory}/vanced-microg.apk", "download" => "https://v.frwd.app/revanced/vanced-microg.apk"]
-);
+$tools = $config->toolArray();
 
 // Check if there are any queries in case user is trying to download files
 $query = (isset($_GET['q'])) ? $_GET['q'] : "";
@@ -108,8 +97,6 @@ if ($query == "dl" || $query == "del" || $query == "toggle") {
     $isBeta2 = ".Beta";
   }
 
-  $full = ($name != "YouTubeMusic") ? "{$name}-{$version}.apk" : "YouTube-Music-{$version}.apk"; // YouTubeMusic needs a hyphen for this repo
-
   // Download APK/Tool
   if ($query == "dl") {
 
@@ -127,7 +114,7 @@ if ($query == "dl" || $query == "del" || $query == "toggle") {
     // Also download patches.json from ReVanced Patches repo if necessary
     // Inject it into the config.json
     if ($file == "Patches") {
-      $dlP = fileDownload("https://github.com/revanced/revanced-patches/releases/download/v{$verPat}/patches.json", "tools/revanced-patches.json");
+      $dlP = fileDownload("https://github.com/revanced/revanced-patches/releases/download/v{$toolData['Patches']['latest']}/patches.json", "tools/revanced-patches.json");
       $config->injectPatches(); // inject official revanced patches.json compatibility information into RWB config.json
     }
 
@@ -727,6 +714,10 @@ if ($query == "config") {
 
     if ($query == "update") {
       echo $config->updateVersion();
+
+      // Reload config
+      $config = new Config();
+      $tools = $config->toolArray();
     }
     ?>
     <div class="row">
@@ -930,7 +921,7 @@ if ($query == "config") {
           <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
           </svg></button>';
 
-          if (file_exists($val['output'])) {
+          if (file_exists($val['output']) && $toolData[$tool]['enabled'] != 0) {
             $val[1] = "btn-secondary";
             $val[2] = "&#10003;";
             $val[3] = $deleteFile;
@@ -967,8 +958,6 @@ if ($query == "config") {
         echo "</div> <!-- end #downloadTools -->
 
         <div id='apkVersions' class='configComplete' ".(($revancedDownloaded < 4) ? "style='display: none'":"").">
-
-
 
         <hr />
 

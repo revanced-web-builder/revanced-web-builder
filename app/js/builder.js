@@ -750,7 +750,7 @@ $(document).on("click", ".selectButton", function(e) {
 // When a column/patch is clicked, check/uncheck the box instead of using a label
 $(document).on("click", ".col-md-6", function(e) {
 
-  if (e.target.type != "checkbox" && e.target.type != "text" && e.target.type != "color") { // Ignore this if the checkbox or textbox was clicked
+  if (e.target.type != "checkbox" && e.target.type != "text" && e.target.type != "color" && e.target.type != "number") { // Ignore this if the checkbox or textbox was clicked
     var input = $(this).find("input")
     if ($(input).prop("checked") == true) {
       $(input).prop({checked: false})
@@ -765,7 +765,7 @@ $(document).on("click", ".col-md-6", function(e) {
   // MOVE THIS SOON
   // Check to see if special patches have been clicked (to show extra input boxes)
 
-  // CUSTOM BRANDING (YouTube)
+  // custom-branding (YouTube)
   var $branding = $("input[value='custom-branding']")
   if ($branding.prop("checked") == true) {
     if ($(".custom-brandingOption").length == 2) {
@@ -778,7 +778,7 @@ $(document).on("click", ".col-md-6", function(e) {
     $(".custom-brandingOption").slideUp()
   }
 
-  // THEME (YouTube)
+  // theme (YouTube)
   var $branding = $("input[value='theme']")
   if ($branding.prop("checked") == true) {
     if ($(".themeOption").length == 2) {
@@ -791,7 +791,20 @@ $(document).on("click", ".col-md-6", function(e) {
     $(".themeOption").slideUp()
   }
 
-  // SPOTIFY THEME
+  // custom-playback-speed (YouTube)
+  var $branding = $("input[value='custom-playback-speed']")
+  if ($branding.prop("checked") == true) {
+    if ($(".custom-playback-speedOption").length == 3) {
+      $(".custom-playback-speedOption").slideDown()
+    } else {
+      $($branding).parent().append('<p class="custom-playback-speedOption mt-2" style="display: none">Granularity: <input type="text" class="btn-input ms-2" value="16" name="playback-speed-granularity" size="4" /></p><p class="custom-playback-speedOption mt-2" style="display: none">Min: <input type="text" class="btn-input ms-2" value="0.25" name="playback-speed-min" size="4" /></p><p class="custom-playback-speedOption mt-2" style="display: none">Max: <input type="text" class="btn-input ms-2" value="5.0" size="4" name="playback-speed-max" /></p>')
+      $(".custom-playback-speedOption").slideDown()
+    }
+  } else {
+    $(".custom-playback-speedOption").slideUp()
+  }
+
+  // spotify-theme
   var $branding = $("input[value='spotify-theme']")
   if ($branding.prop("checked") == true) {
     if ($(".spotify-themeOption").length == 3) {

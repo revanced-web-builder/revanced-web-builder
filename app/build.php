@@ -107,6 +107,22 @@ if (file_exists("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk")
 // Check for patch options
 if ($buildApp == "YouTube" || $buildApp == "Spotify") {
 
+  // spotify-theme
+  if (in_array("spotify-theme", $patches)) {
+    $spotBg = $_POST['spotify-theme-bg'];
+    $spotAccent = $_POST['spotify-theme-accent'];
+    $spotAccentPressed = $_POST['spotify-theme-accent2'];
+    $options .= "['spotify-theme']\nbackgroundColor = \"{$spotBg}\"\naccentColor = \"{$spotAccent}\"\naccentPressedColor = \"{$spotAccentPressed}\"\n";
+  }
+
+  // custom-playback-speed
+  if (in_array("custom-playback-speed", $patches)) {
+    $speedGran = $_POST['playback-speed-granularity'];
+    $speedMin = $_POST['playback-speed-min'];
+    $speedMax = $_POST['playback-speed-max'];
+    $options .= "['custom-playback-speed']\ngranularity = \"{$speedGran}\"\nmin = \"{$speedMin}\"\nmax = \"{$speedMax}\"\n";
+  }
+
   // custom-branding (YouTube)
   if (in_array("custom-branding", $patches)) {
     $custAppName = $_POST['custom-branding-appname'];
@@ -118,14 +134,6 @@ if ($buildApp == "YouTube" || $buildApp == "Spotify") {
     $bgDark = $_POST['theme-bg-dark'];
     $bgLight = $_POST['theme-bg-light'];
     $options .= "[theme]\ndarkThemeBackgroundColor = \"{$bgDark}\"\nlightThemeBackgroundColor = \"{$bgLight}\"\n";
-  }
-
-  // spotify-theme
-  if (in_array("spotify-theme", $patches)) {
-    $spotBg = $_POST['spotify-theme-bg'];
-    $spotAccent = $_POST['spotify-theme-accent'];
-    $spotAccentPressed = $_POST['spotify-theme-accent2'];
-    $options .= "['spotify-theme']\nbackgroundColor = \"{$spotBg}\"\naccentColor = \"{$spotAccent}\"\naccentPressedColor = \"{$spotAccentPressed}\"\n";
   }
 
   if ($options != "") {
