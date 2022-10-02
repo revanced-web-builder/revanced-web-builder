@@ -40,7 +40,7 @@ Install Apache 2 Web Server
 
 Install PHP (8.1) with cURL
 
-`sudo apt install -y php php-mysql libapache2-mod-php php-curl`
+`sudo apt install -y php libapache2-mod-php php-curl`
 
 Enable mod_rewrite (Optional)
 
