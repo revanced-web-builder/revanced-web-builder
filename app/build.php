@@ -148,7 +148,7 @@ if ($options != "") {
   $createOptions = Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt", $options);
   $optionsFile = "--options=\"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt\"";
 } else {
-  $optionsFile = "";
+  $optionsFile = "--options=\"tools/options.toml\"";
 }
 
 // Directly execute the revanced-cli.jar file using a command built with all the selected info and patches
@@ -224,6 +224,11 @@ if ($execJava == "INFO: Finished") { // Success!
     $buildURL = $buildApp.'Vanced-'.$buildID.'.apk';
     echo "<p>{$buildApp} ReVanced: <a href='{$urlPrefix}/{$buildDirectory}/{$buildURL}'>{$urlPrefix}/{$buildDirectory}/{$buildURL}</a></p>";
 
+  }
+
+  // Delete default options.toml (in case new/default options come in ReVanced Patcher updates)
+  if ($optionsFile == "--options=\"tools/options.toml\"") {
+    unlink("tools/options.toml");
   }
 
   die();
