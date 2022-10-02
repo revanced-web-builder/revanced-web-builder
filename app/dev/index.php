@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 // Check if user is using the mod_rewrite page (/admin) or the full path (/app/dev/index.php)
 $dirPrefix = (substr(trim($_SERVER['REQUEST_URI'], "/"), -3) == "dev") ? "app/" : "../";
 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https://' : 'http://';
-$urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -14); // This shouldn't work but it does
+$urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -14); // Remove /app/dev/index.php from URL (for now)
 
 $dir = __DIR__; // this may cause errors for PHP FPM. Look into that or allow user to define the root path if it fails to be autodetected?
 

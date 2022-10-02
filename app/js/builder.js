@@ -78,7 +78,7 @@ function startup() {
       // Check if this section already exists
       if ($("#section"+appNames+thisPatch.section).is(":visible") != true) {
         var patchDiv = `
-        <div class="row" id="section`+appNames+thisPatch.section+`">
+        <div class="row patchSection" id="section`+appNames+thisPatch.section+`">
           <div class="col-12 mt-3">
             <h3>`+thisPatch.section+` <input type="button" value="Select All" class="btn btn-primary btn-sm selectButton" /> <input type="button" value="Select None" class="btn btn-primary btn-sm selectButton" /></h3>
           </div>
@@ -192,6 +192,16 @@ function startup() {
   }
 
   if ($("p.myBuild").length == 0) $("#myBuildsContainer").hide()
+
+  // Show Select All/None buttons when hovering over a category
+  $("div.patchSection").on({
+    mouseenter: function () {
+      $(this).find("input.selectButton").show()
+    },
+    mouseleave: function () {
+      $(this).find("input.selectButton").hide()
+    }
+  });
 
 }
 
@@ -606,6 +616,59 @@ function buildDelete(element) {
 
 }
 
+function checkOptions() {
+  // custom-branding (YouTube)
+  var $branding = $("input[value='custom-branding']")
+  if ($branding.prop("checked") == true) {
+    if ($(".custom-brandingOption").length == 2) {
+      $(".custom-brandingOption").slideDown()
+    } else {
+      $($branding).parent().append('<p class="custom-brandingOption mt-2" style="display: none">Note: YouTube App icon will be changed to ReVanced\'s.</p><p class="custom-brandingOption mt-2" style="display: none">App Name: <input type="text" class="btn-input patchOption" value="YouTube ReVanced" id="custom-branding-appname" name="custom-branding-appname" /></p>')
+      $(".custom-brandingOption").slideDown()
+    }
+  } else {
+    $(".custom-brandingOption").slideUp()
+  }
+
+  // theme (YouTube)
+  var $branding = $("input[value='theme']")
+  if ($branding.prop("checked") == true) {
+    if ($(".themeOption").length == 2) {
+      $(".themeOption").slideDown()
+    } else {
+      $($branding).parent().append('<p class="themeOption mt-2" style="display: none">Dark Background: <input type="color" class="btn-input ms-2 patchOption" value="#000000" id="theme-bg-dark" name="theme-bg-dark" /></p><p class="themeOption mt-2" style="display: none">Light Background: <input type="color" class="btn-input ms-2 patchOption" value="#FFFFFF" id="theme-bg-light" name="theme-bg-light" /></p>')
+      $(".themeOption").slideDown()
+    }
+  } else {
+    $(".themeOption").slideUp()
+  }
+
+  // custom-playback-speed (YouTube)
+  var $branding = $("input[value='custom-playback-speed']")
+  if ($branding.prop("checked") == true) {
+    if ($(".custom-playback-speedOption").length == 3) {
+      $(".custom-playback-speedOption").slideDown()
+    } else {
+      $($branding).parent().append('<p class="custom-playback-speedOption mt-2" style="display: none">Granularity: <input type="text" class="btn-input ms-2 patchOption" value="16" id="playback-speed-granularity" name="playback-speed-granularity" size="4" /></p><p class="custom-playback-speedOption mt-2" style="display: none">Min: <input type="text" class="btn-input ms-2 patchOption" value="0.25" id="playback-speed-min" name="playback-speed-min" size="4" /></p><p class="custom-playback-speedOption mt-2" style="display: none">Max: <input type="text" class="btn-input ms-2 patchOption" value="5.0" size="4" id="playback-speed-max" name="playback-speed-max" /></p>')
+      $(".custom-playback-speedOption").slideDown()
+    }
+  } else {
+    $(".custom-playback-speedOption").slideUp()
+  }
+
+  // spotify-theme
+  var $branding = $("input[value='spotify-theme']")
+  if ($branding.prop("checked") == true) {
+    if ($(".spotify-themeOption").length == 3) {
+      $(".spotify-themeOption").slideDown()
+    } else {
+      $($branding).parent().append('<p class="spotify-themeOption mt-2" style="display: none">Background: <input type="color" class="btn-input ms-2 patchOption" value="#000000" id="spotify-theme-bg" name="spotify-theme-bg" /></p><p class="spotify-themeOption mt-2" style="display: none">Accent: <input type="color" class="btn-input ms-2 patchOption" value="#ff1ed7" id="spotify-theme-accent" name="spotify-theme-accent" /></p><p class="spotify-themeOption mt-2" style="display: none">Accent Pressed: <input type="color" class="btn-input ms-2 patchOption" value="#ff169c" id="spotify-theme-accent2" name="spotify-theme-accent2" /></p>')
+      $(".spotify-themeOption").slideDown()
+    }
+  } else {
+    $(".spotify-themeOption").slideUp()
+  }
+}
 
 
 // EVENTS
@@ -720,17 +783,6 @@ function getObjKey(obj, value) {
   return Object.keys(obj).find(key => obj[key] === value);
 }
 
-
-// Show Select All/None buttons when hovering over a category
-$(".patchRow").on({
-  mouseenter: function () {
-    $(this).find("input.selectButton").show()
-  },
-  mouseleave: function () {
-    $(this).find("input.selectButton").hide()
-  }
-});
-
 // Select All/None
 $(document).on("click", ".selectButton", function(e) {
 
@@ -738,6 +790,7 @@ $(document).on("click", ".selectButton", function(e) {
   var isChecked = ($(this).val() == "Select All") ? true : false
   $(parent).find("input").prop({checked: isChecked})
   setTimeout("checkBuildID()", 250)
+  checkOptions()
 
 })
 
@@ -755,62 +808,7 @@ $(document).on("click", ".col-md-6", function(e) {
 
   checkBuildID()
 
-
-  // MOVE THIS SOON
-  // Check to see if special patches have been clicked (to show extra input boxes)
-
-  // custom-branding (YouTube)
-  var $branding = $("input[value='custom-branding']")
-  if ($branding.prop("checked") == true) {
-    if ($(".custom-brandingOption").length == 2) {
-      $(".custom-brandingOption").slideDown()
-    } else {
-      $($branding).parent().append('<p class="custom-brandingOption mt-2" style="display: none">Note: YouTube App icon will be changed to ReVanced\'s.</p><p class="custom-brandingOption mt-2" style="display: none">App Name: <input type="text" class="btn-input patchOption" value="YouTube ReVanced" id="custom-branding-appname" name="custom-branding-appname" /></p>')
-      $(".custom-brandingOption").slideDown()
-    }
-  } else {
-    $(".custom-brandingOption").slideUp()
-  }
-
-  // theme (YouTube)
-  var $branding = $("input[value='theme']")
-  if ($branding.prop("checked") == true) {
-    if ($(".themeOption").length == 2) {
-      $(".themeOption").slideDown()
-    } else {
-      $($branding).parent().append('<p class="themeOption mt-2" style="display: none">Dark Background: <input type="color" class="btn-input ms-2 patchOption" value="#000000" id="theme-bg-dark" name="theme-bg-dark" /></p><p class="themeOption mt-2" style="display: none">Light Background: <input type="color" class="btn-input ms-2 patchOption" value="#FFFFFF" id="theme-bg-light" name="theme-bg-light" /></p>')
-      $(".themeOption").slideDown()
-    }
-  } else {
-    $(".themeOption").slideUp()
-  }
-
-  // custom-playback-speed (YouTube)
-  var $branding = $("input[value='custom-playback-speed']")
-  if ($branding.prop("checked") == true) {
-    if ($(".custom-playback-speedOption").length == 3) {
-      $(".custom-playback-speedOption").slideDown()
-    } else {
-      $($branding).parent().append('<p class="custom-playback-speedOption mt-2" style="display: none">Granularity: <input type="text" class="btn-input ms-2 patchOption" value="16" id="playback-speed-granularity" name="playback-speed-granularity" size="4" /></p><p class="custom-playback-speedOption mt-2" style="display: none">Min: <input type="text" class="btn-input ms-2 patchOption" value="0.25" id="playback-speed-min" name="playback-speed-min" size="4" /></p><p class="custom-playback-speedOption mt-2" style="display: none">Max: <input type="text" class="btn-input ms-2 patchOption" value="5.0" size="4" id="playback-speed-max" name="playback-speed-max" /></p>')
-      $(".custom-playback-speedOption").slideDown()
-    }
-  } else {
-    $(".custom-playback-speedOption").slideUp()
-  }
-
-  // spotify-theme
-  var $branding = $("input[value='spotify-theme']")
-  if ($branding.prop("checked") == true) {
-    if ($(".spotify-themeOption").length == 3) {
-      $(".spotify-themeOption").slideDown()
-    } else {
-      $($branding).parent().append('<p class="spotify-themeOption mt-2" style="display: none">Background: <input type="color" class="btn-input ms-2 patchOption" value="#000000" id="spotify-theme-bg" name="spotify-theme-bg" /></p><p class="spotify-themeOption mt-2" style="display: none">Accent: <input type="color" class="btn-input ms-2 patchOption" value="#ff1ed7" id="spotify-theme-accent" name="spotify-theme-accent" /></p><p class="spotify-themeOption mt-2" style="display: none">Accent Pressed: <input type="color" class="btn-input ms-2 patchOption" value="#ff169c" id="spotify-theme-accent2" name="spotify-theme-accent2" /></p>')
-      $(".spotify-themeOption").slideDown()
-    }
-  } else {
-    $(".spotify-themeOption").slideUp()
-  }
-
+  checkOptions()
 
 })
 
