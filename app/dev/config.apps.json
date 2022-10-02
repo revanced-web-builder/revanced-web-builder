@@ -204,7 +204,7 @@
     "fullName": "YouTube Music",
     "versions": {
       "5.26.52": {
-        "enabled": 1,
+        "enabled": 0,
         "rec": 1
       },
       "5.25.52": {
