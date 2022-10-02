@@ -73,3 +73,13 @@ Restart Apache
 `sudo systemctl restart apache2`
 
 Direct your web browser to http://localhost/rwb
+
+## Screenshots
+
+Home Screen
+
+![Home Screen](app/img/docs/screenshot_home1.jpg)
+
+Admin Panel
+
+![Admin Panel](app/img/docs/screenshot_admin1.jpg)
