@@ -36,14 +36,6 @@ if ($query == "stats") {
 // Read config.json file and create variables
 
 
-
-
-
-
-
-
-
-
 /* Config Class
 Loads and manages config.json. Can also read/write other files.
 
@@ -396,6 +388,24 @@ class Config {
 
     $return .= "<button class='btn btn-lg btn-secondary'>Update Successful</button>";
     return "<div id='updateContainer' class='p-2 p-lg-3 mb-4 main-accent'>{$return}</div>";
+
+  }
+
+  // Mark all APKs as disabled (enabled = 0)
+  public function disableAPKs() {
+
+    $json = $this->json;
+
+    // Loop through all the apps
+    foreach ($json['apps'] as $appName => $vals) {
+      // Loop through all versions in this app
+      foreach ($vals['versions'] as $version => $versionVals) {
+        $json['apps'][$appName]['versions'][$version]['enabled'] = 0;
+      }
+    }
+
+    $this->json = $json;
+    $this->save(json_encode($json, JSON_PRETTY_PRINT));
 
   }
 

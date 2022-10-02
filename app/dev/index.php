@@ -1,10 +1,16 @@
 <?php
+$rwbVersion = "0.1.1002";
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-$dir = __DIR__; // this may cause errors for PHP FPM. Look into that or allow user to define the root path if it fails to be autodetected?
 
-$newVersion = "0.1.0929"; // version being packaged (make sure to change this)
+// Check if user is using the mod_rewrite page (/admin) or the full path (/app/dev/index.php)
+$dirPrefix = (substr(trim($_SERVER['REQUEST_URI'], "/"), -3) == "dev") ? "app/" : "../";
+$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https://' : 'http://';
+$urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -14); // This shouldn't work but it does
+
+$dir = __DIR__; // this may cause errors for PHP FPM. Look into that or allow user to define the root path if it fails to be autodetected?
 
 require_once("../functions.php");
 
@@ -13,9 +19,10 @@ $debug = new Debug();
 
 if ($query == "configCreate") {
 
-  $version = $_GET['version'];
+  $version = ($_GET['version'] != "") ? $_GET['version'] : $rwbVersion;
 
   // We need to create a config file from scratch
+  echo "Generating app/config.json.dist<br />";
   echo $debug->configCreate($version); // this will combine all default config files from the dev/ directory into a valid config.json file in /app/
 
 }
@@ -50,9 +57,63 @@ if ($query == "prepareRelease") {
 
 }
 
-if ($query == "emptyBuilds") {
+// Empty APKs folder
+if ($query == "deleteapks" || $query == "deleteapk") {
+  echo "Emptying app/apk/ folder<br />";
+  $debug->emptyDir("../apk"); // Delete everything in /apk folder
+
+  // Mark all APKs as enabled = 0
+  $config = new Config();
+  echo $config->disableAPKs();
+
+}
+
+// Disable all APKs in config.json
+if ($query == "disableapks" || $query == "disableapk") {
+  echo "Disabling all APKs in config.json<br />";
+  $config = new Config();
+  echo $config->disableAPKs();
+}
+
+// Empty Builds folder
+if ($query == "deletebuilds" || $query == "deletebuild") {
   echo "Emptying builds/ folder<br />";
-  $debug->emptyDir("../../builds"); // Delete everything in /builds folder
+  $config = new Config();
+  $debug->emptyDir($config->buildDirectory);
+}
+
+// Inject revance-patches.json version compatibility into config.json
+if ($query == "injectpatches") {
+  echo "Injecting patches<br />";
+  $config = new Config();
+  $config->injectPatches();
+}
+
+// Generate a new config.json file from config.json.dist
+if ($query == "confignew") {
+  // Note: generate new config.json.dist if it doesn't exist (later)
+  echo "Generating app/config.json from app/config.json.dist<br />";
+
+  if (!file_exists("../config.json.dist"))
+    $debug->configCreate($rwbVersion); // Create new config.json.dist file
+
+  copy("../config.json.dist", "../config.json");
+  chmod("../config.json.dist", 0777);
+
+  $config = new Config();
+  $config->injectPatches(); // some day this will be built in...
+}
+
+// Generate a new config.json file from config.json.dist
+if ($query == "deleteconfig") {
+  echo "Deleting app/config.json<br />";
+  unlink("../config.json");
+}
+
+// Delete config.json.dist
+if ($query == "deleteconfigdist") {
+  echo "Deleting app/config.json.dist<br />";
+  unlink("../config.json.dist");
 }
 ?>
 
@@ -67,30 +128,30 @@ if ($query == "emptyBuilds") {
   <link rel="manifest" href="manifest.json">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="../css/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/builder.css">
+  <link rel="stylesheet" href="<?php echo $urlPrefix; ?>/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo $urlPrefix; ?>/css/builder.css">
 
   <!-- Favicons -->
-  <link rel="shortcut icon" href="../img/favicons/.ico">
-	<link rel="icon" sizes="16x16 32x32 64x64" href="../img/favicons/.ico">
-	<link rel="icon" type="image/png" sizes="196x196" href="../img/favicons/favicon-192.png">
-	<link rel="icon" type="image/png" sizes="160x160" href="../img/favicons/favicon-160.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="../img/favicons/favicon-96.png">
-	<link rel="icon" type="image/png" sizes="64x64" href="../img/favicons/favicon-64.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="../img/favicons/favicon-32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="../img/favicons/favicon-16.png">
-	<link rel="apple-touch-icon" href="../img/favicons/favicon-57.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="../img/favicons/favicon-114.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="../img/favicons/favicon-72.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="../img/favicons/favicon-144.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="../img/favicons/favicon-60.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="../img/favicons/favicon-120.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="../img/favicons/favicon-76.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="../img/favicons/favicon-152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="../img/favicons/favicon-180.png">
+  <link rel="shortcut icon" href="<?php echo $urlPrefix; ?>/img/favicons/.ico">
+	<link rel="icon" sizes="16x16 32x32 64x64" href="<?php echo $urlPrefix; ?>/img/favicons/.ico">
+	<link rel="icon" type="image/png" sizes="196x196" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-192.png">
+	<link rel="icon" type="image/png" sizes="160x160" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-160.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-96.png">
+	<link rel="icon" type="image/png" sizes="64x64" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-64.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-16.png">
+	<link rel="apple-touch-icon" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-57.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-114.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-144.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-60.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-120.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-76.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-180.png">
 	<meta name="msapplication-TileColor" content="#FFFFFF">
-	<meta name="msapplication-TileImage" content="../img/favicons/favicon-144.png">
-	<meta name="msapplication-config" content="../img/favicons/browserconfig.xml">
+	<meta name="msapplication-TileImage" content="<?php echo $urlPrefix; ?>/img/favicons/favicon-144.png">
+	<meta name="msapplication-config" content="<?php echo $urlPrefix; ?>/img/favicons/browserconfig.xml">
 
   <style type="text/css">
 
@@ -110,7 +171,7 @@ if ($query == "emptyBuilds") {
 <h2>Create config.json.dist</h2>
 <form method="get" action="index.php">
   <input type="hidden" name="q" value="configCreate" />
-  <p>Version: <input name="version" size="8" type="text" /> <input type="submit" value="Create" /></p>
+  <p>Version: <input name="version" size="8" type="text" value="<?php echo $rwbVersion; ?>" /> <input type="submit" value="Create" /></p>
 </form>
 
 <h2>Prepare for Release</h2>
@@ -123,10 +184,10 @@ if ($query == "emptyBuilds") {
   <p><input type="submit" value="Prepare for Release" /></p>
 </form>
 
-<h2>Empty Builds Folder</h2>
-<form method="get" action="index.php">
-  <input type="hidden" name="q" value="emptyBuilds" />
-  <p><input type="submit" value="Empty Builds" /></p>
+<h2>Quick Actions</h2>
+<form method="get" action="<?php echo $urlPrefix; ?>/dev/index.php">
+  <input type="hidden" name="q" value="quick" />
+  <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=confignew"><input type="button" value="Generate config.json" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deleteconfig"><input type="button" value="Delete config.json" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deleteconfigdist"><input type="button" value="Delete config.json.dist" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deletebuilds"><input type="button" value="Delete Builds" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=disableapks"><input type="button" value="Disable APKs" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deleteapks"><input type="button" value="Delete APKs" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=injectpatches"><input type="button" value="Inject Patches" /></a></p>
 </form>
 
 <?php
