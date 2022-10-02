@@ -835,7 +835,7 @@ $(document).on("click", "#microgInfoToggle", function(e) { $("#microgInfo").slid
 $(document).on("click", ".myBuildHide", function(e) { buildHide($(this)) })
 $(document).on("click", ".myBuildDelete", function(e) { buildDelete($(this)) })
 $(document).on("click", ".buildHiddenToggle", function(e) { $(".buildHidden").slideToggle() }) // Toggle Hidden "My Builds"
-$(document).on("change keyup", "#custom-branding-appname", function(e) { checkBuildID() })
+$(document).on("change keyup", ".patchOption", function(e) { checkBuildID() })
 
 // Show Debug Menu
 $(document).on("click", ".debugMenuToggle", function(e) {
