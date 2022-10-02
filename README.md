@@ -38,9 +38,9 @@ Install Apache 2 Web Server
 
 `sudo apt install -y apache2 apache2-utils`
 
-Install PHP (8.1) with cURL
+Install PHP (8.1) with cURL and wGet
 
-`sudo apt install -y php libapache2-mod-php php-curl`
+`sudo apt install -y php libapache2-mod-php php-curl curl wget`
 
 Enable mod_rewrite (Optional)
 
@@ -60,16 +60,16 @@ Install Java OpenJDK 18
 
 `sudo apt install opendjk-18-jdk-headless openjdk-18-jdk`
 
-Restart Apache
-
-`sudo systemctl restart apache2`
-
-Place ReVanced Web Builder in /var/www/html/ (such as /var/www/html/rwb)
+Place ReVanced Web Builder in `/var/www/html/` (such as `/var/www/html/rwb`)
 
 Give write permissions to two folders
 
 `sudo chmod 0777 /var/www/html/rwb/app`
 
 `sudo chmod 0777 /var/www/html/rwb/builds`
+
+Restart Apache
+
+`sudo systemctl restart apache2`
 
 Direct your web browser to http://localhost/rwb
