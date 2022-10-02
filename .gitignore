@@ -3,5 +3,6 @@
 app/config.json
 app/apk/*
 app/tools/*
-builds/*
+builds/*.apk
+builds/*.txt
 *.toml
