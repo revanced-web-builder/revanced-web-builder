@@ -487,6 +487,12 @@ function checkBuildID(buildID=undefined, updateStatus=undefined) {
     buildString = buildString+$(this).val()
   })
 
+  $("#patches"+appName+" .patchOption").each(function(index, value) {
+    var patchID = $(this).attr("id")
+    var patchVal = $(this).val()
+    buildString = buildString+patchID+"="+patchVal
+  })
+  console.log(buildString)
   // Get Prefix of App for build Build ID URL
   var buildPrefix = appPrefix(appName)
 
@@ -671,8 +677,11 @@ function buildCompleteMessage(data) {
   <p class="buildInfo">Build Duration: `+data.buildDuration+` seconds</p>
   <p class="buildInfo">Build Date: `+data.buildDateFull+`</p>
   <p class="buildInfo">Build Size: `+data.buildSize+` bytes (`+buildSize+` MB)</p>
-  <p class="buildInfo">Keystore: <a href="`+rootDir+buildDir+`/RWB-`+data.app+`.keystore">Download</a></p>
-  <p class="buildInfo">JSON: <a href="`+rootDir+buildDir+`/`+data.app+buildSuffix+`-`+data.id+`.info.txt" target="_blank">View</a></p>
+  <p class="buildInfo">Keystore: <a href="`+rootDir+buildDir+`/RWB-`+data.app+`.keystore">Download</a></p>`
+  if (data.options.length != 0) {
+    successMsg += `<p class="buildInfo">Options: <a href="`+rootDir+buildDir+`/`+data.app+buildSuffix+`-`+data.id+`.options.txt" target="_blank">View</a></p>`
+  }
+  successMsg += `<p class="buildInfo">JSON: <a href="`+rootDir+buildDir+`/`+data.app+buildSuffix+`-`+data.id+`.info.txt" target="_blank">View</a></p>
   <p>Patches: `+patches+`</p>`
 
   if (data.microG != "") {
@@ -756,7 +765,7 @@ $(document).on("click", ".col-md-6", function(e) {
     if ($(".custom-brandingOption").length == 2) {
       $(".custom-brandingOption").slideDown()
     } else {
-      $($branding).parent().append('<p class="custom-brandingOption mt-2" style="display: none">Note: YouTube App icon will be changed to ReVanced\'s.</p><p class="custom-brandingOption mt-2" style="display: none">App Name: <input type="text" class="btn-input" value="YouTube ReVanced" name="custom-branding-appname" /></p>')
+      $($branding).parent().append('<p class="custom-brandingOption mt-2" style="display: none">Note: YouTube App icon will be changed to ReVanced\'s.</p><p class="custom-brandingOption mt-2" style="display: none">App Name: <input type="text" class="btn-input patchOption" value="YouTube ReVanced" id="custom-branding-appname" name="custom-branding-appname" /></p>')
       $(".custom-brandingOption").slideDown()
     }
   } else {
@@ -769,7 +778,7 @@ $(document).on("click", ".col-md-6", function(e) {
     if ($(".themeOption").length == 2) {
       $(".themeOption").slideDown()
     } else {
-      $($branding).parent().append('<p class="themeOption mt-2" style="display: none">Dark Background: <input type="color" class="btn-input ms-2" value="#000000" name="theme-bg-dark" /></p><p class="themeOption mt-2" style="display: none">Light Background: <input type="color" class="btn-input ms-2" value="#FFFFFF" name="theme-bg-light" /></p>')
+      $($branding).parent().append('<p class="themeOption mt-2" style="display: none">Dark Background: <input type="color" class="btn-input ms-2 patchOption" value="#000000" id="theme-bg-dark" name="theme-bg-dark" /></p><p class="themeOption mt-2" style="display: none">Light Background: <input type="color" class="btn-input ms-2 patchOption" value="#FFFFFF" id="theme-bg-light" name="theme-bg-light" /></p>')
       $(".themeOption").slideDown()
     }
   } else {
@@ -782,7 +791,7 @@ $(document).on("click", ".col-md-6", function(e) {
     if ($(".custom-playback-speedOption").length == 3) {
       $(".custom-playback-speedOption").slideDown()
     } else {
-      $($branding).parent().append('<p class="custom-playback-speedOption mt-2" style="display: none">Granularity: <input type="text" class="btn-input ms-2" value="16" name="playback-speed-granularity" size="4" /></p><p class="custom-playback-speedOption mt-2" style="display: none">Min: <input type="text" class="btn-input ms-2" value="0.25" name="playback-speed-min" size="4" /></p><p class="custom-playback-speedOption mt-2" style="display: none">Max: <input type="text" class="btn-input ms-2" value="5.0" size="4" name="playback-speed-max" /></p>')
+      $($branding).parent().append('<p class="custom-playback-speedOption mt-2" style="display: none">Granularity: <input type="text" class="btn-input ms-2 patchOption" value="16" id="playback-speed-granularity" name="playback-speed-granularity" size="4" /></p><p class="custom-playback-speedOption mt-2" style="display: none">Min: <input type="text" class="btn-input ms-2 patchOption" value="0.25" id="playback-speed-min" name="playback-speed-min" size="4" /></p><p class="custom-playback-speedOption mt-2" style="display: none">Max: <input type="text" class="btn-input ms-2 patchOption" value="5.0" size="4" id="playback-speed-max" name="playback-speed-max" /></p>')
       $(".custom-playback-speedOption").slideDown()
     }
   } else {
@@ -795,7 +804,7 @@ $(document).on("click", ".col-md-6", function(e) {
     if ($(".spotify-themeOption").length == 3) {
       $(".spotify-themeOption").slideDown()
     } else {
-      $($branding).parent().append('<p class="spotify-themeOption mt-2" style="display: none">Background: <input type="color" class="btn-input ms-2" value="#000000" name="spotify-theme-bg" /></p><p class="spotify-themeOption mt-2" style="display: none">Accent: <input type="color" class="btn-input ms-2" value="#ff1ed7" name="spotify-theme-accent" /></p><p class="spotify-themeOption mt-2" style="display: none">Accent Pressed: <input type="color" class="btn-input ms-2" value="#ff169c" name="spotify-theme-accent2" /></p>')
+      $($branding).parent().append('<p class="spotify-themeOption mt-2" style="display: none">Background: <input type="color" class="btn-input ms-2 patchOption" value="#000000" id="spotify-theme-bg" name="spotify-theme-bg" /></p><p class="spotify-themeOption mt-2" style="display: none">Accent: <input type="color" class="btn-input ms-2 patchOption" value="#ff1ed7" id="spotify-theme-accent" name="spotify-theme-accent" /></p><p class="spotify-themeOption mt-2" style="display: none">Accent Pressed: <input type="color" class="btn-input ms-2 patchOption" value="#ff169c" id="spotify-theme-accent2" name="spotify-theme-accent2" /></p>')
       $(".spotify-themeOption").slideDown()
     }
   } else {
@@ -826,6 +835,7 @@ $(document).on("click", "#microgInfoToggle", function(e) { $("#microgInfo").slid
 $(document).on("click", ".myBuildHide", function(e) { buildHide($(this)) })
 $(document).on("click", ".myBuildDelete", function(e) { buildDelete($(this)) })
 $(document).on("click", ".buildHiddenToggle", function(e) { $(".buildHidden").slideToggle() }) // Toggle Hidden "My Builds"
+$(document).on("change keyup", "#custom-branding-appname", function(e) { checkBuildID() })
 
 // Show Debug Menu
 $(document).on("click", ".debugMenuToggle", function(e) {

@@ -41,6 +41,7 @@ $buildID = $buildApp.$buildVersion; // Start build ID with app info. patches wil
 $buildDirectory = $config->buildDirectory; // this will be $urlPrefix/$buildDirectory (can also be app/builds, etc)
 $include = ""; // Leave blank to begin
 $options = ""; // this too
+$optionsArray = array();
 
 // Make sure this app and version is enabled
 if ($appData[$buildApp]['versions'][$buildVersionNoBeta]['enabled'] != 1) {
@@ -66,15 +67,11 @@ $patchesAllowed = array(
 
 // Loop through each selected patch and make sure it's an allowed patch
 foreach ($patches as $id => $name) {
-
   // Kill script if an invalid patch was found (This system needs to be automated/updated)
-  //if (!in_array($name, $patchesAllowed))
-  //  die("ERROR:NOPATCH");
+  //if (!in_array($name, $patchesAllowed)) die("ERROR:NOPATCH");
 
   $include .= " -i ".$name; // append this patch to the included patches array
-
   $buildID .= $name; // append this patch's name to the buildID string
-
 }
 
 // Add MicroG  and other patches if it's a YouTube app (required for Non-Root APKs)
@@ -90,27 +87,24 @@ if ($buildApp == "YouTube") {
 $appNameShortcuts = array("YouTube"=>"yt", "YouTubeMusic"=>"ym", "Reddit"=>"re", "Spotify" => "sp", "TikTok"=>"tt", "Twitter"=>"tw", "Pflotsh"=>"pf", "WarnWetter"=>"ww");
 $appPrefix = $appNameShortcuts[$buildApp];
 
-// Get the first X characters of md5 for the buildID and add the $appPrefix
-$buildID = $appPrefix.substr(md5($buildID), 0, $config->buildIDLength-2); // Convert build_id into first idLength (minus 2) digits of md5 for shorter build_id (minus 2 to make up for prefix)
+// Patch Options
+// These have to be in the same order as they appear in the HTML to make sure the buildID lines up
 
-// Optional suffix after the AppName in the final .apk
-$buildSuffix = ($config->buildSuffix != "") ? " ".$config->buildSuffix : "";
-
-// Check if file already exists with this build name
-// If it does, send the user the build information instead
-if (file_exists("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk")) {
-  $cur = Files::read("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.info.txt");
-  die(json_encode($cur));
+// theme (YouTube)
+if (in_array("theme", $patches)) {
+  $bgDark = $_POST['theme-bg-dark'];
+  $bgLight = $_POST['theme-bg-light'];
+  $options .= "[theme]\ndarkThemeBackgroundColor = \"{$bgDark}\"\nlightThemeBackgroundColor = \"{$bgLight}\"\n";
+  $buildID .= "theme-bg-dark={$bgDark}theme-bg-light={$bgLight}";
+  array_push($optionsArray, array("[theme]" => array("darkThemeBackgroundColor" => $bgDark, "lightThemeBackgroundColor" => $bgLight)));
 }
 
-// Patch Options
-
-// spotify-theme
-if (in_array("spotify-theme", $patches)) {
-  $spotBg = $_POST['spotify-theme-bg'];
-  $spotAccent = $_POST['spotify-theme-accent'];
-  $spotAccentPressed = $_POST['spotify-theme-accent2'];
-  $options .= "['spotify-theme']\nbackgroundColor = \"{$spotBg}\"\naccentColor = \"{$spotAccent}\"\naccentPressedColor = \"{$spotAccentPressed}\"\n";
+// custom-branding (YouTube)
+if (in_array("custom-branding", $patches)) {
+  $custAppName = $_POST['custom-branding-appname'];
+  $options .= "['custom-branding']\nappName = \"{$custAppName}\"\n";
+  $buildID .= "custom-branding-appname={$custAppName}";
+  array_push($optionsArray, array("['custom-branding']" => array("appName" => $custAppName)));
 }
 
 // custom-playback-speed
@@ -119,28 +113,43 @@ if (in_array("custom-playback-speed", $patches)) {
   $speedMin = $_POST['playback-speed-min'];
   $speedMax = $_POST['playback-speed-max'];
   $options .= "['custom-playback-speed']\ngranularity = \"{$speedGran}\"\nmin = \"{$speedMin}\"\nmax = \"{$speedMax}\"\n";
+  $buildID .= "playback-speed-granularity={$speedGran}playback-speed-min={$speedMin}playback-speed-max={$speedMax}";
+  array_push($optionsArray, array("['custom-playback-speed']" => array("granularity" => $speedGran, "min" => $speedMin, "max" => $speedMax)));
 }
 
-// custom-branding (YouTube)
-if (in_array("custom-branding", $patches)) {
-  $custAppName = $_POST['custom-branding-appname'];
-  $options .= "['custom-branding']\nappName = \"{$custAppName}\"\n";
+// spotify-theme
+if (in_array("spotify-theme", $patches)) {
+  $spotBg = $_POST['spotify-theme-bg'];
+  $spotAccent = $_POST['spotify-theme-accent'];
+  $spotAccentPressed = $_POST['spotify-theme-accent2'];
+  $options .= "['spotify-theme']\nbackgroundColor = \"{$spotBg}\"\naccentColor = \"{$spotAccent}\"\naccentPressedColor = \"{$spotAccentPressed}\"\n";
+  $buildID .= "spotify-theme-bg={$spotBg}spotify-theme-accent={$spotAccent}spotify-theme-accent2={$spotAccentPressed}";
+  array_push($optionsArray, array("['spotify-theme']" => array("backgroundColor" => $spotBg, "accentColor" => $spotAccent, "accentPressedColor" => $spotAccentPressed)));
 }
 
-// theme (YouTube)
-if (in_array("theme", $patches)) {
-  $bgDark = $_POST['theme-bg-dark'];
-  $bgLight = $_POST['theme-bg-light'];
-  $options .= "[theme]\ndarkThemeBackgroundColor = \"{$bgDark}\"\nlightThemeBackgroundColor = \"{$bgLight}\"\n";
+
+
+// Get the first X characters of md5 for the buildID and add the $appPrefix
+$buildID = $appPrefix.substr(md5($buildID), 0, $config->buildIDLength-2); // Convert build_id into first idLength (minus 2) digits of md5 for shorter build_id (minus 2 to make up for prefix)
+
+// Optional suffix after the AppName in the final .apk
+$buildSuffix = ($config->buildSuffix != "") ? " ".$config->buildSuffix : "";
+
+
+// Check if file already exists with this build name
+// If it does, send the user the build information instead
+if (file_exists("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk")) {
+  $cur = Files::read("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.info.txt");
+  die(json_encode($cur));
 }
 
+// Write options file if necessary
 if ($options != "") {
   $createOptions = Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt", $options);
   $optionsFile = "--options=\"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt\"";
 } else {
   $optionsFile = "";
 }
-
 
 // Directly execute the revanced-cli.jar file using a command built with all the selected info and patches
 if ($buildApp == "YouTube" || $buildApp == "YouTubeMusic") {
@@ -181,7 +190,8 @@ if ($execJava == "INFO: Finished") { // Success!
     'buildDuration' => $timeTotal,
     'buildSize' => $filesize,
     'microG' => $microg,
-    'patches' => substr( str_replace(" -i ", "|", $include), 1 ) // convert -i to | and remove the first one
+    'patches' => substr( str_replace(" -i ", "|", $include), 1 ), // convert -i to | and remove the first one
+    'options' => $optionsArray
   );
 
   Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.info.txt", json_encode($txtData, JSON_PRETTY_PRINT)); // Write text file with all the build information
