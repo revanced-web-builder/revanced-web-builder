@@ -24,7 +24,7 @@ $.ajax({
 
 }).fail(function (jqXHR, textStatus, errorThrown) {
   console.log("CONFIG Not Found")
-  $("body").html("<p class='mt-2 ms-4'>ReVanced Web Builder needs to be installed.<br /><br /><a href='admin'>Admin Panel</a>")
+  $("body").html("<p class='mt-2 ms-4'>ReVanced Web Builder needs to be installed.<br /><br /><a href='app/admin.php'>Admin Panel</a>")
 })
 
 
