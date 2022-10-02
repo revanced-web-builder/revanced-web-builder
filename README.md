@@ -78,8 +78,8 @@ Direct your web browser to http://localhost/rwb
 
 Home Screen
 
-![Home Screen](app/img/docs/screenshot_home1.jpg)
+![Home Screen](app/img/docs/screenshot_home.jpg)
 
 Admin Panel
 
-![Admin Panel](app/img/docs/screenshot_admin1.jpg)
+![Admin Panel](app/img/docs/screenshot_admin.jpg)
