@@ -56,6 +56,55 @@ if ($query == "emptyBuilds") {
 }
 ?>
 
+<!DOCTYPE html>
+<head>
+
+  <meta charset="utf-8">
+  <title>ReVanced Web Builder: Dev Tools</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/builder.css">
+
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="../img/favicons/.ico">
+	<link rel="icon" sizes="16x16 32x32 64x64" href="../img/favicons/.ico">
+	<link rel="icon" type="image/png" sizes="196x196" href="../img/favicons/favicon-192.png">
+	<link rel="icon" type="image/png" sizes="160x160" href="../img/favicons/favicon-160.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="../img/favicons/favicon-96.png">
+	<link rel="icon" type="image/png" sizes="64x64" href="../img/favicons/favicon-64.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../img/favicons/favicon-32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../img/favicons/favicon-16.png">
+	<link rel="apple-touch-icon" href="../img/favicons/favicon-57.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="../img/favicons/favicon-114.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="../img/favicons/favicon-72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="../img/favicons/favicon-144.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="../img/favicons/favicon-60.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="../img/favicons/favicon-120.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="../img/favicons/favicon-76.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="../img/favicons/favicon-152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="../img/favicons/favicon-180.png">
+	<meta name="msapplication-TileColor" content="#FFFFFF">
+	<meta name="msapplication-TileImage" content="../img/favicons/favicon-144.png">
+	<meta name="msapplication-config" content="../img/favicons/browserconfig.xml">
+
+  <style type="text/css">
+
+  body {
+    padding-top: 10px;
+    padding-left: 25px;
+  }
+
+  </style>
+
+</head>
+
+<body>
+
 <h1>ReVanced Web Builder: Dev Tools</h1>
 
 <h2>Create config.json.dist</h2>
