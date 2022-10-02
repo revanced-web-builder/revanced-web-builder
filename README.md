@@ -64,4 +64,12 @@ Restart Apache
 
 `sudo systemctl restart apache2`
 
-Follow the original Instructions to set up ReVanced Web Builder
+Place ReVanced Web Builder in /var/www/html/ (such as /var/www/html/rwb)
+
+Give write permissions to two folders
+
+`sudo chmod 0777 /var/www/html/rwb/app`
+
+`sudo chmod 0777 /var/www/html/rwb/builds`
+
+Direct your web browser to http://localhost/rwb
