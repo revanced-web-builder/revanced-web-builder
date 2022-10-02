@@ -10,7 +10,7 @@ ReVanced Web Builder is an entire interface (with an admin panel) that allows yo
 
 Admin chooses which apps and versions to allow users to build, along with other options to customize the script.
 
-Note: Hosting and distibuting patched APKs can be a legal issue. Be cautious about who has access to ReVanced Web Builder.
+Note: Hosting and distributing patched APKs can be a legal issue. Be cautious about who has access to ReVanced Web Builder.
 It's best to just use this for personal use, but I'm not responsible for what you do with this code or project on your own server.
 
 ## Requirements
