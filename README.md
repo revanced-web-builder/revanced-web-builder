@@ -22,6 +22,46 @@ It's best to just use this for personal use, but I'm not responsible for what yo
 
 ## Installation
 
+If you already have Apache, PHP, and Java set up:
+
 1. Extract the release to anywhere in your web server.
-2. Give write permissions to the "builds" and "app" folder.
+2. (Linux/Mac only) Give write permissions to the "builds" and "app" folder.
 3. Point your web browser to the RWB folder (example: http://localhost/rwb)
+
+### Fresh Install (Linux, Ubuntu 22.04 and 22.10)
+
+This is a quick way to install Apache, PHP, and Java OpenJDK on a fresh cooy of Ubuntu 22.04 and 22.10.
+
+Please keep in mind this isn't the best or most secure way to do things, but should be easy enough for beginners.
+
+Install Apache 2 Web Server
+
+`sudo apt install -y apache2 apache2-utils`
+
+Install PHP (8.1) with cURL
+
+`sudo apt install -y php php-mysql libapache2-mod-php php-curl
+
+Enable mod_rewrite (Optional)
+
+`sudo a2enmod rewrite`
+
+Give htdocs/html folder proper privileges
+
+`sudo usermod -a -G www-data $USER`
+
+`sudo chown root:root /var/www`
+
+`sudo chmod -R 755 /var/www`
+
+`sudo chown -R www-data:www-data /var/www/*`
+
+Install Java OpenJDK 18
+
+`sudo apt install opendjk-18-jdk-headless openjdk-18-jdk`
+
+Restart Apache
+
+`sudo systemctl restart apache2`
+
+Follow the original Instructions to set up ReVanced Web Builder
