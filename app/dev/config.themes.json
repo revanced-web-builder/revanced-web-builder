@@ -27,7 +27,7 @@
     },
     "warning": {
       "bg": "#ffc107",
-      "font": "#e9e5e5",
+      "font": "#000000",
       "border": "#ffc107",
       "radius": "6"
     },
@@ -66,7 +66,7 @@
     },
     "warning": {
       "bg": "#ffc107",
-      "font": "#e9e5e5",
+      "font": "#000000",
       "border": "#ffc107",
       "radius": "6"
     },
@@ -105,7 +105,7 @@
     },
     "warning": {
       "bg": "#ffc107",
-      "font": "#ffffff",
+      "font": "#000000",
       "border": "#ffc107",
       "radius": "6"
     },
