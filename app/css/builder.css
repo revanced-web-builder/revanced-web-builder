@@ -106,7 +106,7 @@ body .patchContainer .col-md-6:hover { /* Dark theme column hover */
   height: auto;
 }
 
-.buildHidden, .buildInfo {
+.buildHidden, .buildInfo, .startHidden {
   display: none;
 }
 

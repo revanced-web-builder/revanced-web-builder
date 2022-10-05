@@ -6,19 +6,6 @@ error_reporting(E_ALL);
 // Check if there is a query
 $query = (isset($_GET['q']) && $_GET['q'] != "") ? $_GET['q'] : false;
 
-if ($query == "update2") {
-
-  $config = new Config();
-
-  $config->injectPatches(); // inject patch information from official revanced patches.json to this config.json
-
-  die();
-
-}
-
-
-
-
 // Query: Checkin - Users will be checking in while they're not building to see if the builder is busy
 if ($query == "checkin") {
   echo isBuilding(); // Show 1 if builder is busy, 0 if not
