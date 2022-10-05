@@ -1,0 +1,625 @@
+{
+    "config": {
+        "buildEnabled": 1,
+        "buildDirectory": "builds",
+        "buildDirectoryPublic": 0,
+        "buildIDLength": 8,
+        "buildSuffix": "ReVanced",
+        "buildBeta": 0,
+        "buildUnsupported": 0,
+        "myBuildsHiddenToggle": 0,
+        "checkinInterval": 5,
+        "downloads": 1,
+        "downloadMethod": "auto",
+        "footer": 1,
+        "pageTitle": "ReVanced Web Builder",
+        "themeDefault": "dark",
+        "themeSwitcher": 1,
+        "timezone": "Etc\/Greenwich",
+        "debugMenu": 0,
+        "admin": ""
+    },
+    "themes": {
+        "dark": {
+            "name": "Dark",
+            "main": {
+                "bg": "#212121",
+                "font": "#e9e5e5",
+                "accent": "#393939",
+                "url": "#e9e5e5"
+            },
+            "input": {
+                "bg": "#303030",
+                "font": "#e9e5e5",
+                "border": "#e9e5e5",
+                "radius": "6"
+            },
+            "primary": {
+                "bg": "#2e79e8",
+                "font": "#e9e5e5",
+                "border": "#2e79e8",
+                "radius": "6"
+            },
+            "secondary": {
+                "bg": "#198754",
+                "font": "#e9e5e5",
+                "border": "#198754",
+                "radius": "6"
+            },
+            "warning": {
+                "bg": "#ffc107",
+                "font": "#e9e5e5",
+                "border": "#ffc107",
+                "radius": "6"
+            },
+            "danger": {
+                "bg": "#dc3545",
+                "font": "#e9e5e5",
+                "border": "#dc3545",
+                "radius": "6"
+            }
+        },
+        "light": {
+            "name": "Light",
+            "main": {
+                "bg": "#eeeeee",
+                "font": "#000000",
+                "accent": "#cccccc",
+                "url": "#000000"
+            },
+            "input": {
+                "bg": "#cccccc",
+                "font": "#000000",
+                "border": "#bbbbbb",
+                "radius": "6"
+            },
+            "primary": {
+                "bg": "#2e79e8",
+                "font": "#e9e5e5",
+                "border": "#2e79e8",
+                "radius": "6"
+            },
+            "secondary": {
+                "bg": "#198754",
+                "font": "#e9e5e5",
+                "border": "#198754",
+                "radius": "6"
+            },
+            "warning": {
+                "bg": "#ffc107",
+                "font": "#e9e5e5",
+                "border": "#ffc107",
+                "radius": "6"
+            },
+            "danger": {
+                "bg": "#dc3545",
+                "font": "#e9e5e5",
+                "border": "#dc3545",
+                "radius": "6"
+            }
+        },
+        "custom": {
+            "name": "Custom",
+            "main": {
+                "bg": "#212121",
+                "font": "#e9e5e5",
+                "accent": "#4f4f4f",
+                "url": "#e9e5e5"
+            },
+            "input": {
+                "bg": "#303030",
+                "font": "#e9e5e5",
+                "border": "#e9e5e5",
+                "radius": "6"
+            },
+            "primary": {
+                "bg": "#2e79e8",
+                "font": "#ffffff",
+                "border": "#2e79e8",
+                "radius": "6"
+            },
+            "secondary": {
+                "bg": "#198754",
+                "font": "#e9e5e5",
+                "border": "#198754",
+                "radius": "6"
+            },
+            "warning": {
+                "bg": "#ffc107",
+                "font": "#ffffff",
+                "border": "#ffc107",
+                "radius": "6"
+            },
+            "danger": {
+                "bg": "#dc3545",
+                "font": "#ffffff",
+                "border": "#dc3545",
+                "radius": "6"
+            }
+        }
+    },
+    "apps": {
+        "YouTube": {
+            "size": "130 MB",
+            "versions": {
+                "17.36.37": {
+                    "enabled": 0
+                },
+                "17.34.36": {
+                    "enabled": 0
+                },
+                "17.34.35": {
+                    "enabled": 0
+                },
+                "17.33.42": {
+                    "enabled": 0
+                },
+                "17.32.35": {
+                    "enabled": 0,
+                    "beta": 1
+                },
+                "17.29.34": {
+                    "enabled": 0,
+                    "rec": 1
+                },
+                "17.28.34": {
+                    "enabled": 0
+                },
+                "17.27.39": {
+                    "enabled": 0
+                },
+                "17.26.35": {
+                    "enabled": 0
+                }
+            },
+            "patches": {
+                "video-ads": {
+                    "name": "Block Video Ads",
+                    "desc": "Block all video advertisements.",
+                    "section": "Essentials",
+                    "checked": 1
+                },
+                "general-ads": {
+                    "name": "Block General Ads",
+                    "desc": " Block all general advertisements in the interface.",
+                    "section": "Essentials",
+                    "checked": 1
+                },
+                "sponsorblock": {
+                    "name": "SponsorBlock",
+                    "desc": "Integrate <a href='https:\/\/sponsor.ajay.app\/' target='_blank'>SponsorBlock<\/a>. Blocks all sponsored and self promotions in videos.",
+                    "section": "Essentials",
+                    "checked": 1
+                },
+                "minimized-playback": {
+                    "name": "Minimized Playback",
+                    "desc": "Enables minimized and background playback.",
+                    "section": "Essentials",
+                    "checked": 1
+                },
+                "theme": {
+                    "name": "Custom Theme",
+                    "desc": "Change light and dark backgrounds.",
+                    "section": "Essentials"
+                },
+                "return-youtube-dislike": {
+                    "name": "Show Dislike Count",
+                    "desc": "Shows dislike count of videos using the Return YouTube Dislike API.",
+                    "section": "Essentials"
+                },
+                "downloads": {
+                    "name": "Downloads",
+                    "desc": "Download music and videos (<a href='#' id='instructDownloads'>Requires Setup<\/a>)",
+                    "section": "Essentials"
+                },
+                "custom-branding": {
+                    "name": "Custom Branding",
+                    "desc": "Customize YouTube's App Name.",
+                    "section": "Appearance"
+                },
+                "hide-watermark": {
+                    "name": "Hide Watermarks",
+                    "desc": "Hides creator's watermarks on videos.",
+                    "section": "Appearance"
+                },
+                "hide-shorts-button": {
+                    "name": "Hide Shorts Button",
+                    "desc": "Hides the Shorts button on the navigation bar.",
+                    "section": "Appearance"
+                },
+                "hide-cast-button": {
+                    "name": "Hide Cast Button",
+                    "desc": "Hides the Cast button in the video player.",
+                    "section": "Appearance"
+                },
+                "hide-create-button": {
+                    "name": "Hide Create Button",
+                    "desc": "Hides the Create button in the navigation bar.",
+                    "section": "Appearance"
+                },
+                "hide-infocard-suggestions": {
+                    "name": "Hide Infocard Suggestions",
+                    "desc": "Hides infocards in videos.",
+                    "section": "Appearance"
+                },
+                "hide-autoplay-button": {
+                    "name": "Hide Autoplay Button",
+                    "desc": "Hides the Autoplay button in the video player.",
+                    "section": "Appearance"
+                },
+                "disable-fullscreen-panels": {
+                    "name": "Disable Fullscreen Panels",
+                    "desc": "Disables video description and comments panel in fullscreen view.",
+                    "section": "Appearance"
+                },
+                "enable-wide-searchbar": {
+                    "name": "Enable Wide Search Bar",
+                    "desc": "Replaces the search icon with a search bar. Hide the YouTube logo when active.",
+                    "section": "Appearance"
+                },
+                "hide-video-buttons": {
+                    "name": "Hide Video Buttons",
+                    "desc": "Add options to hide action buttons under a video.",
+                    "section": "Appearance"
+                },
+                "premium-heading": {
+                    "name": "Premium Heading",
+                    "desc": "Shows premium branding on the home screen.",
+                    "section": "Appearance"
+                },
+                "hide-time-and-seekbar": {
+                    "name": "Hide Time and Seekbar",
+                    "desc": "Hides progress bar and time counter on videos.",
+                    "section": "Appearance"
+                },
+                "swipe-controls": {
+                    "name": "Swipe Controls",
+                    "desc": "Adds volume and brightness swipe controls when video is fullscreen.",
+                    "section": "Controls"
+                },
+                "seekbar-tapping": {
+                    "name": "Seekbar Tapping",
+                    "desc": "Enables tap-to-seek on the seekbar of the video player.",
+                    "section": "Controls"
+                },
+                "old-quality-layout": {
+                    "name": "Old Quality Menu",
+                    "desc": "Enables the original quality flyout menu.",
+                    "section": "Controls"
+                },
+                "remember-video-quality": {
+                    "name": "Remember Video Quality",
+                    "desc": "Remember the video quality you chose in the video quality flyout.",
+                    "section": "Controls"
+                },
+                "custom-playback-speed": {
+                    "name": "Custom Playback Speed",
+                    "desc": "Adds more video playback speed options.",
+                    "section": "Controls"
+                },
+                "tablet-mini-player": {
+                    "name": "Tablet Mini Player",
+                    "desc": "Enables the tablet mini player layout.",
+                    "section": "Controls"
+                },
+                "disable-auto-captions": {
+                    "name": "Disable Auto Captions",
+                    "desc": "Disable forced captions from being auto enabled.",
+                    "section": "Controls"
+                },
+                "disable-auto-player-popup-panels": {
+                    "name": "Disable Auto Popup Panels",
+                    "desc": "Disable automatic popups (playlist or live chat) on videos.",
+                    "section": "Appearance"
+                },
+                "disable-startup-shorts-player": {
+                    "name": "Disable Shorts on Startup",
+                    "desc": "Disables playing YouTube Shorts when launching YouTube.",
+                    "section": "Advanced"
+                },
+                "custom-video-buffer": {
+                    "name": "Custom Video Buffer",
+                    "desc": "Lets you change the buffers of videos.",
+                    "section": "Advanced"
+                },
+                "always-autorepeat": {
+                    "name": "Always Auto-Repeat",
+                    "desc": "Always repeats the playing video again.",
+                    "section": "Advanced"
+                },
+                "hdr-auto-brightness": {
+                    "name": "HDR Auto Brightness",
+                    "desc": "Makes the brightness of HDR videos follow the system default.",
+                    "section": "Advanced"
+                },
+                "hide-email-address": {
+                    "name": "Hide E-Mail Address",
+                    "desc": "Hide email address in the account switcher.",
+                    "section": "Advanced"
+                },
+                "enable-debugging": {
+                    "name": "Enable Debugging (Slows Down App)",
+                    "desc": "Enables app debugging by patching the manifest file.",
+                    "section": "Advanced"
+                }
+            }
+        },
+        "YouTubeMusic": {
+            "size": "30 MB",
+            "fullName": "YouTube Music",
+            "versions": {
+                "5.26.52": {
+                    "enabled": 0,
+                    "rec": 1
+                },
+                "5.25.52": {
+                    "enabled": 0
+                },
+                "5.25.51": {
+                    "enabled": 0
+                },
+                "5.23.50": {
+                    "enabled": 0
+                },
+                "5.21.52": {
+                    "enabled": 0
+                }
+            },
+            "patches": {
+                "music-video-ads": {
+                    "name": "Block Ads",
+                    "desc": "Removes ads in the music player.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "background-play": {
+                    "name": "Background Playback",
+                    "desc": "Enables playing music in the background and while screen off.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "exclusive-audio-playback": {
+                    "name": "Exclusive Audio Playback",
+                    "desc": "Enables the option to play music without video.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "hide-get-premium": {
+                    "name": "Hide \"Get Premium\"",
+                    "desc": "Removes all \"Get Premium\" evidences from the avatar menu.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "upgrade-button-remover": {
+                    "name": "Remove \"Upgrade\" Button",
+                    "desc": "Removes upgrade button from menu.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "tasteBuilder-remover": {
+                    "name": "Remove Taste Builder",
+                    "desc": "Removes the \"Tell us which artists you like\" card from the home screen.",
+                    "section": "Patches"
+                },
+                "minimized-playback-music": {
+                    "name": "Minimized Playback (Kids)",
+                    "desc": "Enables minimized playback on Kids music.",
+                    "section": "Patches"
+                },
+                "compact-header": {
+                    "name": "Compact Header",
+                    "desc": "Hides the music category bar at the top of the homepage.",
+                    "section": "Patches"
+                },
+                "codecs-unlock": {
+                    "name": "More Audio Codecs",
+                    "desc": "More audio codec options. The new codecs usually result in better audio quality.",
+                    "section": "Patches"
+                }
+            }
+        },
+        "Reddit": {
+            "size": "205 MB",
+            "versions": {
+                "2022.34.0": {
+                    "enabled": 0,
+                    "rec": 1
+                },
+                "2022.31.1": {
+                    "enabled": 0,
+                    "rec": 0
+                },
+                "2022.28.0": {
+                    "enabled": 0,
+                    "rec": 0
+                }
+            },
+            "patches": {
+                "general-reddit-ads": {
+                    "name": "Block Ads and Promotions (Required)",
+                    "desc": "Removes Ads from the Reddit frontpage and subreddits.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "premium-icon-reddit": {
+                    "name": "Premium Branding",
+                    "desc": "Unlocks premium icons in app settings.",
+                    "section": "Patches",
+                    "checked": 1
+                }
+            }
+        },
+        "Spotify": {
+            "size": "70 MB",
+            "versions": {
+                "8.7.68.568": {
+                    "enabled": 0,
+                    "rec": 1
+                }
+            },
+            "patches": {
+                "hide-premium-navbar": {
+                    "name": "Hide Premium Navbar",
+                    "desc": "Removes the Premium tab from the navbar.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "spotify-theme": {
+                    "name": "Theme",
+                    "desc": "Applies a custom theme.",
+                    "section": "Patches",
+                    "checked": 0
+                },
+                "disable-capture-restriction": {
+                    "name": "Disable Capture Restriction",
+                    "desc": "Allows capturing Spotify's audio output while screen sharing or screen recording.",
+                    "section": "Patches",
+                    "checked": 0
+                }
+            }
+        },
+        "TikTok": {
+            "size": "160 MB",
+            "versions": {
+                "25.8.2": {
+                    "enabled": 0,
+                    "rec": 1
+                }
+            },
+            "patches": {
+                "tiktok-ads": {
+                    "name": "Block Ads (Required)",
+                    "desc": "Removes Ads from the entire TikTok app.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "tiktok-seekbar": {
+                    "name": "Seekbar",
+                    "desc": "Show progress bar for all videos.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "tiktok-download": {
+                    "name": "Downloads",
+                    "desc": "Remove restrictions on video downloads.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "tiktok-force-login": {
+                    "name": "Optional Login",
+                    "desc": "Do not force login.",
+                    "section": "Patches",
+                    "checked": 0
+                },
+                "tiktok-speed": {
+                    "name": "Playback Speed",
+                    "desc": "Enables the playback speed option for all videos.",
+                    "section": "Patches",
+                    "checked": 0
+                },
+                "tiktok-feed-filter": {
+                    "name": "Feed Filter",
+                    "desc": "Filter videos (Removing ads and livestreams.)",
+                    "section": "Patches",
+                    "checked": 0
+                },
+                "tiktok-settings": {
+                    "name": "Settings",
+                    "desc": "Add ReVanced Settings.",
+                    "section": "Patches",
+                    "checked": 1
+                }
+            }
+        },
+        "Twitter": {
+            "size": "110 MB",
+            "versions": {
+                "9.58.1": {
+                    "enabled": 0,
+                    "rec": 1
+                },
+                "9.53.0": {
+                    "enabled": 0,
+                    "rec": 0
+                },
+                "9.52.0": {
+                    "enabled": 0
+                }
+            },
+            "patches": {
+                "timeline-ads": {
+                    "name": "Block Ads and Promotions (Required)",
+                    "desc": "Removes ads from the Twitter timeline.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "monochrome-icon": {
+                    "name": "Monochrome Icon",
+                    "desc": "Add monochrome Twitter icon.",
+                    "section": "Patches",
+                    "checked": 0
+                },
+                "dynamic-color": {
+                    "name": "Dynamic Color",
+                    "desc": "Replace the default Twitter Blue with your Android\/Material You palette.",
+                    "section": "Patches",
+                    "checked": 0
+                }
+            }
+        },
+        "Pflotsh": {
+            "size": "6 MB",
+            "versions": {
+                "3.5.4": {
+                    "enabled": 0,
+                    "rec": 1
+                }
+            },
+            "patches": {
+                "pflotsh-ecmwf-subscription-unlock": {
+                    "name": "Unlock All (Required)",
+                    "desc": "Unlocks all subscription features.",
+                    "section": "Patches",
+                    "checked": 1
+                }
+            }
+        },
+        "WarnWetter": {
+            "size": "50 MB",
+            "versions": {
+                "3.7.2": {
+                    "enabled": 0,
+                    "rec": 1
+                }
+            },
+            "patches": {
+                "promo-code-unlock": {
+                    "name": "Promo Code Unlock (Required)",
+                    "desc": "Disables the validation of promo code. Any code will unlock all features.",
+                    "section": "Patches",
+                    "checked": 1
+                }
+            }
+        }
+    },
+    "tools": {
+        "CLI": {
+            "latest": "2.13.0",
+            "enabled": 0
+        },
+        "Patches": {
+            "latest": "2.80.0",
+            "enabled": 0
+        },
+        "Integrations": {
+            "latest": "0.49.1",
+            "enabled": 0
+        },
+        "MicroG": {
+            "latest": "0.2.24.220220",
+            "enabled": 0
+        }
+    },
+    "version": "0.1.1005",
+    "versionLast": "0.1.1005"
+}

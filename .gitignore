@@ -1,0 +1,8 @@
+
+*.apk
+app/config.json
+app/apk/*
+app/tools/*
+builds/*.apk
+builds/*.txt
+*.toml

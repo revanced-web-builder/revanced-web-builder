@@ -1,0 +1,20 @@
+{
+  "buildEnabled": 1,
+  "buildDirectory": "builds",
+  "buildDirectoryPublic": 0,
+  "buildIDLength": 8,
+  "buildSuffix": "ReVanced",
+  "buildBeta": 0,
+  "buildUnsupported": 0,
+  "myBuildsHiddenToggle": 0,
+  "checkinInterval": 5,
+  "downloads": 1,
+  "downloadMethod": "auto",
+  "footer": 1,
+  "pageTitle": "ReVanced Web Builder",
+  "themeDefault": "dark",
+  "themeSwitcher": 1,
+  "timezone": "Etc\/Greenwich",
+  "debugMenu": 0,
+  "admin": ""
+}

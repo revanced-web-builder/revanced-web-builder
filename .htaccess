@@ -1,0 +1,3 @@
+Options +FollowSymLinks -MultiViews -Indexes
+RewriteEngine on
+RewriteRule ^admin/?$ app/admin.php

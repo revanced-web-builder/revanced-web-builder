@@ -1,0 +1,20 @@
+{
+  "background_color": "black",
+  "description": "Build APKs with ReVanced patches.",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "app/assets/icons/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "app/assets/icons/favicon-310.png",
+      "sizes": "310x310",
+      "type": "image/png"
+    }
+  ],
+  "name": "ReVanced Web Builder",
+  "short_name": "RWB",
+  "start_url": ""
+}

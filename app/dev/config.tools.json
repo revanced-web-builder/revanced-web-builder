@@ -1,0 +1,18 @@
+{
+  "CLI": {
+    "latest": "2.13.0",
+    "enabled": 0
+  },
+  "Patches": {
+    "latest": "2.80.0",
+    "enabled": 0
+  },
+  "Integrations": {
+    "latest": "0.49.1",
+    "enabled": 0
+  },
+  "MicroG": {
+    "latest": "0.2.24.220220",
+    "enabled": 0
+  }
+}

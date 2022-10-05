@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<head>
+
+  <meta charset="utf-8">
+  <title>ReVanced Web Builder: Documentation</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="../assets/icons/.ico">
+	<link rel="icon" sizes="16x16 32x32 64x64" href="../assets/icons/.ico">
+	<link rel="icon" type="image/png" sizes="196x196" href="../assets/icons/favicon-192.png">
+	<link rel="icon" type="image/png" sizes="160x160" href="../assets/icons/favicon-160.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="../assets/icons/favicon-96.png">
+	<link rel="icon" type="image/png" sizes="64x64" href="../assets/icons/favicon-64.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16.png">
+	<link rel="apple-touch-icon" href="../assets/icons/favicon-57.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="../assets/icons/favicon-114.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="../assets/icons/favicon-72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="../assets/icons/favicon-144.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="../assets/icons/favicon-60.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="../assets/icons/favicon-120.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="../assets/icons/favicon-76.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="../assets/icons/favicon-152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/favicon-180.png">
+	<meta name="msapplication-TileColor" content="#FFFFFF">
+	<meta name="msapplication-TileImage" content="../assets/icons/favicon-144.png">
+	<meta name="msapplication-config" content="../assets/icons/browserconfig.xml">
+
+  <style type="text/css">
+
+  body {
+    padding-top: 0px;
+    padding-left: 15px;
+    font-size: 1.3em;
+    font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    background: #212121;
+    color: #e9e5e5;
+  }
+
+  .code {
+    border: 1px solid #eeeeee;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: #303030;
+  }
+
+  div.code {
+    display: inline-block;
+    max-width: 100%;
+    white-space: pre;
+  }
+
+  h2, h3 {
+    cursor: pointer;
+  }
+  h2:hover, h3:hover {
+    text-decoration: underline;;
+  }
+
+  .docSection {
+    margin-top: 40px;
+  }
+
+  .startHidden {
+    display: none;
+  }
+
+  a, a:visited {
+    color: #3391ff;
+    text-decoration: underline;
+  }
+  a:hover {
+    color: #5c9fee;
+  }
+  </style>
+
+  <script src="../js/jquery-3.6.1.min.js"></script>
+
+  <script type="text/javascript">
+
+  $(document).ready(function() {
+  })
+
+  $(document).on("click", "h2", function(e) {
+
+    $(this).next(".docSectionInfo").slideToggle()
+
+  })
+
+  </script>
+
+
+</head>
+
+<body>
+
+<h1>ReVanced Web Builder: Documentation</h1>
+
+<div class="docSection">
+
+  <a name="notice"></a>
+  <h2>Notice / Disclaimer / Legal</h2>
+
+  <div class="docSectionInfo">
+
+    <p>I made an interface that you are in control of. Don't blame me :></p>
+
+  </div>
+
+</div>
+
+<div class="docSection">
+
+  <a name="requirements"></a>
+  <h2>Requirements</h2>
+
+  <div class="docSectionInfo">
+
+    <ul>
+      <li>Apache Web Server (Windows, Mac, or Linux)</li>
+      <li>Java JDK >= 17</li>
+      <li>PHP >= 7.4</li>
+      <li>cURL (System or PHP) or wGet</li>
+    </ul>
+
+  </div>
+
+</div>
+
+<div class="docSection">
+
+  <a name="install"></a>
+  <h2>Quick Installation (Linux, Windows, Mac)</h2>
+
+  <div class="docSectionInfo">
+
+    <p>If you already have Apache, PHP, and Java set up:</p>
+
+    <ol>
+      <li>Extract the release to anywhere in your web server.</li>
+      <li>(Linux/Mac only) Give write permissions to the "builds" and "app" folder.</li>
+      <li>Point your web browser to the RWB folder (example: <a href="http://localhost/rwb" target="_blank">http://localhost/rwb</a>)</li>
+    </ol>
+
+  </div>
+
+</div>
+
+<div class="docSection">
+
+  <a name="linuxUbuntu"></a>
+  <h2>Linux Installation (Ubuntu/Debian)</h2>
+
+  <div class="docSectionInfo startHidden">
+
+    <p>This is a quick way to install Apache, PHP, and Java OpenJDK on a fresh cooy of Ubuntu 22.04 and 22.10.</p>
+
+    <p>Please keep in mind this isn't the best or most secure way to do things, but should be easy enough for beginners to set up RWB for personal use.</p>
+
+    <p>Install Apache 2 Web Server</p>
+
+    <p><span class="code">sudo apt install -y apache2 apache2-utils</span></p>
+
+    <p>Install PHP (8.1) with cURL and wGet</p>
+
+    <p><span class="code">sudo apt install -y php libapache2-mod-php php-curl curl wget</span></p>
+
+    <p>Enable mod_rewrite (Optional)</p>
+
+    <p><span class="code">sudo a2enmod rewrite</span></p>
+
+    <p>Give htdocs/html folder proper privileges</p>
+
+    <p><span class="code">sudo usermod -a -G www-data $USER</span></p>
+
+    <p><span class="code">sudo chown root:root /var/www</span></p>
+
+    <p><span class="code">sudo chmod -R 755 /var/www</span></p>
+
+    <p><span class="code">sudo chown -R www-data:www-data /var/www/*</span></p>
+
+    <p>Install Java OpenJDK 18</p>
+
+    <p><span class="code">sudo apt install opendjk-18-jdk-headless openjdk-18-jdk</span></p>
+
+    <p>Place ReVanced Web Builder in <span class="code">/var/www/html/</span> (such as <span class="code">/var/www/html/rwb</span>)</p>
+
+    <p>Give write permissions to two folders</p>
+
+    <p><span class="code">sudo chmod 0777 /var/www/html/rwb/app</span></p>
+
+    <p><span class="code">sudo chmod 0777 /var/www/html/rwb/builds</span></p>
+
+    <p>Restart Apache</p>
+
+    <p><span class="code">sudo systemctl restart apache2</span></p>
+
+    <p>Direct your web browser to http://localhost/rwb</p>
+
+  </div>
+
+</div>
+
+<div class="docSection">
+
+  <a name="windows"></a>
+  <h2>Windows Installation</h2>
+
+  <div class="docSectionInfo startHidden">
+
+    <p>As with the Linux installation: This is probably not the best or most secure way to set things up, but is good enough for personal use.</p>
+
+    <p>Download and install OpenJDK: <a href="https://www.azul.com/downloads/?version=java-19-sts&os=windows&package=jdk#download-openjdk" target="_blank">https://www.azul.com/downloads/?version=java-19-sts&os=windows&package=jdk</a></p>
+    <p>You most likely want the Windows x86 64-bit .msi file. (Building ReVanced with ARM is not supported!)</p>
+
+    <p>Restart Windows so Java is for sure found in Command Prompt.</p>
+
+    <p>Download and install XAMPP: <a href="https://www.apachefriends.org/download.html" target="_blank">https://www.apachefriends.org/download.html</a></p>
+
+    <p>This will install Apache Web Server and PHP 8.1.</p>
+
+    <p>Start XAMPP Control Panel.</p>
+
+    <p>Start Apache</p>
+
+    <p>Allow Ports 80 and 443 into your firewall if you plan on opening RWB to the public.</p>
+
+    <p>Place RWB folder in C:/xampp/htdocs/</p>
+
+    <p>Point your web browser to the RWB folder (example: http://localhost/rwb)</p>
+
+  </div>
+
+</div>
+
+<div class="docSection">
+
+  <a name="mac"></a>
+  <h2>MacOS Installation</h2>
+
+  <div class="docSectionInfo startHidden">
+
+    <p>Due to not being up to date on MacOS, I can't provide universal advice with installing Java 17+ in a way that PHP will read it.</p>
+
+    <p>I suggest installing Java through <a href="https://brew.sh/" target="_blank">Brew</a>. Make sure you follow the instructions Brew gives you after installing Java.</p>
+
+    <p>If you can get PHP to read the Java version 17 or above, ReVanced Web Builder should work just by dragging it into your server directory and locating your browser to it.</p>
+
+    <p>Don't forget to give write permissions to the /builds and /app folders!</p>
+
+  </div>
+
+</div>
+
+<div class="docSection">
+
+  <a name="modrewrite"></a>
+  <h2>Mod_Rewrite</h2>
+
+  <div class="docSectionInfo startHidden">
+
+    <p>If you would like to reach the Admin Panel at /admin instead of /app/admin.php, enable mod_rewrite on your server
+
+    <p>This is usually done by adding the following lines to your sites-available/000-default.conf file in your apache2 folder.</p>
+
+    <p>(This is located at /etc/apache2/sites-available on Ubuntu/Debian Linux)</p>
+
+    <div class="code">&lt;Directory /var/www/html/&gt;
+    Options Indexes FollowSymLinks
+    AllowOverride All
+&lt;/Directory&gt;</div>
+
+    <p>Change /var/www/html/ to your htdocs/root server directory.</p>
+
+    <p>Restart Apache (sudo systemctl restart apache2)</p>
+
+    <p>More information can be found at <a href="https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-16-04" target="_blank">DigitalOcean</a>.
+
+  </div>
+
+<div>
+
+<div class="docSection">
+
+  <a name="builds"></a>
+  <h2>Build Info/Stats</h2>
+
+  <div class="docSectionInfo startHidden">
+
+    <p>ReVanced Web Builder keeps track of information about each build.</p>
+
+    <p>This will be located in the /builds/ folder along with the final .apk listed as <em>buildID.info.txt</em></p>
+
+    <p>Build Options (if given) are kept in <em>/builds/buildID.options.txt</em></p>
+
+    <p>Example: <strong>builds/YouTube ReVanced-ytef8026.info.txt</strong></p>
+
+    <div class="code">
+      {
+        "app": "YouTube",
+        "version": "17.29.34",
+        "url": "YouTube ReVanced-ytef8026.apk",
+        "id": "ytef8026",
+        "md5": "950d2e6faf2ed3f01a8174a1b62209e2",
+        "buildDate": 1664959088,
+        "buildDateFull": "2022-10-05T08:38:08+00:00",
+        "buildDuration": 41,
+        "buildSize": 170897497,
+        "microG": "vanced-microg.apk",
+        "patches": "video-ads|general-ads|sponsorblock|minimized-playback|client-spoof|microg-support|settings",
+        "options": []
+      }
+    </div>
+
+  </div>
+
+</div>
+
+<div class="docSection">
+
+  <a name="buildDurations"></a>
+  <h2>Build Durations</h2>
+
+  <div class="docSectionInfo startHidden">
+
+    <p>ReVanced Web Builder keeps track of statistics about each build. It will keep track of the minimum, maximum, and average build time for each app to give the user a good idea on how long it will take to build their APK.</p>
+
+    <p>Once one build is made for an app you will be able to see the average build time in the APKs section of the Admin Panel.</p>
+
+    <p>There will eventually be a better way to view this information if more meaningful statistics are ever kept.</p>
+
+    <p><strong>Build times heavily depend on the server they are being built on.</strong></p>
+
+    <p>Expect a minute or two wait time on slower systems.</p>
+
+  </div>
+
+</div>
+
+<div class="docSection">
+
+  <a name="issues"></a>
+  <h2>Known Issues/Bugs/Caveats</h2>
+
+  <div class="docSectionInfo startHidden">
+
+    <ul>
+      <li>I could not find Universal APKs for YouTube Music. Therefore YouTube Music builds will likely only work on AMD64 devices. If/when ReVanced officially supports split APKs this can be fixed.</li>
+    </ul>
+
+  </div>
+
+</div>
+
+<div class="docSection">
+
+  <a name="issues"></a>
+  <h2>Dev Tools</h2>
+
+  <div class="docSectionInfo startHidden">
+
+    <p>The dev tools used to maintain and update ReVanced Web Builder are supplied with the source code in the root/app/dev folder.</p>
+
+    <p><strong>It is highly advised that you do not include the /app/dev folder on any public copy of ReVanced Web Builder.</strong></p>
+
+    <p>Dev Tools are currently not password protected, and there's practically no use to have them if you are not maintaining a fork of ReVanced Web Builder.</p>
+
+    <p>Dev Tools are located at <a href="../dev">root/app/dev or root/app/dev/index.html</a></p>
+  </div>
+
+</div>
+
+</body>
