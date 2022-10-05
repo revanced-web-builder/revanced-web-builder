@@ -254,7 +254,13 @@ if (!$auth->valid) {
 <h2>Quick Actions</h2>
 <form method="get" action="<?php echo $urlPrefix; ?>/dev/index.php">
   <input type="hidden" name="q" value="quick" />
-  <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=confignew"><input type="button" value="Generate config.json" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deleteconfig"><input type="button" value="Delete config.json" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deleteconfigdist"><input type="button" value="Delete config.json.dist" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deletebuilds"><input type="button" value="Delete Builds" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=disableapks"><input type="button" value="Disable APKs" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deleteapks"><input type="button" value="Delete APKs" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=disabletools"><input type="button" value="Disable Tools" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deletetools"><input type="button" value="Delete Tools" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=injectpatches"><input type="button" value="Inject Patches" /></a></p>
+  <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=confignew"><input type="button" value="Generate config.json" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deleteconfig"><input type="button" value="Delete config.json" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deleteconfigdist"><input type="button" value="Delete config.json.dist" /></a></p>
+
+  <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deletebuilds"><input type="button" value="Delete Builds" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=disableapks"><input type="button" value="Disable APKs" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deleteapks"><input type="button" value="Delete APKs" /></a></p>
+
+  <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=disabletools"><input type="button" value="Disable Tools" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deletetools"><input type="button" value="Delete Tools" /></a></p>
+
+  <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=injectpatches"><input type="button" value="Inject Patches" /></a></p>
 </form>
 
 <?php
