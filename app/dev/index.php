@@ -17,16 +17,17 @@ require_once("../functions.php");
 
 $query = (isset($_GET['q']) && $_GET['q'] != "") ? $_GET['q'] : false;
 $debug = new Debug();
-$auth = new Auth();
-
-// Check if user is trying to login
-$loginPassword = $_POST['adminPass'] ?? null;
-if ($loginPassword != null) {
-  $loginAttempt = $auth->login($loginPassword);
-}
 
 // Check if there is a config file and an admin password
 if (file_exists("../config.json")) {
+
+  $auth = new Auth();
+
+  // Check if user is trying to login
+  $loginPassword = $_POST['adminPass'] ?? null;
+  if ($loginPassword != null) {
+    $loginAttempt = $auth->login($loginPassword);
+  }
   $config = new Config();
 
   if ($config->admin != "") {
@@ -62,8 +63,9 @@ if ($query == "prepareRelease") {
   }
 
   if ($keepAPKs !== 1) {
-    echo "Emptying app/apk/ folder<br />";
+    echo "Deleting app/apk/ folder<br />";
     $debug->emptyDir("../apk"); // Delete all APKs
+    unlink("../apk");
   }
 
   if ($keepBuilds !== 1) {
@@ -72,8 +74,9 @@ if ($query == "prepareRelease") {
   }
 
   if ($keepTools !== 1) {
-    echo "Emptying app/tools/ folder<br />";
+    echo "Deleting app/tools/ folder<br />";
     $debug->emptyDir("../tools"); // Delete all ReVanced Tools
+    unlink("../tools");
   }
 
 }
@@ -228,7 +231,7 @@ if ($query == "deleteconfigdist") {
 </div>
 
 <?php
-if (!$auth->valid) {
+if (isset($auth) && !$auth->valid) {
   echo "<h2>You should set up an <a href='../admin.php'>Admin Password</a> as soon as you have a config.json file!</h2><hr />";
 }
 ?>
