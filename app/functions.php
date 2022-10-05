@@ -396,6 +396,21 @@ class Config {
 
   }
 
+  // Mark all Tools as disabled (enabled = 0)
+  public function disableTools() {
+
+    $json = $this->json;
+
+    // Loop through all the apps
+    foreach ($json['tools'] as $toolName => $vals) {
+      $json['tools'][$toolName]['enabled'] = 0;
+    }
+
+    $this->json = $json;
+    $this->save(json_encode($json, JSON_PRETTY_PRINT));
+
+  }
+
   // Shortcut for Files::write("config.json", JSON)
   public function save($fileContents=null) {
     Files::write("config.json", $fileContents);
