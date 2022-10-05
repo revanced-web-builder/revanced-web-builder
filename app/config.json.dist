@@ -257,6 +257,11 @@
                     "desc": "Replaces the search icon with a search bar. Hide the YouTube logo when active.",
                     "section": "Appearance"
                 },
+                "hide-video-buttons": {
+                    "name": "Hide Video Buttons",
+                    "desc": "Add options to hide action buttons under a video.",
+                    "section": "Appearance"
+                },
                 "premium-heading": {
                     "name": "Premium Heading",
                     "desc": "Shows premium branding on the home screen.",
@@ -506,6 +511,12 @@
                     "section": "Patches",
                     "checked": 0
                 },
+                "tiktok-speed": {
+                    "name": "Playback Speed",
+                    "desc": "Enables the playback speed option for all videos.",
+                    "section": "Patches",
+                    "checked": 0
+                },
                 "tiktok-feed-filter": {
                     "name": "Feed Filter",
                     "desc": "Filter videos (Removing ads and livestreams.)",
@@ -597,11 +608,11 @@
             "enabled": 0
         },
         "Patches": {
-            "latest": "2.77.1",
+            "latest": "2.80.0",
             "enabled": 0
         },
         "Integrations": {
-            "latest": "0.46.2",
+            "latest": "0.49.1",
             "enabled": 0
         },
         "MicroG": {
@@ -609,6 +620,6 @@
             "enabled": 0
         }
     },
-    "version": "0.1.1002",
-    "versionLast": "0.1.1002"
+    "version": "0.1.1004",
+    "versionLast": "0.1.1004"
 }

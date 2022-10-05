@@ -117,6 +117,11 @@
         "desc": "Replaces the search icon with a search bar. Hide the YouTube logo when active.",
         "section": "Appearance"
       },
+      "hide-video-buttons": {
+        "name": "Hide Video Buttons",
+        "desc": "Add options to hide action buttons under a video.",
+        "section": "Appearance"
+      },
       "premium-heading": {
         "name": "Premium Heading",
         "desc": "Shows premium branding on the home screen.",
@@ -366,6 +371,12 @@
       "tiktok-force-login": {
         "name": "Optional Login",
         "desc": "Do not force login.",
+        "section": "Patches",
+        "checked": 0
+      },
+      "tiktok-speed": {
+        "name": "Playback Speed",
+        "desc": "Enables the playback speed option for all videos.",
         "section": "Patches",
         "checked": 0
       },
