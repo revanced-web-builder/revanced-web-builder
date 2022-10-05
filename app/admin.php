@@ -1323,6 +1323,32 @@ if ($query == "config") {
     </div>
   </div>
 
+
+  <?php
+  // Detect if Dev Tools exist
+  if (file_exists("dev/index.php"))
+  { ?>
+
+  <div id="adminDev" class="container configComplete" <?php echo ($revancedDownloaded < 4) ? "style='display: none'":""; ?>>
+    <div class="row">
+      <hr />
+      <div class="col-12">
+        <h3 class="mb-4">Development Tools</h3>
+        <p class="badge bg-danger">Dev Tools have been detected</p>
+        <p>Even though your Admin Password will protect the Dev Tools, it is highly suggested that you do not include the /app/dev folder on your public instance of RWB.</p>
+
+        <p><a href="dev/index.php"><input type="button" class="btn btn-primary" value="Go to Dev Tools" /></a></p>
+      </div>
+    </div>
+  </div>
+
+  <?php
+  }
+  ?>
+
+
+
+
   <div id="footer" class="container mt-3">
     <div class="row">
       <hr />
