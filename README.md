@@ -38,8 +38,8 @@ Documentation also includes information about mod_rewrite, build info/stats, bui
 
 Home Screen
 
-![Home Screen](app/docs/img/screenshot_home.jpg)
+![Home Screen](app/docs/assets/screenshot_home.jpg)
 
 Admin Panel
 
-![Admin Panel](app/docs/img/screenshot_admin.jpg)
+![Admin Panel](app/docs/assets/screenshot_admin.jpg)

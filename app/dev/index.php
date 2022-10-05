@@ -65,7 +65,7 @@ if ($query == "prepareRelease") {
   if ($keepAPKs !== 1) {
     echo "Deleting app/apk/ folder<br />";
     $debug->emptyDir("../apk"); // Delete all APKs
-    unlink("../apk");
+    rmdir("../apk");
   }
 
   if ($keepBuilds !== 1) {
@@ -76,7 +76,7 @@ if ($query == "prepareRelease") {
   if ($keepTools !== 1) {
     echo "Deleting app/tools/ folder<br />";
     $debug->emptyDir("../tools"); // Delete all ReVanced Tools
-    unlink("../tools");
+    rmdir("../tools");
   }
 
 }
@@ -170,30 +170,18 @@ if ($query == "deleteconfigdist") {
   <link rel="manifest" href="manifest.json">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="<?php echo $urlPrefix; ?>/css/bootstrap.min.css">
-  <link rel="stylesheet" href="<?php echo $urlPrefix; ?>/css/builder.css">
+  <link rel="stylesheet" href="<?php echo $urlPrefix; ?>/assets/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo $urlPrefix; ?>/assets/builder.css">
 
-  <!-- Favicons -->
-  <link rel="shortcut icon" href="<?php echo $urlPrefix; ?>/img/favicons/.ico">
-	<link rel="icon" sizes="16x16 32x32 64x64" href="<?php echo $urlPrefix; ?>/img/favicons/.ico">
-	<link rel="icon" type="image/png" sizes="196x196" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-192.png">
-	<link rel="icon" type="image/png" sizes="160x160" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-160.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-96.png">
-	<link rel="icon" type="image/png" sizes="64x64" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-64.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-16.png">
-	<link rel="apple-touch-icon" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-57.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-114.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-72.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-144.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-60.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-120.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-76.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo $urlPrefix; ?>/img/favicons/favicon-180.png">
-	<meta name="msapplication-TileColor" content="#FFFFFF">
-	<meta name="msapplication-TileImage" content="<?php echo $urlPrefix; ?>/img/favicons/favicon-144.png">
-	<meta name="msapplication-config" content="<?php echo $urlPrefix; ?>/img/favicons/browserconfig.xml">
+  <!-- icons -->
+  <link rel="shortcut icon" href="<?php echo $urlPrefix; ?>/assets/icons/.ico">
+	<link rel="icon" sizes="16x16 32x32 64x64" href="<?php echo $urlPrefix; ?>/assets/icons/.ico">
+	<link rel="icon" type="image/png" sizes="196x196" href="<?php echo $urlPrefix; ?>/assets/icons/favicon-192.png">
+	<link rel="icon" type="image/png" sizes="160x160" href="<?php echo $urlPrefix; ?>/assets/icons/favicon-160.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="<?php echo $urlPrefix; ?>/assets/icons/favicon-96.png">
+	<link rel="icon" type="image/png" sizes="64x64" href="<?php echo $urlPrefix; ?>/assets/icons/favicon-64.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="<?php echo $urlPrefix; ?>/assets/icons/favicon-32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="<?php echo $urlPrefix; ?>/assets/icons/favicon-16.png">
 
   <style type="text/css">
 
