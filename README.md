@@ -20,7 +20,7 @@ It's best to just use this for personal use, but I'm not responsible for what yo
 - PHP >= 7.4
 - cURL (System or PHP) or wGet
 
-## Installation
+## Quick Installation
 
 If you already have Apache, PHP, and Java set up:
 
@@ -28,51 +28,11 @@ If you already have Apache, PHP, and Java set up:
 2. (Linux/Mac only) Give write permissions to the "builds" and "app" folder.
 3. Point your web browser to the RWB folder (example: http://localhost/rwb)
 
-### Fresh Install (Linux, Ubuntu 22.04 and 22.10)
+## Documentation
 
-This is a quick way to install Apache, PHP, and Java OpenJDK on a fresh cooy of Ubuntu 22.04 and 22.10.
+Full documentation including full setup instruction for Linux and Windows can be found at the [Documentation Website](https://revanced-web-builder.github.io/) or in the [/app/docs/](app/docs/index.html) folder of your RWB install.
 
-Please keep in mind this isn't the best or most secure way to do things, but should be easy enough for beginners.
-
-Install Apache 2 Web Server
-
-`sudo apt install -y apache2 apache2-utils`
-
-Install PHP (8.1) with cURL and wGet
-
-`sudo apt install -y php libapache2-mod-php php-curl curl wget`
-
-Enable mod_rewrite (Optional)
-
-`sudo a2enmod rewrite`
-
-Give htdocs/html folder proper privileges
-
-`sudo usermod -a -G www-data $USER`
-
-`sudo chown root:root /var/www`
-
-`sudo chmod -R 755 /var/www`
-
-`sudo chown -R www-data:www-data /var/www/*`
-
-Install Java OpenJDK 18
-
-`sudo apt install opendjk-18-jdk-headless openjdk-18-jdk`
-
-Place ReVanced Web Builder in `/var/www/html/` (such as `/var/www/html/rwb`)
-
-Give write permissions to two folders
-
-`sudo chmod 0777 /var/www/html/rwb/app`
-
-`sudo chmod 0777 /var/www/html/rwb/builds`
-
-Restart Apache
-
-`sudo systemctl restart apache2`
-
-Direct your web browser to http://localhost/rwb
+Documentation also includes information about mod_rewrite, build info/stats, build durations, known issues, dev tools, and more.
 
 ## Screenshots
 
