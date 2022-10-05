@@ -1,4 +1,5 @@
 <?php
+session_start();
 $rwbVersion = "0.1.1002";
 
 ini_set('display_errors', 1);
@@ -16,6 +17,26 @@ require_once("../functions.php");
 
 $query = (isset($_GET['q']) && $_GET['q'] != "") ? $_GET['q'] : false;
 $debug = new Debug();
+$auth = new Auth();
+
+// Check if user is trying to login
+$loginPassword = $_POST['adminPass'] ?? null;
+if ($loginPassword != null) {
+  $loginAttempt = $auth->login($loginPassword);
+}
+
+// Check if there is a config file and an admin password
+if (file_exists("../config.json")) {
+  $config = new Config();
+
+  if ($config->admin != "") {
+    if (!$auth->valid) {
+      echo "<p><form method='post' action='index.php'>Admin Password: <input id='adminPass' name='adminPass' type='password' /> <input type='submit' value='Login' /></form></p>";
+      die();
+    }
+  }
+
+}
 
 if ($query == "configCreate") {
 
@@ -165,6 +186,12 @@ if ($query == "deleteconfigdist") {
 </head>
 
 <body>
+
+<?php
+if (!$auth->valid) {
+  echo "<h2>You should set up an <a href='../admin.php'>Admin Password</a> as soon as you have a config.json file!</h2><hr />";
+}
+?>
 
 <h1>ReVanced Web Builder: Dev Tools</h1>
 
