@@ -1323,6 +1323,26 @@ if ($query == "config") {
     </div>
   </div>
 
+  <?php
+  // Detect if Documentation exists
+  if (file_exists("docs/index.html"))
+  { ?>
+
+  <div id="adminDocs" class="container configComplete" <?php echo ($revancedDownloaded < 4) ? "style='display: none'":""; ?>>
+    <div class="row">
+      <hr />
+      <div class="col-12">
+        <h3 class="mb-4">Documentation</h3>
+        <p>RWB has documentation that includes information about build info/stats, build durations, known issues, mod_rewrite, dev tools, and more.
+        <p><a href="docs/" target="_blank" class="me-2"><input type="button" class="btn btn-primary" value="Go to Documentation" /></a> <a href="https://github.com/revanced-web-builder/revanced-web-builder/" target="_blank"><input type="button" class="btn btn-primary" value="Go to Github" /></a></p>
+      </div>
+    </div>
+  </div>
+
+  <?php
+  }
+  ?>
+
 
   <?php
   // Detect if Dev Tools exist
