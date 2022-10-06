@@ -5,7 +5,6 @@ var configAll
 var appData
 var config
 
-
 $.ajax({
   dataType: "json",
   type: "GET",
@@ -18,13 +17,15 @@ $.ajax({
   appData = data['apps']
   themeData = data['themes']
 
+  if (config.admin == "") window.location = "app/admin.php" // go to admin panel if password isn't setup yet
+
   config.checkinInterval *= 1000 // Multiply checkin interval by 1000 to convert seconds to milliseconds
 
   startup()
 
 }).fail(function (jqXHR, textStatus, errorThrown) {
   console.log("CONFIG Not Found")
-  $("body").html("<p class='mt-2 ms-4'>ReVanced Web Builder needs to be installed.<br /><br /><a href='app/admin.php'>Admin Panel</a>")
+  window.location = "app/admin.php"
 })
 
 
@@ -108,6 +109,13 @@ function startup() {
     var versionsVisible = $("#appVersion option[data-app='"+appNames+"']").length
     if (versionsVisible <= 0) $("#appName option[value='"+appNames+"'], #patches"+appNames).remove()
 
+
+
+  }
+
+  // If no apps are enabled, redirect to admin panel.
+  if ($("#appName option").length == 0) {
+    window.location = "app/admin.php"
   }
 
   $("#buildAvg"+$("#appName").val()).show() // Show the build time of the currently selected App
