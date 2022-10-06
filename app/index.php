@@ -135,11 +135,10 @@ $urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -14
 
 <div id="generatePatches"></div>
 
-<div id="buildNewContainer" class="container">
+<div id="buildNewContainer" class="container my-4 p-2 p-lg-4">
 
-  <div class="row">
+  <div id="buildNewRow" class="row">
 
-    <hr />
     <div id="buildNew" class="col-md-12">
       <h3 style="margin-bottom: 7px">Package Build</h3>
       <p><span class="appName"></span> <span class="appVersion"></p>
@@ -161,29 +160,22 @@ $urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -14
       <p id="buildTime" style="display: none">Elapsed Time: <span id="buildTimeElapsed">0</span> seconds</p>
       <p id="buildError" style="display: none">ERROR: Sorry, it seems that the builder failed. </p>
 
+      <input type="button" class="btn btn-secondary instructionsToggle" value="Install Instructions" />
+
     </div>
 
   </div>
 
-</div>
-
-<div id="buildComplete" class="container" style="display: none">
-  <div class="row">
+  <div id="buildComplete" class="row" style="display: none">
     <div id="buildCompleteData" class="col-12"></div>
   </div>
 </div>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <p><input id="buildInstructionsButton" type="button" class="btn btn-secondary instructionsToggle" value="Install Instructions" /></p>
-    </div>
-  </div>
-</div>
+
 
 <div id="myBuildsContainer" class="container">
   <div class="row">
-    <hr />
+
     <div id="myBuilds" class="col-md-12">
       <h3 style="margin-bottom: 7px">My Builds</h3>
     </div>

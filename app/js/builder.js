@@ -767,7 +767,7 @@ function buildCompleteMessage(data) {
   }
 
   successMsg += `<p><a href='`+rootDir+buildDir+`/`+data.url+`'><input type='button' value='Download `+data.app+` ReVanced' class='btn btn-primary' /></a></p>`
-
+  successMsg += `<input type="button" class="btn btn-secondary instructionsToggle" value="Install Instructions" />`
   $("#buildCompleteData").html(successMsg)
   $("#buildComplete").slideDown()
 
