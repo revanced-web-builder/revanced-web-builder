@@ -669,3 +669,33 @@ function isNumeric($num) {
     return false;
   }
 }
+
+
+function copy_folder($src, $dst) {
+
+    // open the source directory
+    $dir = opendir($src);
+
+    // Make the destination directory if not exist
+    @mkdir($dst, 0777);
+
+    // Loop through the files in source directory
+    while( $file = readdir($dir) ) {
+
+        if (( $file != '.' ) && ( $file != '..' )) {
+            if ( is_dir($src . '/' . $file) )
+            {
+
+                // Recursively calling custom copy function
+                // for sub directory
+                copy_folder($src . '/' . $file, $dst . '/' . $file);
+
+            }
+            else {
+                copy($src . '/' . $file, $dst . '/' . $file);
+            }
+        }
+    }
+
+    closedir($dir);
+}

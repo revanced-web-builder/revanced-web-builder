@@ -1,6 +1,6 @@
 <?php
 session_start();
-$rwbVersion = "0.1.10051";
+$rwbVersion = "0.1.1006";
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -32,7 +32,7 @@ if (file_exists("../config.json")) {
 
   if ($config->admin != "") {
     if (!$auth->valid) {
-      echo "<p><form method='post' action='index.php'>Admin Password: <input id='adminPass' name='adminPass' type='password' /> <input type='submit' value='Login' /></form></p>";
+      echo "<p><form method='post' action='{$urlPrefix}/dev/index.php'>Admin Password: <input id='adminPass' name='adminPass' type='password' /> <input type='submit' value='Login' /></form></p>";
       die();
     }
   }
@@ -56,6 +56,7 @@ if ($query == "prepareRelease") {
   $keepAPKs = (isset($_GET['keepAPKs'])) ? 1 : 0;
   $keepBuilds = (isset($_GET['keepBuilds'])) ? 1 : 0;
   $keepTools = (isset($_GET['keepTools'])) ? 1 : 0;
+  $keepMaps = (isset($_GET['keepMaps'])) ? 1 : 0;
 
   if ($keepConfig !== 1) {
     echo "Deleting app/config.json...<br />";
@@ -78,6 +79,15 @@ if ($query == "prepareRelease") {
     $debug->emptyDir("../tools"); // Delete all ReVanced Tools
     rmdir("../tools");
   }
+
+
+
+  /*
+  if ($keepMaps !== 1) {
+    echo "Deleting .min.js.map files<br />";
+    unlink("../assets/bootstrap.min.css.map");
+    unlink("../js/bootstrap.min.js.map");
+  }*/
 
 }
 
@@ -239,6 +249,7 @@ if (isset($auth) && !$auth->valid) {
   <p><label><input type="checkbox" name="keepAPKs" value="1" /> Keep APKs</label></p>
   <p><label><input type="checkbox" name="keepTools" value="1" /> Keep Tools</label></p>
   <p><label><input type="checkbox" name="keepBuilds" value="1" /> Keep Builds</label></p>
+  <p><label><input type="checkbox" name="keepMaps" value="1" /> Keep .js.min.map files</label></p>
   <p><input type="submit" value="Prepare for Release" /></p>
 </form>
 

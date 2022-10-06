@@ -42,7 +42,6 @@ if (!file_exists("config.json.dist") || !is_readable("config.json.dist")) {
   die();
 }
 
-
 // Check if a config file exists. If not, copy the .dist file to config.json
 // $created will be used later to confirm the default config was created
 if (!file_exists("config.json")) {
