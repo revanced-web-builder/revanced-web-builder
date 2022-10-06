@@ -6,3 +6,5 @@ app/tools/*
 builds/*.apk
 builds/*.txt
 *.toml
+app/*
+!app/index.php

@@ -30,6 +30,7 @@ foreach ($installFolder as $f) {
     if ($f != "home.php") {
       copy($f, "../app/$f");
     } else { // make home.php the app/index.php file instead of it redirecting to the installer
+      unlink("../app/index.php");
       copy($f, "../app/index.php");
     }
 
@@ -54,6 +55,13 @@ foreach ($others as $o) {
   if ($verbose) echo "Creating $o folder<br />";
   mkdir("../app/$o", 0775);
   chmod("../app/$o", 0775);
+}
+
+// Only make /app/builds folder if user didn't make /builds writable
+if (!is_writable("../builds")) {
+  if ($verbose) echo "Creating builds folder in /app instead of root";
+  mkdir("../app/builds", 0775);
+  chmod("../app/builds", 0775);
 }
 
 if ($verbose) {
