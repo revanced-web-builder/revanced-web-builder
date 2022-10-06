@@ -177,8 +177,7 @@ if ($query == "deleteconfigdist") {
 // Delete entire /app folder (if this is ran from the /install/dev folder)
 if ($query == "emptyappfolder") {
 
-  $fo = $_SERVER['REQUEST_URI'];
-  if (str_contains($fo, "install")) {
+  if (str_contains($_SERVER['REQUEST_URI'], "install")) {
     echo "Emptying /app folder<br />";
     rrmdir("../../app");
 
@@ -310,7 +309,10 @@ if (isset($auth) && !$auth->valid) {
 
   <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=injectpatches"><input type="button" value="Inject Patches" /></a></p>
 
-  <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=emptyappfolder"><input type="button" value="Empty /app Folder" /></a></p>
+  <?php
+  if (str_contains($_SERVER['REQUEST_URI'], "install")) {
+    echo '<p><a href="'.$urlPrefix.'/dev/index.php?q=emptyappfolder"><input type="button" value="Empty /app Folder" /></a></p>';
+  } ?>
 </form>
 
 <?php
