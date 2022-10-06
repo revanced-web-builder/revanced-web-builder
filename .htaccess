@@ -4,4 +4,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^admin/?$ app/admin.php [L]
 RewriteRule ^dev/?$ app/dev/index.php [L]
-RewriteRule ^/?$ app/index.html [L]
+RewriteRule ^/?$ app/index.php [L]
