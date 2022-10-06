@@ -1,6 +1,6 @@
 <?php
 session_start();
-$rwbVersion = "0.1.1005";
+$rwbVersion = "0.1.10051";
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);

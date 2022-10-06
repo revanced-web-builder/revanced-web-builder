@@ -48,7 +48,7 @@
             },
             "warning": {
                 "bg": "#ffc107",
-                "font": "#e9e5e5",
+                "font": "#000000",
                 "border": "#ffc107",
                 "radius": "6"
             },
@@ -87,7 +87,7 @@
             },
             "warning": {
                 "bg": "#ffc107",
-                "font": "#e9e5e5",
+                "font": "#000000",
                 "border": "#ffc107",
                 "radius": "6"
             },
@@ -126,7 +126,7 @@
             },
             "warning": {
                 "bg": "#ffc107",
-                "font": "#ffffff",
+                "font": "#000000",
                 "border": "#ffc107",
                 "radius": "6"
             },
@@ -604,7 +604,7 @@
     },
     "tools": {
         "CLI": {
-            "latest": "2.13.0",
+            "latest": "2.14.0",
             "enabled": 0
         },
         "Patches": {
@@ -620,6 +620,6 @@
             "enabled": 0
         }
     },
-    "version": "0.1.1005",
-    "versionLast": "0.1.1005"
+    "version": "0.1.10051",
+    "versionLast": "0.1.10051"
 }
