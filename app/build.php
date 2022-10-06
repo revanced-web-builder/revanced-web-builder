@@ -31,6 +31,8 @@ if (isBuilding() === 1) {
   die("ERROR:FLOOD");
 }
 
+
+
 // Build Information
 $buildDate = time(); // UNIX timestamp of when this build started
 $buildDateFull = date("c");

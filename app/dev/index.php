@@ -140,7 +140,7 @@ if ($query == "confignew") {
     $debug->configCreate($rwbVersion); // Create new config.json.dist file
 
   copy("../config.json.dist", "../config.json");
-  chmod("../config.json.dist", 0777);
+  chmod("../config.json.dist", 0775);
 
   $config = new Config();
   $config->injectPatches(); // some day this will be built in...
@@ -227,13 +227,13 @@ if (isset($auth) && !$auth->valid) {
 <h1>ReVanced Web Builder: Dev Tools</h1>
 
 <h2>Create config.json.dist</h2>
-<form method="get" action="index.php">
+<form method="get" action="<?php echo $urlPrefix; ?>/dev/index.php">
   <input type="hidden" name="q" value="configCreate" />
   <p>Version: <input name="version" size="8" type="text" value="<?php echo $rwbVersion; ?>" /> <input type="submit" value="Create" /></p>
 </form>
 
 <h2>Prepare for Release</h2>
-<form method="get" action="index.php">
+<form method="get" action="<?php echo $urlPrefix; ?>/dev/index.php">
   <input type="hidden" name="q" value="prepareRelease" />
   <p><label><input type="checkbox" name="keepConfig" value="1" /> Keep config.json</label></p>
   <p><label><input type="checkbox" name="keepAPKs" value="1" /> Keep APKs</label></p>
@@ -269,6 +269,7 @@ class Debug {
     $configs = ["config" => $configSrc, "themes" => $themeSrc, "apps" => $appSrc, "tools" => $toolSrc, "version" => $version, "versionLast" => $version];
 
     Files::write("config.json.dist", json_encode($configs, JSON_PRETTY_PRINT));
+    chmod("../config.json.dist", 0775);
 
   }
 
