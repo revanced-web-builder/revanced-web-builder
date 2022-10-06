@@ -200,6 +200,11 @@ body .patchContainer .col-md-6:hover { /* Dark theme column hover */
   background: var(--input-hover);
 }
 
+.patchSection .btn-input {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 .main-bg {
   background: var(--main-bg);
 }
