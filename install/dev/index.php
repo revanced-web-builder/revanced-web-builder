@@ -167,6 +167,52 @@ if ($query == "deleteconfigdist") {
   echo "Deleting app/config.json.dist<br />";
   unlink("../config.json.dist");
 }
+
+// Delete config.json.dist
+if ($query == "deleteconfigdist") {
+  echo "Deleting app/config.json.dist<br />";
+  unlink("../config.json.dist");
+}
+
+// Delete entire /app folder (if this is ran from the /install/dev folder)
+if ($query == "emptyappfolder") {
+
+  $fo = $_SERVER['REQUEST_URI'];
+  if (str_contains($fo, "install")) {
+    echo "Emptying /app folder<br />";
+    rrmdir("../../app");
+
+    // Remake the folder in case rrmdir deleted the /app folder
+    if (!file_exists("../../app")) {
+      mkdir("../../app", 0777);
+      chmod("../../app", 0777);
+    }
+
+    // Place the /app/index.php back
+    copy("index.app.php", "../../app/index.php");
+
+  } else {
+    echo "emptyappfolder must be ran from the /install/dev folder<br />";
+  }
+
+}
+
+// Recursively remove directory
+function rrmdir($dir) {
+  if (is_dir($dir)) {
+    $objects = scandir($dir);
+    foreach ($objects as $object) {
+      if ($object != "." && $object != "..") {
+        if (filetype($dir."/".$object) == "dir")
+           rrmdir($dir."/".$object);
+        else unlink   ($dir."/".$object);
+      }
+    }
+    reset($objects);
+    rmdir($dir);
+  }
+ }
+
 ?>
 
 <!DOCTYPE html>
@@ -263,6 +309,8 @@ if (isset($auth) && !$auth->valid) {
   <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=disabletools"><input type="button" value="Disable Tools" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deletetools"><input type="button" value="Delete Tools" /></a></p>
 
   <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=injectpatches"><input type="button" value="Inject Patches" /></a></p>
+
+  <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=emptyappfolder"><input type="button" value="Empty /app Folder" /></a></p>
 </form>
 
 <?php
