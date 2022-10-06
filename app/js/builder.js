@@ -183,10 +183,6 @@ function startup() {
 
     // Hide build if necessary
     if (myBuilds[b]['hidden'] == 1) {
-      if (config.myBuildsHiddenToggle != 1) {
-        $("#myBuildsShowHidden").remove() // remove Show Hidden button from page since it won't do anything with the option disabled
-        continue // Don't even put this My Build on the page if disabled in config
-      }
       var hidden = "buildHidden"
       var statusButton1 = "myBuildDelete"
       var statusButton2 = "Delete"

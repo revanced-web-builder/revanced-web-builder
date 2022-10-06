@@ -169,7 +169,7 @@ if ($query == "config") {
   }
 
   // These vars must be binary
-  $requireBinary = array("buildEnabled", "downloads", "buildDirectoryPublic", "themeSwitcher", "myBuildsHiddenToggle", "debugMenu", "buildUnsupported", "buildBeta", "footer");
+  $requireBinary = array("buildEnabled", "downloads", "buildDirectoryPublic", "themeSwitcher", "debugMenu", "buildUnsupported", "buildBeta", "footer");
   foreach ($requireBinary as $bin) {
     if (!isset($_POST[$bin]) || $_POST[$bin] != "1") {
       $$bin = "0";
@@ -203,7 +203,6 @@ if ($query == "config") {
     "buildSuffix" => $buildSuffix,
     "buildBeta" => $buildBeta,
     "buildUnsupported" => $buildUnsupported,
-    "myBuildsHiddenToggle" => $myBuildsHiddenToggle,
     "checkinInterval" => $checkinInterval,
     "downloads" => $downloads,
     "downloadMethod" => $downloadMethod,

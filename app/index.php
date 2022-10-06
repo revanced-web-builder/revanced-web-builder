@@ -189,7 +189,7 @@ $urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -14
     </div>
     <div id="myBuildsData" class="col-md-12">
 
-      <p><a id="myBuildsShowHidden" class="buildHiddenToggle underline" style="display: none">Toggle Hidden</a></p>
+      <p><a id="myBuildsShowHidden" class="buildHiddenToggle btn btn-primary" style="display: none">Toggle Hidden</a></p>
     </div>
   </div>
 </div>

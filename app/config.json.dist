@@ -7,7 +7,6 @@
         "buildSuffix": "ReVanced",
         "buildBeta": 0,
         "buildUnsupported": 0,
-        "myBuildsHiddenToggle": 0,
         "checkinInterval": 5,
         "downloads": 1,
         "downloadMethod": "auto",

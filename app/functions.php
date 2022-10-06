@@ -57,7 +57,6 @@ class Config {
     "buildSuffix" => "ReVanced",
     "buildBeta" => 0,
     "buildUnsupported" => 0,
-    "myBuildsHiddenToggle" => 1,
     "checkinInterval" => 5,
     "downloads" => 1,
     "downloadMethod" => "auto",
