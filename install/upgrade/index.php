@@ -85,4 +85,12 @@ echo "Emptying upgrade/release folder<br />";
 $file->rmdir("release");
 echo "Deleting release.zip<br />";
 unlink("release.zip");
+
+// Update the config file
+echo $config->updateVersion();
+
+//Inject patches from revanced-patches.json (this should eventually be part of updateVersion())
+if (file_exists("tools/revanced-patches.json")) {
+  $config->injectPatches();
+}
 ?>

@@ -321,7 +321,7 @@ class Config {
     $return .= "<h3 class='mb-3'>Updating from version {$cur['versionLast']} to {$new['version']}</h3>";
 
     $return .= "<p>Making backup of apps/config.json to apps/config-{$cur['versionLast']}.json</p>";
-    $backupConfig = copy("config.json", "config-{$cur['versionLast']}.json");
+    $backupConfig = copy(__DIR__."/config.json", "config-{$cur['versionLast']}.json");
 
     $return .= "<p>Updating apps and tools section of config.json</p>";
     $this->replaceApps();
@@ -331,7 +331,7 @@ class Config {
 
     $return .= "<p>Checking for existing Tools and APKs...</p>";
 
-    $files = scandir("apk/");
+    $files = scandir(__DIR__."/apk/");
     $filesizes = [];
 
     // Get every File that ends with .apk
@@ -350,7 +350,7 @@ class Config {
 
       if ($isSupported === true) {
         $isSupported = "";
-        $filesizes[] = filesize("apk/".$filefull);
+        $filesizes[] = filesize(__DIR__."/apk/".$filefull);
       } else if ($isSupported == "unsupported") {
         $isSupported = "<span class='badge bg-warning'>No Longer Supported</span>";
       } else if ($isSupported == "404") {
@@ -571,7 +571,7 @@ function statsUpdate() {
 
   $getConfig = new Config();
   $appData = $getConfig->apps;
-  $dir = "../{$getConfig->buildDirectory}/";
+  $dir = __DIR__."/../{$getConfig->buildDirectory}/";
   $files = scandir($dir);
   $stats = [];
 

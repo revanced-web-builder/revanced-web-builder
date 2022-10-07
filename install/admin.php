@@ -714,7 +714,11 @@ if ($query == "config") {
 
     if ($query == "update") {
       echo $config->updateVersion();
-      $config->injectPatches(); // Inject patches from revanced-patches.json (this should eventually be part of the updateVersion())
+
+      //Inject patches from revanced-patches.json (this should eventually be part of updateVersion())
+      if (file_exists("tools/revanced-patches.json")) {
+        $config->injectPatches();
+      }
 
       // Reload config
       $config = new Config();
