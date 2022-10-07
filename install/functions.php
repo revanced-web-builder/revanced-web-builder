@@ -580,19 +580,24 @@ function array_search_fuzzy($arr, $keyword) {
   }
 }
 
-// Download Tool or APK (Admin panel)
-function fileDownload($url, $filepath){
 
-  $filepath = __DIR__."/".$filepath;
+// Check which file download method should be used
+function fileDownloadMethod() {
 
-  // Check to see which download methods this system supports
-  $config = new Config();
-  $checkSysCurl = exec("curl --version", $outputSys);
-  $checkPHPCurl = extension_loaded("curl");
-  $checkWget = exec("wget --version", $outputWget);
+  // Check if a config file exists to see which method user prefers
+  if (file_exists("config.json")) {
 
-  // If set to Auto, prioritze System cURL, then WGET, then PHP
-  if ($config->downloadMethod == "auto") {
+    $config = new Config();
+    $use = $config->downloadMethod;
+
+  } else {
+
+    // Check the different download methods and then choose one
+    $checkSysCurl = exec("curl --version", $outputSys);
+    $checkPHPCurl = extension_loaded("curl");
+    $checkWget = exec("wget --version", $outputWget);
+
+    // If set to Auto, prioritze System cURL, then WGET, then PHP
     if ($checkSysCurl != "") {
       $use = "curl";
     } else if ($checkWget != "") {
@@ -602,9 +607,22 @@ function fileDownload($url, $filepath){
     } else {
       die("NO DL METHODS FOUND");
     }
-  } else {
-    $use = $config->downloadMethod;
+
   }
+
+  return $use;
+
+}
+
+
+
+// Download Tool or APK (Admin panel)
+function fileDownload($url, $filepath){
+
+  $filepath = __DIR__."/".$filepath;
+
+  // Check to see which download methods this system supports
+  $use = fileDownloadMethod();
 
   // Check which download method the user prefers
   if ($use == "curl") { // Use system cURL
