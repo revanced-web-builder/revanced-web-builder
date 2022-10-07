@@ -60,6 +60,7 @@ class Config {
     "checkinInterval" => 5,
     "downloads" => 1,
     "downloadMethod" => "auto",
+    "autoUpdate" => 1,
     "footer" => 1,
     "pageTitle" => "ReVanced Web Builder",
     "themeDefault" => "dark",

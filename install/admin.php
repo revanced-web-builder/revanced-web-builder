@@ -191,7 +191,7 @@ if ($query == "config") {
   }
 
   // These vars must be binary
-  $requireBinary = array("buildEnabled", "downloads", "buildDirectoryPublic", "themeSwitcher", "debugMenu", "buildUnsupported", "buildBeta", "footer");
+  $requireBinary = array("buildEnabled", "downloads", "buildDirectoryPublic", "themeSwitcher", "debugMenu", "buildUnsupported", "buildBeta", "footer", "autoUpdate");
   foreach ($requireBinary as $bin) {
     if (!isset($_POST[$bin]) || $_POST[$bin] != "1") {
       $$bin = "0";
@@ -228,7 +228,9 @@ if ($query == "config") {
     "checkinInterval" => $checkinInterval,
     "downloads" => $downloads,
     "downloadMethod" => $downloadMethod,
+    "autoUpdate" => $autoUpdate,
     "footer" => $footer,
+    "autoUpdate" => $autoUpdate,
     "pageTitle" => $pageTitle,
     "themeDefault" => $themeDefault,
     "themeSwitcher" => $themeSwitcher,
@@ -1203,6 +1205,13 @@ if ($query == "config") {
           </div>
         </div>
       <?php } else { echo "<input type='hidden' name='downloadMethod' value='auto' checked='checked' />"; } // set "auto" to default if user can't choose ?>
+
+        <div class="py-2 row">
+          <label for="configautoUpdate" class="col-12 col-md-4 col-lg-2 col-form-label">Auto Update</label>
+          <div class="col-sm-10">
+            <label><input type="checkbox" class="mt-3 me-2" id="configautoUpdate" name="autoUpdate" value="1" <?php echo ($config->autoUpdate == 1) ? "checked='checked'":""; ?>/> Automatically check for ReVanced Web Builder updates.</label>
+          </div>
+        </div>
 
         <div class="py-2 row">
           <label for="configfooter" class="col-12 col-md-4 col-lg-2 col-form-label">Footer</label>
