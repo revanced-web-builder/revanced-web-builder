@@ -57,7 +57,6 @@ class Config {
     "buildSuffix" => "ReVanced",
     "buildBeta" => 0,
     "buildUnsupported" => 0,
-    "myBuildsHiddenToggle" => 1,
     "checkinInterval" => 5,
     "downloads" => 1,
     "downloadMethod" => "auto",
@@ -581,19 +580,25 @@ function array_search_fuzzy($arr, $keyword) {
   }
 }
 
-// Download Tool or APK (Admin panel)
-function fileDownload($url, $filepath){
 
-  $filepath = __DIR__."/".$filepath;
+// Check which file download method should be used
+function fileDownloadMethod() {
 
-  // Check to see which download methods this system supports
-  $config = new Config();
-  $checkSysCurl = exec("curl --version", $outputSys);
-  $checkPHPCurl = extension_loaded("curl");
-  $checkWget = exec("wget --version", $outputWget);
+  // Check if a config file exists to see which method user prefers
+  if (file_exists("config.json")) {
+    $config = new Config();
+    $use = $config->downloadMethod;
+  } else {
+    $use = "auto";
+  }
 
-  // If set to Auto, prioritze System cURL, then WGET, then PHP
-  if ($config->downloadMethod == "auto") {
+  if ($use == "auto") {
+    // Check the different download methods and then choose one
+    $checkSysCurl = exec("curl --version", $outputSys);
+    $checkPHPCurl = extension_loaded("curl");
+    $checkWget = exec("wget --version", $outputWget);
+
+    // If set to Auto, prioritze System cURL, then WGET, then PHP
     if ($checkSysCurl != "") {
       $use = "curl";
     } else if ($checkWget != "") {
@@ -603,9 +608,22 @@ function fileDownload($url, $filepath){
     } else {
       die("NO DL METHODS FOUND");
     }
-  } else {
-    $use = $config->downloadMethod;
+
   }
+
+  return $use;
+
+}
+
+
+
+// Download Tool or APK (Admin panel)
+function fileDownload($url, $filepath, $save=1){
+
+  $filepath = __DIR__."/".$filepath;
+
+  // Check to see which download methods this system supports
+  $use = fileDownloadMethod();
 
   // Check which download method the user prefers
   if ($use == "curl") { // Use system cURL
@@ -647,14 +665,20 @@ function fileDownload($url, $filepath){
     }
     curl_close($ch);
 
-    file_put_contents($filepath, $raw_file_data);
+    // Save file (or just return file data if $save==0)
+    // this isn't really necessary at the moment until I can do the same with wget and system curl
+    if ($save == 1) {
+      file_put_contents($filepath, $raw_file_data);
 
-    // Delete the file that was attempted to be made if it failed
-    if (curl_errno($ch)) {
-      unlink($filepath);
+      // Delete the file that was attempted to be made if it failed
+      if (curl_errno($ch)) {
+        unlink($filepath);
+      }
+
+      return (filesize($filepath) > 0)? true : false;
+    } else {
+      return $raw_file_data;
     }
-
-    return (filesize($filepath) > 0)? true : false;
 
   } else {
     die("ERROR: NO DOWNLOAD METHOD FOUND");
@@ -669,4 +693,34 @@ function isNumeric($num) {
   } else {
     return false;
   }
+}
+
+
+function copy_folder($src, $dst) {
+
+    // open the source directory
+    $dir = opendir($src);
+
+    // Make the destination directory if not exist
+    @mkdir($dst, 0777);
+
+    // Loop through the files in source directory
+    while( $file = readdir($dir) ) {
+
+        if (( $file != '.' ) && ( $file != '..' )) {
+            if ( is_dir($src . '/' . $file) )
+            {
+
+                // Recursively calling custom copy function
+                // for sub directory
+                copy_folder($src . '/' . $file, $dst . '/' . $file);
+
+            }
+            else {
+                copy($src . '/' . $file, $dst . '/' . $file);
+            }
+        }
+    }
+
+    closedir($dir);
 }

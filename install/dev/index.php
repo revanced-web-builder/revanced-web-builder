@@ -1,6 +1,6 @@
 <?php
 session_start();
-$rwbVersion = "0.1.10051";
+$rwbVersion = "0.1.1007";
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -32,7 +32,7 @@ if (file_exists("../config.json")) {
 
   if ($config->admin != "") {
     if (!$auth->valid) {
-      echo "<p><form method='post' action='index.php'>Admin Password: <input id='adminPass' name='adminPass' type='password' /> <input type='submit' value='Login' /></form></p>";
+      echo "<p><form method='post' action='{$urlPrefix}/dev/index.php'>Admin Password: <input id='adminPass' name='adminPass' type='password' /> <input type='submit' value='Login' /></form></p>";
       die();
     }
   }
@@ -56,6 +56,7 @@ if ($query == "prepareRelease") {
   $keepAPKs = (isset($_GET['keepAPKs'])) ? 1 : 0;
   $keepBuilds = (isset($_GET['keepBuilds'])) ? 1 : 0;
   $keepTools = (isset($_GET['keepTools'])) ? 1 : 0;
+  $keepMaps = (isset($_GET['keepMaps'])) ? 1 : 0;
 
   if ($keepConfig !== 1) {
     echo "Deleting app/config.json...<br />";
@@ -78,6 +79,15 @@ if ($query == "prepareRelease") {
     $debug->emptyDir("../tools"); // Delete all ReVanced Tools
     rmdir("../tools");
   }
+
+
+
+  /*
+  if ($keepMaps !== 1) {
+    echo "Deleting .min.js.map files<br />";
+    unlink("../assets/bootstrap.min.css.map");
+    unlink("../js/bootstrap.min.js.map");
+  }*/
 
 }
 
@@ -140,7 +150,7 @@ if ($query == "confignew") {
     $debug->configCreate($rwbVersion); // Create new config.json.dist file
 
   copy("../config.json.dist", "../config.json");
-  chmod("../config.json.dist", 0777);
+  chmod("../config.json.dist", 0775);
 
   $config = new Config();
   $config->injectPatches(); // some day this will be built in...
@@ -157,6 +167,51 @@ if ($query == "deleteconfigdist") {
   echo "Deleting app/config.json.dist<br />";
   unlink("../config.json.dist");
 }
+
+// Delete config.json.dist
+if ($query == "deleteconfigdist") {
+  echo "Deleting app/config.json.dist<br />";
+  unlink("../config.json.dist");
+}
+
+// Delete entire /app folder (if this is ran from the /install/dev folder)
+if ($query == "emptyappfolder") {
+
+  if (str_contains($_SERVER['REQUEST_URI'], "install")) {
+    echo "Emptying /app folder<br />";
+    rrmdir("../../app");
+
+    // Remake the folder in case rrmdir deleted the /app folder
+    if (!file_exists("../../app")) {
+      mkdir("../../app", 0777);
+      chmod("../../app", 0777);
+    }
+
+    // Place the /app/index.php back
+    copy("index.app.php", "../../app/index.php");
+
+  } else {
+    echo "emptyappfolder must be ran from the /install/dev folder<br />";
+  }
+
+}
+
+// Recursively remove directory
+function rrmdir($dir) {
+  if (is_dir($dir)) {
+    $objects = scandir($dir);
+    foreach ($objects as $object) {
+      if ($object != "." && $object != "..") {
+        if (filetype($dir."/".$object) == "dir")
+           rrmdir($dir."/".$object);
+        else unlink   ($dir."/".$object);
+      }
+    }
+    reset($objects);
+    rmdir($dir);
+  }
+ }
+
 ?>
 
 <!DOCTYPE html>
@@ -227,18 +282,19 @@ if (isset($auth) && !$auth->valid) {
 <h1>ReVanced Web Builder: Dev Tools</h1>
 
 <h2>Create config.json.dist</h2>
-<form method="get" action="index.php">
+<form method="get" action="<?php echo $urlPrefix; ?>/dev/index.php">
   <input type="hidden" name="q" value="configCreate" />
   <p>Version: <input name="version" size="8" type="text" value="<?php echo $rwbVersion; ?>" /> <input type="submit" value="Create" /></p>
 </form>
 
 <h2>Prepare for Release</h2>
-<form method="get" action="index.php">
+<form method="get" action="<?php echo $urlPrefix; ?>/dev/index.php">
   <input type="hidden" name="q" value="prepareRelease" />
   <p><label><input type="checkbox" name="keepConfig" value="1" /> Keep config.json</label></p>
   <p><label><input type="checkbox" name="keepAPKs" value="1" /> Keep APKs</label></p>
   <p><label><input type="checkbox" name="keepTools" value="1" /> Keep Tools</label></p>
   <p><label><input type="checkbox" name="keepBuilds" value="1" /> Keep Builds</label></p>
+  <p><label><input type="checkbox" name="keepMaps" value="1" /> Keep .js.min.map files</label></p>
   <p><input type="submit" value="Prepare for Release" /></p>
 </form>
 
@@ -252,6 +308,11 @@ if (isset($auth) && !$auth->valid) {
   <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=disabletools"><input type="button" value="Disable Tools" /></a> <a href="<?php echo $urlPrefix; ?>/dev/index.php?q=deletetools"><input type="button" value="Delete Tools" /></a></p>
 
   <p><a href="<?php echo $urlPrefix; ?>/dev/index.php?q=injectpatches"><input type="button" value="Inject Patches" /></a></p>
+
+  <?php
+  if (str_contains($_SERVER['REQUEST_URI'], "install")) {
+    echo '<p><a href="'.$urlPrefix.'/dev/index.php?q=emptyappfolder"><input type="button" value="Empty /app Folder" /></a></p>';
+  } ?>
 </form>
 
 <?php
@@ -269,6 +330,7 @@ class Debug {
     $configs = ["config" => $configSrc, "themes" => $themeSrc, "apps" => $appSrc, "tools" => $toolSrc, "version" => $version, "versionLast" => $version];
 
     Files::write("config.json.dist", json_encode($configs, JSON_PRETTY_PRINT));
+    chmod("../config.json.dist", 0775);
 
   }
 

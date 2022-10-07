@@ -103,6 +103,11 @@ body .patchContainer .col-md-6:hover { /* Dark theme column hover */
   line-height: 1.1;
 }
 
+#buildNewContainer {
+  background: var(--main-accent);
+  border-radius: 10px;
+}
+
 #buildIDCheck {
   padding: 0px 5px;
   height: auto;
@@ -193,6 +198,11 @@ body .patchContainer .col-md-6:hover { /* Dark theme column hover */
 }
 #patchesGeneral select:hover, .btn-input:hover {
   background: var(--input-hover);
+}
+
+.patchSection .btn-input {
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .main-bg {

@@ -4,12 +4,18 @@ var noSleep = new NoSleep() // NoSleep to prevent phone from falling asleep whil
 var configAll
 var appData
 var config
-
+var href = location.href; //returns the entire url
+var urlPrefix = href.substr(-4) // check last 4 chars of url
+if (urlPrefix != ".php" && urlPrefix != "app/" && urlPrefix != "/app") { // mod_rewritten
+  urlPrefix = "app/"
+} else {
+  urlPrefix = "" // no mod_rewrite
+}
 
 $.ajax({
   dataType: "json",
   type: "GET",
-  url: "app/config.json",
+  url: urlPrefix+"config.json",
   cache: false
 }).done(function (data, textStatus, errorThrown) {
 
@@ -18,13 +24,15 @@ $.ajax({
   appData = data['apps']
   themeData = data['themes']
 
+  if (config.admin == "") window.location = urlPrefix+"admin.php" // go to admin panel if password isn't setup yet
+
   config.checkinInterval *= 1000 // Multiply checkin interval by 1000 to convert seconds to milliseconds
 
   startup()
 
 }).fail(function (jqXHR, textStatus, errorThrown) {
   console.log("CONFIG Not Found")
-  $("body").html("<p class='mt-2 ms-4'>ReVanced Web Builder needs to be installed.<br /><br /><a href='app/admin.php'>Admin Panel</a>")
+  window.location = urlPrefix+"admin.php"
 })
 
 
@@ -108,6 +116,13 @@ function startup() {
     var versionsVisible = $("#appVersion option[data-app='"+appNames+"']").length
     if (versionsVisible <= 0) $("#appName option[value='"+appNames+"'], #patches"+appNames).remove()
 
+
+
+  }
+
+  // If no apps are enabled, redirect to admin panel.
+  if ($("#appName option").length == 0) {
+    window.location = urlPrefix+"admin.php"
   }
 
   $("#buildAvg"+$("#appName").val()).show() // Show the build time of the currently selected App
@@ -168,10 +183,6 @@ function startup() {
 
     // Hide build if necessary
     if (myBuilds[b]['hidden'] == 1) {
-      if (config.myBuildsHiddenToggle != 1) {
-        $("#myBuildsShowHidden").remove() // remove Show Hidden button from page since it won't do anything with the option disabled
-        continue // Don't even put this My Build on the page if disabled in config
-      }
       var hidden = "buildHidden"
       var statusButton1 = "myBuildDelete"
       var statusButton2 = "Delete"
@@ -267,10 +278,11 @@ function buildSetup(urlHash) {
   var prefix = urlHash.substr(0,2)
   var appName = appPrefix(prefix, 1) // reverse lookup prefix -> appname
   var buildSuffix = (config.buildSuffix != "") ? " "+config.buildSuffix : ""
+  var buildDirPrefix = (urlPrefix == "") ? "../" : "" // build directory is one directory back if not mod_rewritten
 
   $.ajax({
     type: "GET",
-    url: config.buildDirectory+"/"+appName+buildSuffix+"-"+urlHash+".info.txt",
+    url: buildDirPrefix+config.buildDirectory+"/"+appName+buildSuffix+"-"+urlHash+".info.txt",
     cache: false
   }).done(function (data, textStatus, errorThrown) {
 
@@ -304,7 +316,7 @@ function buildStart() {
 
   window.buildAjax = $.ajax({
     type: "POST",
-    url: "app/build.php",
+    url: urlPrefix+"build.php",
     data: dataString,
     beforeSend: function() {
       $("#buildError").slideUp()
@@ -421,7 +433,7 @@ function checkIn() {
 
   $.ajax({
     type: "GET",
-    url: "app/build.php?q=checkin",
+    url: urlPrefix+"build.php?q=checkin",
     success: function (isBusy) {
       if (isBusy == 1) { // Builder is busy. Disable Build button.
         $("#buildButton").prop({disabled: true})
@@ -514,9 +526,11 @@ function checkBuildID(buildID=undefined, updateStatus=undefined) {
     $("#buildIDCheck").slideDown()
   }
 
+  var buildDirPrefix = (urlPrefix == "") ? "../" : "" // build directory is one directory back if not mod_rewritten
+
   var checkBuild = $.ajax({
     type: "GET",
-    url: config.buildDirectory+"/"+appName+buildSuffix+"-"+buildID+".info.txt",
+    url: buildDirPrefix+config.buildDirectory+"/"+appName+buildSuffix+"-"+buildID+".info.txt",
     cache: false
   }).done(function (data, textStatus, errorThrown) {
     // only update the page if updateStatus is false
@@ -753,7 +767,7 @@ function buildCompleteMessage(data) {
   }
 
   successMsg += `<p><a href='`+rootDir+buildDir+`/`+data.url+`'><input type='button' value='Download `+data.app+` ReVanced' class='btn btn-primary' /></a></p>`
-
+  successMsg += `<input type="button" class="btn btn-secondary instructionsToggle" value="Install Instructions" />`
   $("#buildCompleteData").html(successMsg)
   $("#buildComplete").slideDown()
 

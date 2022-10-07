@@ -7,7 +7,6 @@
         "buildSuffix": "ReVanced",
         "buildBeta": 0,
         "buildUnsupported": 0,
-        "myBuildsHiddenToggle": 0,
         "checkinInterval": 5,
         "downloads": 1,
         "downloadMethod": "auto",
@@ -608,11 +607,11 @@
             "enabled": 0
         },
         "Patches": {
-            "latest": "2.80.0",
+            "latest": "2.81.0",
             "enabled": 0
         },
         "Integrations": {
-            "latest": "0.49.1",
+            "latest": "0.51.0",
             "enabled": 0
         },
         "MicroG": {
@@ -620,6 +619,6 @@
             "enabled": 0
         }
     },
-    "version": "0.1.10051",
-    "versionLast": "0.1.10051"
+    "version": "0.1.2",
+    "versionLast": "0.1.2"
 }

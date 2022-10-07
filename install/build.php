@@ -31,6 +31,8 @@ if (isBuilding() === 1) {
   die("ERROR:FLOOD");
 }
 
+
+
 // Build Information
 $buildDate = time(); // UNIX timestamp of when this build started
 $buildDateFull = date("c");
@@ -127,14 +129,11 @@ if (in_array("spotify-theme", $patches)) {
   array_push($optionsArray, array("['spotify-theme']" => array("backgroundColor" => $spotBg, "accentColor" => $spotAccent, "accentPressedColor" => $spotAccentPressed)));
 }
 
-
-
 // Get the first X characters of md5 for the buildID and add the $appPrefix
 $buildID = $appPrefix.substr(md5($buildID), 0, $config->buildIDLength-2); // Convert build_id into first idLength (minus 2) digits of md5 for shorter build_id (minus 2 to make up for prefix)
 
 // Optional suffix after the AppName in the final .apk
 $buildSuffix = ($config->buildSuffix != "") ? " ".$config->buildSuffix : "";
-
 
 // Check if file already exists with this build name
 // If it does, send the user the build information instead
