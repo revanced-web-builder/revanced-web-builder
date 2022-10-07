@@ -1339,6 +1339,25 @@ if ($query == "config") {
   </div>
 
   <?php
+  // Detect if Install folder exists
+  if (file_exists("../install"))
+  { ?>
+
+  <div id="adminInstallFound" class="container configComplete" <?php echo ($revancedDownloaded < 4) ? "style='display: none'":""; ?>>
+    <div class="row">
+      <hr />
+      <div class="col-12">
+        <h3 class="mb-4">Install Folder Detected</h3>
+        <p>You should delete the /install/ folder for security purposes.</p>
+      </div>
+    </div>
+  </div>
+
+  <?php
+  }
+  ?>
+
+  <?php
   // Detect if Documentation exists
   if (file_exists("docs/index.html"))
   { ?>
@@ -1348,7 +1367,7 @@ if ($query == "config") {
       <hr />
       <div class="col-12">
         <h3 class="mb-4">Documentation</h3>
-        <p>RWB has documentation that includes information about build info/stats, build durations, known issues, mod_rewrite, dev tools, and more.
+        <p>RWB has documentation that includes information about build info/stats, build durations, known issues, mod_rewrite, dev tools, and more.</p>
         <p><a href="docs/" target="_blank" class="me-2"><input type="button" class="btn btn-primary" value="Go to Documentation" /></a> <a href="https://github.com/revanced-web-builder/revanced-web-builder/" target="_blank"><input type="button" class="btn btn-primary" value="Go to Github" /></a></p>
       </div>
     </div>
