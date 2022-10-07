@@ -618,7 +618,7 @@ function fileDownloadMethod() {
 
 
 // Download Tool or APK (Admin panel)
-function fileDownload($url, $filepath){
+function fileDownload($url, $filepath, $save=1){
 
   $filepath = __DIR__."/".$filepath;
 
@@ -665,14 +665,20 @@ function fileDownload($url, $filepath){
     }
     curl_close($ch);
 
-    file_put_contents($filepath, $raw_file_data);
+    // Save file (or just return file data if $save==0)
+    // this isn't really necessary at the moment until I can do the same with wget and system curl
+    if ($save == 1) {
+      file_put_contents($filepath, $raw_file_data);
 
-    // Delete the file that was attempted to be made if it failed
-    if (curl_errno($ch)) {
-      unlink($filepath);
+      // Delete the file that was attempted to be made if it failed
+      if (curl_errno($ch)) {
+        unlink($filepath);
+      }
+
+      return (filesize($filepath) > 0)? true : false;
+    } else {
+      return $raw_file_data;
     }
-
-    return (filesize($filepath) > 0)? true : false;
 
   } else {
     die("ERROR: NO DOWNLOAD METHOD FOUND");

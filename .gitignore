@@ -5,6 +5,8 @@ app/apk/*
 app/tools/*
 builds/*.apk
 builds/*.txt
+builds/*.keystore
 *.toml
 app/*
 !app/index.php
+install/upgrade/latestRelease.json

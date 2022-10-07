@@ -11,9 +11,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require("functions.php");
+require_once("functions.php");
 
-$verbose = false; // true = Print out what the installer is doing. This won't automatically redirect you to Admin Panel when finished
+$verbose = true; // true = Print out what the installer is doing. This won't automatically redirect you to Admin Panel when finished
 
 // Make sure the /install folder is writable
 if (!is_writable(".")) die("/install folder needs to be writable.");
