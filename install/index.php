@@ -7,6 +7,12 @@ this installer needs to create all the files/folders
 in the /app folder with proper permissions
 */
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require("functions.php");
+
 $verbose = false; // true = Print out what the installer is doing. This won't automatically redirect you to Admin Panel when finished
 
 // Make sure the /install folder is writable
@@ -69,36 +75,4 @@ if ($verbose) {
 } else {
   header("Location: ../app/admin.php");
   exit;
-}
-
-
-
-function copy_folder($src, $dst) {
-
-    // open the source directory
-    $dir = opendir($src);
-
-    // Make the destination directory if not exist
-    @mkdir($dst, 0775);
-    chmod($dst, 0775);
-
-    // Loop through the files in source directory
-    while( $file = readdir($dir) ) {
-
-        if (( $file != '.' ) && ( $file != '..' )) {
-            if ( is_dir($src . '/' . $file) )
-            {
-
-                // Recursively calling custom copy function
-                // for sub directory
-                copy_folder($src . '/' . $file, $dst . '/' . $file);
-
-            }
-            else {
-                copy($src . '/' . $file, $dst . '/' . $file);
-            }
-        }
-    }
-
-    closedir($dir);
 }
