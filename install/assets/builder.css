@@ -290,7 +290,7 @@ body .patchContainer .col-md-6:hover { /* Dark theme column hover */
   margin-left: 8px;
 }
 
-#updateContainer {
+#updateContainer, .accentContainer {
   border-radius: 6px;
 }
 

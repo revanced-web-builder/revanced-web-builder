@@ -73,6 +73,29 @@ $appData = $config->apps;
 $toolData = $config->tools;
 $themeData = $config->themes;
 
+// Check if there's an update available
+$distConfig = Files::read("config.json.dist");
+if ($config->versionLast < $distConfig['versionLast']) {
+
+  $config->updateVersion();
+
+  //Inject patches from revanced-patches.json (this should eventually be part of updateVersion())
+  if (file_exists("tools/revanced-patches.json")) {
+    $config->injectPatches();
+  }
+
+  // Reload config
+  $config = new Config();
+  $tools = $config->toolArray();
+
+  /*echo "<h3>ReVanced Web Builder has been updated from version {$config->versionLast} to {$distConfig['versionLast']}</h3>
+  <p class='mt-3'><a href='?q=update'><button class='btn btn-primary'>Update</button></a></p>";*/
+  header("Location: $urlPrefix/app/admin.php?update=".$distConfig['versionLast']);
+  exit;
+  die();
+}
+
+
 // Information needed for downloading ReVanced tools
 $tools = $config->toolArray();
 
@@ -357,7 +380,6 @@ if ($query == "config") {
       $("#downloadAll,#toolsNotice").hide()
       $(".configComplete").slideDown()
     }
-
 
     if (config.buildUnsupported != 1) $("p[data-support='0']").hide() // Hide unsupported builds (if necessary)
     if (config.buildBeta != 1) $("p[data-beta='1']").hide() // Hide beta builds (if necessary)
@@ -644,8 +666,9 @@ if ($query == "config") {
     }
   })
 
-
+  // EVENTS
   $(document).on("click", ".toggleSection", function(e) { toggleSection($(this)) }) // Download all of a certain App
+  $(document).on("click", "#updateHide", function(e) { $("#updateContainer").slideUp() }) // Hide RWB version update box
   </script>
 
 </head>
@@ -675,6 +698,15 @@ if ($query == "config") {
       </div>
     </div>
     <?php
+
+    // Check if RWB was updated
+    if (isset($_GET['update'])) {
+      echo "<div id='updateContainer' class='accentContainer p-2 p-lg-3 mb-4 main-accent'>
+        <h2 class='mb-4'>Updated to version ".$_GET['update']."!</h2>
+        <a href='https://github.com/revanced-web-builder/revanced-web-builder/releases/tag/v".$_GET['update']."' target='_blank'><input type='button' class='btn btn-primary me-2' value='Changelog' /></a> <input id='updateHide' type='button' class='btn btn-secondary' value='Okay' />
+      </div>";
+    }
+
     if ($auth->valid !== true) {
       echo "<div class='container'>
       <form id='adminLoginForm' method='post' action='{$_SERVER['PHP_SELF']}' class='row justify-content-center'>";
@@ -702,27 +734,6 @@ if ($query == "config") {
       echo "</form>
       </div>";
       die();
-    }
-
-    // Check if there's an update available
-    $distConfig = Files::read("config.json.dist");
-    if ($config->versionLast < $distConfig['versionLast'] && $query != "update") {
-      echo "<h3>You need to update from version {$config->versionLast} to {$distConfig['versionLast']}</h3>
-      <p class='mt-3'><a href='?q=update'><button class='btn btn-primary'>Update</button></a></p>";
-      die();
-    }
-
-    if ($query == "update") {
-      echo $config->updateVersion();
-
-      //Inject patches from revanced-patches.json (this should eventually be part of updateVersion())
-      if (file_exists("tools/revanced-patches.json")) {
-        $config->injectPatches();
-      }
-
-      // Reload config
-      $config = new Config();
-      $tools = $config->toolArray();
     }
     ?>
     <div class="row">

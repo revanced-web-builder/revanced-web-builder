@@ -373,7 +373,7 @@ class Config {
     $return .= "<p>Total size of supported APKs: {$returnsize}</p>";
 
     $return .= "<button class='btn btn-lg btn-secondary'>Update Successful</button>";
-    return "<div id='updateContainer' class='p-2 p-lg-3 mb-4 main-accent'>{$return}</div>";
+    return "<div id='updateContainer' class='accentContainer p-2 p-lg-3 mb-4 main-accent'>{$return}</div>";
 
   }
 

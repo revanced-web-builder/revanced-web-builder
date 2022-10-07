@@ -8,8 +8,8 @@ $file = new Files();
 
 // Download information about the latest RWB release
 $url = "https://api.github.com/repos/revanced-web-builder/revanced-web-builder/releases/latest";
-$dl = fileDownload($url, "upgrade/latestRelease.json");
-$data = $file->read("upgrade/latestRelease.json");
+$dl = fileDownload($url, "update/latestRelease.json");
+$data = $file->read("update/latestRelease.json");
 
 // Check current version
 $config = new Config();
@@ -26,17 +26,17 @@ $version = substr($data['name'], 1);
 echo "Version: $version<br />";
 
 
-if (!isset($_GET['upgrade'])) {
+if (!isset($_GET['update'])) {
   if (version_compare($versionInstalled, $version) == -1) {
-    echo "<a href='?upgrade=true'>UPGRADE!</a>";
+    echo "<a href='?update=true'>Update!</a>";
   } else {
-    echo "NO NEED TO UPGRADE!";
+    echo "No need to update!";
   }
   die();
 }
 
 $url2 = $data['assets'][1]['browser_download_url'];
-$dl2 = fileDownload($url2, "upgrade/release.zip");
+$dl2 = fileDownload($url2, "update/release.zip");
 
 if (class_exists("ZipArchive")) {
   $zip = new ZipArchive;
@@ -46,7 +46,7 @@ if (class_exists("ZipArchive")) {
     $zip->close();
     chmod("release/rwb", 0777);
   } else {
-    echo "Upgrade failed to unzip...";
+    echo "update failed to unzip...";
   }
 } else {
   echo "You must install the php-zip module.";
@@ -60,7 +60,7 @@ $verbose = true;
 $installFolder = scandir("release/rwb/install");
 //unlink("../index.php");
 foreach ($installFolder as $f) {
-  if ($f == "." || $f == ".." || $f == "index.php" || $f == "upgrade") continue; // don't copy ., .., or the installer
+  if ($f == "." || $f == ".." || $f == "index.php" || $f == "update") continue; // don't copy ., .., or the installer
 
   if (is_dir("release/rwb/install/".$f)) {
     if ($verbose) echo "Copying $f folder.<br />";
@@ -80,8 +80,8 @@ foreach ($installFolder as $f) {
 
 }
 
-// Empty the upgrade/release folder
-echo "Emptying upgrade/release folder<br />";
+// Empty the update/release folder
+echo "Emptying update/release folder<br />";
 $file->rmdir("release");
 echo "Deleting release.zip<br />";
 unlink("release.zip");
