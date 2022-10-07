@@ -9,4 +9,4 @@ builds/*.keystore
 *.toml
 app/*
 !app/index.php
-install/upgrade/latestRelease.json
+install/update/latestRelease.json

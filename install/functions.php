@@ -60,6 +60,7 @@ class Config {
     "checkinInterval" => 5,
     "downloads" => 1,
     "downloadMethod" => "auto",
+    "autoUpdate" => 1,
     "footer" => 1,
     "pageTitle" => "ReVanced Web Builder",
     "themeDefault" => "dark",
@@ -321,7 +322,7 @@ class Config {
     $return .= "<h3 class='mb-3'>Updating from version {$cur['versionLast']} to {$new['version']}</h3>";
 
     $return .= "<p>Making backup of apps/config.json to apps/config-{$cur['versionLast']}.json</p>";
-    $backupConfig = copy("config.json", "config-{$cur['versionLast']}.json");
+    $backupConfig = copy(__DIR__."/config.json", "config-{$cur['versionLast']}.json");
 
     $return .= "<p>Updating apps and tools section of config.json</p>";
     $this->replaceApps();
@@ -331,7 +332,7 @@ class Config {
 
     $return .= "<p>Checking for existing Tools and APKs...</p>";
 
-    $files = scandir("apk/");
+    $files = scandir(__DIR__."/apk/");
     $filesizes = [];
 
     // Get every File that ends with .apk
@@ -350,7 +351,7 @@ class Config {
 
       if ($isSupported === true) {
         $isSupported = "";
-        $filesizes[] = filesize("apk/".$filefull);
+        $filesizes[] = filesize(__DIR__."/apk/".$filefull);
       } else if ($isSupported == "unsupported") {
         $isSupported = "<span class='badge bg-warning'>No Longer Supported</span>";
       } else if ($isSupported == "404") {
@@ -373,7 +374,7 @@ class Config {
     $return .= "<p>Total size of supported APKs: {$returnsize}</p>";
 
     $return .= "<button class='btn btn-lg btn-secondary'>Update Successful</button>";
-    return "<div id='updateContainer' class='p-2 p-lg-3 mb-4 main-accent'>{$return}</div>";
+    return "<div id='updateContainer' class='accentContainer p-2 p-lg-3 mb-4 main-accent'>{$return}</div>";
 
   }
 
@@ -571,7 +572,7 @@ function statsUpdate() {
 
   $getConfig = new Config();
   $appData = $getConfig->apps;
-  $dir = "../{$getConfig->buildDirectory}/";
+  $dir = __DIR__."/../{$getConfig->buildDirectory}/";
   $files = scandir($dir);
   $stats = [];
 

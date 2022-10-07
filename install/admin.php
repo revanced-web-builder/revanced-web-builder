@@ -59,7 +59,6 @@ if (!file_exists("config.json")) {
 
 
 // Gather all Config and AppData JSON
-
 $config = new Config();
 
 $auth = new Auth();
@@ -72,6 +71,48 @@ if ($loginPassword != null) {
 $appData = $config->apps;
 $toolData = $config->tools;
 $themeData = $config->themes;
+
+// Automatically check for RWB updates if enabled
+$versionUpdate = null;
+if ($config->autoUpdate == 1) {
+  // Download information about the latest RWB release
+  $url = "https://api.github.com/repos/revanced-web-builder/revanced-web-builder/releases/latest";
+  $dl = fileDownload($url, "update/latestRelease.json");
+  $data = Files::read("update/latestRelease.json");
+
+  // Check current version
+  $config = new Config();
+  $versionInstalled = $config->versionLast;
+  $version = substr($data['tag_name'], 1);
+
+  if (version_compare($versionInstalled, $version) == -1) {
+    $versionUpdate = $version;
+  }
+}
+
+
+// Check if there's an update available
+$distConfig = Files::read("config.json.dist");
+if ($config->versionLast < $distConfig['versionLast']) {
+
+  $config->updateVersion();
+
+  //Inject patches from revanced-patches.json (this should eventually be part of updateVersion())
+  if (file_exists("tools/revanced-patches.json")) {
+    $config->injectPatches();
+  }
+
+  // Reload config
+  $config = new Config();
+  $tools = $config->toolArray();
+
+  /*echo "<h3>ReVanced Web Builder has been updated from version {$config->versionLast} to {$distConfig['versionLast']}</h3>
+  <p class='mt-3'><a href='?q=update'><button class='btn btn-primary'>Update</button></a></p>";*/
+  header("Location: $urlPrefix/app/admin.php?update=".$distConfig['versionLast']);
+  exit;
+  die();
+}
+
 
 // Information needed for downloading ReVanced tools
 $tools = $config->toolArray();
@@ -168,7 +209,7 @@ if ($query == "config") {
   }
 
   // These vars must be binary
-  $requireBinary = array("buildEnabled", "downloads", "buildDirectoryPublic", "themeSwitcher", "debugMenu", "buildUnsupported", "buildBeta", "footer");
+  $requireBinary = array("buildEnabled", "downloads", "buildDirectoryPublic", "themeSwitcher", "debugMenu", "buildUnsupported", "buildBeta", "footer", "autoUpdate");
   foreach ($requireBinary as $bin) {
     if (!isset($_POST[$bin]) || $_POST[$bin] != "1") {
       $$bin = "0";
@@ -191,7 +232,7 @@ if ($query == "config") {
 
   // Write new .htaccess file in builds directory
   Files::write("../{$config->buildDirectory}/.htaccess", $write);
-  chmod("../{$config->buildDirectory}/.htaccess", 0775);
+  chmod(__DIR__."/../{$config->buildDirectory}/.htaccess", 0775);
 
   // Build the new config.json
   $configs = array(
@@ -205,7 +246,9 @@ if ($query == "config") {
     "checkinInterval" => $checkinInterval,
     "downloads" => $downloads,
     "downloadMethod" => $downloadMethod,
+    "autoUpdate" => $autoUpdate,
     "footer" => $footer,
+    "autoUpdate" => $autoUpdate,
     "pageTitle" => $pageTitle,
     "themeDefault" => $themeDefault,
     "themeSwitcher" => $themeSwitcher,
@@ -357,7 +400,6 @@ if ($query == "config") {
       $("#downloadAll,#toolsNotice").hide()
       $(".configComplete").slideDown()
     }
-
 
     if (config.buildUnsupported != 1) $("p[data-support='0']").hide() // Hide unsupported builds (if necessary)
     if (config.buildBeta != 1) $("p[data-beta='1']").hide() // Hide beta builds (if necessary)
@@ -644,8 +686,9 @@ if ($query == "config") {
     }
   })
 
-
+  // EVENTS
   $(document).on("click", ".toggleSection", function(e) { toggleSection($(this)) }) // Download all of a certain App
+  $(document).on("click", "#updateHide", function(e) { $("#updateContainer").slideUp() }) // Hide RWB version update box
   </script>
 
 </head>
@@ -675,6 +718,23 @@ if ($query == "config") {
       </div>
     </div>
     <?php
+
+    // Check if RWB needs to be updated
+    if ($versionUpdate != null) {
+      echo "<div id='updateContainer' class='accentContainer p-2 p-lg-3 mb-4 main-accent'>
+        <h2 class='mb-4'>Update Available!</h2>
+        <a href='{$urlPrefix}/app/update'><input type='button' class='btn btn-primary me-2' value='Update to version {$versionUpdate}' /></a>
+      </div>";
+    }
+
+    // Check if RWB was updated
+    if (isset($_GET['update'])) {
+      echo "<div id='updateContainer' class='accentContainer p-2 p-lg-3 mb-4 main-accent'>
+        <h2 class='mb-4'>Updated to version ".$_GET['update']."!</h2>
+        <a href='https://github.com/revanced-web-builder/revanced-web-builder/releases/tag/v".$_GET['update']."' target='_blank'><input type='button' class='btn btn-primary me-2' value='Changelog' /></a> <input id='updateHide' type='button' class='btn btn-secondary' value='Okay' />
+      </div>";
+    }
+
     if ($auth->valid !== true) {
       echo "<div class='container'>
       <form id='adminLoginForm' method='post' action='{$_SERVER['PHP_SELF']}' class='row justify-content-center'>";
@@ -702,23 +762,6 @@ if ($query == "config") {
       echo "</form>
       </div>";
       die();
-    }
-
-    // Check if there's an update available
-    $distConfig = Files::read("config.json.dist");
-    if ($config->versionLast < $distConfig['versionLast'] && $query != "update") {
-      echo "<h3>You need to update from version {$config->versionLast} to {$distConfig['versionLast']}</h3>
-      <p class='mt-3'><a href='?q=update'><button class='btn btn-primary'>Update</button></a></p>";
-      die();
-    }
-
-    if ($query == "update") {
-      echo $config->updateVersion();
-      $config->injectPatches(); // Inject patches from revanced-patches.json (this should eventually be part of the updateVersion())
-
-      // Reload config
-      $config = new Config();
-      $tools = $config->toolArray();
     }
     ?>
     <div class="row">
@@ -1190,6 +1233,13 @@ if ($query == "config") {
       <?php } else { echo "<input type='hidden' name='downloadMethod' value='auto' checked='checked' />"; } // set "auto" to default if user can't choose ?>
 
         <div class="py-2 row">
+          <label for="configautoUpdate" class="col-12 col-md-4 col-lg-2 col-form-label">Auto Update</label>
+          <div class="col-sm-10">
+            <label><input type="checkbox" class="mt-3 me-2" id="configautoUpdate" name="autoUpdate" value="1" <?php echo ($config->autoUpdate == 1) ? "checked='checked'":""; ?>/> Automatically check for ReVanced Web Builder updates.</label>
+          </div>
+        </div>
+
+        <div class="py-2 row">
           <label for="configfooter" class="col-12 col-md-4 col-lg-2 col-form-label">Footer</label>
           <div class="col-sm-10">
             <label><input type="checkbox" class="mt-3 me-2" id="configfooter" name="footer" value="1" <?php echo ($config->footer == 1) ? "checked='checked'":""; ?>/> Display footer to support ReVanced and Web Builder.</label>
@@ -1324,6 +1374,25 @@ if ($query == "config") {
   </div>
 
   <?php
+  // Detect if Install folder exists
+  if (file_exists("../install"))
+  { ?>
+
+  <div id="adminInstallFound" class="container configComplete" <?php echo ($revancedDownloaded < 4) ? "style='display: none'":""; ?>>
+    <div class="row">
+      <hr />
+      <div class="col-12">
+        <h3 class="mb-4">Install Folder Detected</h3>
+        <p>You should delete the /install/ folder for security purposes.</p>
+      </div>
+    </div>
+  </div>
+
+  <?php
+  }
+  ?>
+
+  <?php
   // Detect if Documentation exists
   if (file_exists("docs/index.html"))
   { ?>
@@ -1333,7 +1402,7 @@ if ($query == "config") {
       <hr />
       <div class="col-12">
         <h3 class="mb-4">Documentation</h3>
-        <p>RWB has documentation that includes information about build info/stats, build durations, known issues, mod_rewrite, dev tools, and more.
+        <p>RWB has documentation that includes information about build info/stats, build durations, known issues, mod_rewrite, dev tools, and more.</p>
         <p><a href="docs/" target="_blank" class="me-2"><input type="button" class="btn btn-primary" value="Go to Documentation" /></a> <a href="https://github.com/revanced-web-builder/revanced-web-builder/" target="_blank"><input type="button" class="btn btn-primary" value="Go to Github" /></a></p>
       </div>
     </div>

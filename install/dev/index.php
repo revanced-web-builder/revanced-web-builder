@@ -1,6 +1,5 @@
 <?php
 session_start();
-$rwbVersion = "0.1.21";
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -12,6 +11,7 @@ $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https://' : 'http
 $urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -14); // Remove /app/dev/index.php from URL (for now)
 
 $dir = __DIR__; // this may cause errors for PHP FPM. Look into that or allow user to define the root path if it fails to be autodetected?
+$rwbVersion = ""; // This is updated later if there's a config.json file
 
 require_once("../functions.php");
 $files = new Files();
@@ -30,6 +30,7 @@ if (file_exists("../config.json")) {
     $loginAttempt = $auth->login($loginPassword);
   }
   $config = new Config();
+  $rwbVersion = $config->versionLast;
 
   if ($config->admin != "") {
     if (!$auth->valid) {
@@ -80,8 +81,6 @@ if ($query == "prepareRelease") {
     $debug->emptyDir("../tools"); // Delete all ReVanced Tools
     rmdir("../tools");
   }
-
-
 
   /*
   if ($keepMaps !== 1) {

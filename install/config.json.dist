@@ -10,6 +10,7 @@
         "checkinInterval": 5,
         "downloads": 1,
         "downloadMethod": "auto",
+        "autoUpdate": 1,
         "footer": 1,
         "pageTitle": "ReVanced Web Builder",
         "themeDefault": "dark",
@@ -619,6 +620,6 @@
             "enabled": 0
         }
     },
-    "version": "0.1.21",
-    "versionLast": "0.1.21"
+    "version": "0.1.22",
+    "versionLast": "0.1.22"
 }
