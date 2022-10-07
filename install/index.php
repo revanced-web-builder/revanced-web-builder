@@ -13,7 +13,7 @@ error_reporting(E_ALL);
 
 require_once("functions.php");
 
-$verbose = true; // true = Print out what the installer is doing. This won't automatically redirect you to Admin Panel when finished
+$verbose = false; // true = Print out what the installer is doing. This won't automatically redirect you to Admin Panel when finished
 
 // Make sure the /install folder is writable
 if (!is_writable(".")) die("/install folder needs to be writable.");
