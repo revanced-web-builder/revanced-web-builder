@@ -59,7 +59,6 @@ if (!file_exists("config.json")) {
 
 
 // Gather all Config and AppData JSON
-
 $config = new Config();
 
 $auth = new Auth();
@@ -72,6 +71,25 @@ if ($loginPassword != null) {
 $appData = $config->apps;
 $toolData = $config->tools;
 $themeData = $config->themes;
+
+// Automatically check for RWB updates if enabled
+$versionUpdate = null;
+if ($config->autoUpdate == 1) {
+  // Download information about the latest RWB release
+  $url = "https://api.github.com/repos/revanced-web-builder/revanced-web-builder/releases/latest";
+  $dl = fileDownload($url, "update/latestRelease.json");
+  $data = Files::read("update/latestRelease.json");
+
+  // Check current version
+  $config = new Config();
+  $versionInstalled = $config->versionLast;
+  $version = substr($data['tag_name'], 1);
+
+  if (version_compare($versionInstalled, $version) == -1) {
+    $versionUpdate = $version;
+  }
+}
+
 
 // Check if there's an update available
 $distConfig = Files::read("config.json.dist");
@@ -214,7 +232,7 @@ if ($query == "config") {
 
   // Write new .htaccess file in builds directory
   Files::write("../{$config->buildDirectory}/.htaccess", $write);
-  chmod("../{$config->buildDirectory}/.htaccess", 0775);
+  chmod(__DIR__."/../{$config->buildDirectory}/.htaccess", 0775);
 
   // Build the new config.json
   $configs = array(
@@ -700,6 +718,14 @@ if ($query == "config") {
       </div>
     </div>
     <?php
+
+    // Check if RWB needs to be updated
+    if ($versionUpdate != null) {
+      echo "<div id='updateContainer' class='accentContainer p-2 p-lg-3 mb-4 main-accent'>
+        <h2 class='mb-4'>Update Available!</h2>
+        <a href='{$urlPrefix}/app/update'><input type='button' class='btn btn-primary me-2' value='Update to version {$versionUpdate}' /></a>
+      </div>";
+    }
 
     // Check if RWB was updated
     if (isset($_GET['update'])) {

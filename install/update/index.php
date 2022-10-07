@@ -17,14 +17,9 @@ $versionInstalled = $config->versionLast;
 
 echo "Version Installed: $versionInstalled<br />";
 
-$branch = substr($data['tag_name'], 1);
-
-echo "Branch: $branch<br />";
-
-$version = substr($data['name'], 1);
+$version = substr($data['tag_name'], 1);
 
 echo "Version: $version<br />";
-
 
 if (!isset($_GET['update'])) {
   if (version_compare($versionInstalled, $version) == -1) {
