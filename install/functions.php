@@ -586,12 +586,13 @@ function fileDownloadMethod() {
 
   // Check if a config file exists to see which method user prefers
   if (file_exists("config.json")) {
-
     $config = new Config();
     $use = $config->downloadMethod;
-
   } else {
+    $use = "auto";
+  }
 
+  if ($use == "auto") {
     // Check the different download methods and then choose one
     $checkSysCurl = exec("curl --version", $outputSys);
     $checkPHPCurl = extension_loaded("curl");
