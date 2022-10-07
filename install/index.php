@@ -12,6 +12,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once("functions.php");
+$file = new Files();
 
 $verbose = false; // true = Print out what the installer is doing. This won't automatically redirect you to Admin Panel when finished
 
@@ -28,7 +29,7 @@ foreach ($installFolder as $f) {
 
   if (is_dir($f)) {
     if ($verbose) echo "Copying $f folder.<br />";
-    copy_folder($f, "../app/$f");
+    $file->copydir($f, "../app/$f");
   } else {
     if ($verbose) echo "Copying $f.<br />";
 

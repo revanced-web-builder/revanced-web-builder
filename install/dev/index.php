@@ -1,6 +1,6 @@
 <?php
 session_start();
-$rwbVersion = "0.1.1007";
+$rwbVersion = "0.1.21";
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -14,6 +14,7 @@ $urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -14
 $dir = __DIR__; // this may cause errors for PHP FPM. Look into that or allow user to define the root path if it fails to be autodetected?
 
 require_once("../functions.php");
+$files = new Files();
 
 $query = (isset($_GET['q']) && $_GET['q'] != "") ? $_GET['q'] : false;
 $debug = new Debug();
@@ -179,9 +180,9 @@ if ($query == "emptyappfolder") {
 
   if (str_contains($_SERVER['REQUEST_URI'], "install")) {
     echo "Emptying /app folder<br />";
-    rrmdir("../../app");
+    $files->rmdir("../../app");
 
-    // Remake the folder in case rrmdir deleted the /app folder
+    // Remake the folder in case rmdir deleted the /app folder
     if (!file_exists("../../app")) {
       mkdir("../../app", 0777);
       chmod("../../app", 0777);
@@ -195,23 +196,6 @@ if ($query == "emptyappfolder") {
   }
 
 }
-
-// Recursively remove directory
-function rrmdir($dir) {
-  if (is_dir($dir)) {
-    $objects = scandir($dir);
-    foreach ($objects as $object) {
-      if ($object != "." && $object != "..") {
-        if (filetype($dir."/".$object) == "dir")
-           rrmdir($dir."/".$object);
-        else unlink   ($dir."/".$object);
-      }
-    }
-    reset($objects);
-    rmdir($dir);
-  }
- }
-
 ?>
 
 <!DOCTYPE html>
