@@ -446,6 +446,51 @@ class Files {
       fclose($myFileLink2);
     }
 
+    // Recursively remove directory
+    // (May leave root folder if permissions error)
+    public static function rmdir($dir) {
+
+      if (is_dir($dir)) {
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+          if ($object != "." && $object != "..") {
+            if (filetype($dir."/".$object) == "dir")
+               Files::rmdir($dir."/".$object);
+            else unlink   ($dir."/".$object);
+          }
+        }
+        reset($objects);
+        rmdir($dir);
+
+      }
+
+    }
+
+    public static function copydir($src, $dst) {
+
+      // open the source directory
+      $dir = opendir($src);
+
+      // Make the destination directory if not exist
+      @mkdir($dst, 0777);
+
+      // Loop through the files in source directory
+      while( $file = readdir($dir) ) {
+
+        if (( $file != '.' ) && ( $file != '..' )) {
+
+          if ( is_dir($src . '/' . $file) ) {
+            // Recursively calling custom copy function for subdirs
+            Files::copydir($src . '/' . $file, $dst . '/' . $file);
+          } else {
+            copy($src . '/' . $file, $dst . '/' . $file);
+          }
+        }
+      }
+
+      closedir($dir);
+    }
+
 }
 
 
@@ -693,34 +738,4 @@ function isNumeric($num) {
   } else {
     return false;
   }
-}
-
-
-function copy_folder($src, $dst) {
-
-    // open the source directory
-    $dir = opendir($src);
-
-    // Make the destination directory if not exist
-    @mkdir($dst, 0777);
-
-    // Loop through the files in source directory
-    while( $file = readdir($dir) ) {
-
-        if (( $file != '.' ) && ( $file != '..' )) {
-            if ( is_dir($src . '/' . $file) )
-            {
-
-                // Recursively calling custom copy function
-                // for sub directory
-                copy_folder($src . '/' . $file, $dst . '/' . $file);
-
-            }
-            else {
-                copy($src . '/' . $file, $dst . '/' . $file);
-            }
-        }
-    }
-
-    closedir($dir);
 }
