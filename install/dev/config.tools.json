@@ -4,11 +4,11 @@
     "enabled": 0
   },
   "Patches": {
-    "latest": "2.81.0",
+    "latest": "2.82.0",
     "enabled": 0
   },
   "Integrations": {
-    "latest": "0.51.0",
+    "latest": "0.52.0",
     "enabled": 0
   },
   "MicroG": {
