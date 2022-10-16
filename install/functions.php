@@ -572,7 +572,7 @@ function statsUpdate() {
 
   $getConfig = new Config();
   $appData = $getConfig->apps;
-  $dir = __DIR__."/../{$getConfig->buildDirectory}/";
+  $dir = "../{$getConfig->buildDirectory}/";
   $files = scandir($dir);
   $stats = [];
 

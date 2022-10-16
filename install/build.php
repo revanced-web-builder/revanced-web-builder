@@ -172,8 +172,8 @@ $execJava = exec($javaCMD, $javaOutput);
 if ($execJava == "INFO: Finished") { // Success!
 
   $timeTotal = time() - $buildDate; // Calculate how long build took to make
-  $fileMD5 = md5_file("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get MD5 hash of generated build
-  $filesize = filesize("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get APK file size
+  $fileMD5 = md5_file(__DIR__."/../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get MD5 hash of generated build
+  $filesize = filesize(__DIR__."/../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get APK file size
 
   // Don't include MicroG for any version of Twitter or Reddit
   $microg = ($buildApp == "YouTube" || $buildApp == "YouTubeMusic") ? "vanced-microg.apk":"";
