@@ -284,6 +284,7 @@ class Config {
     foreach ($patches as $p => $v) {
 
       $appPkg = $v['compatiblePackages'][0]['name'];
+      if (!array_key_exists($appPkg, $names)) { continue; } // Skip this if app package isn't supported yet
       $appName = $names[$appPkg][0];
       $versions = $v['compatiblePackages'][0]['versions'];
       $filteredVersions = [];
