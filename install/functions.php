@@ -271,7 +271,7 @@ class Config {
 
     // Loop through each of the official patches and add the patch version, supported apk versions, etc
     $names = array(
-      "com.google.android.youtube" => ["YouTube", "17.26.35"], // last in array is lowest/minimum supported version
+      "com.google.android.youtube" => ["YouTube", "17.36.37"], // last in array is lowest/minimum supported version
       "com.google.android.apps.youtube.music" => ["YouTubeMusic", "5.21.52"],
       "com.reddit.frontpage" => ["Reddit", "2022.28.0"],
       "com.spotify.music" => ["Spotify", "8.7.68.568"],
