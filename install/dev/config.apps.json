@@ -107,6 +107,51 @@
         "desc": "Hides the Autoplay button in the video player.",
         "section": "Appearance"
       },
+      "hide-my-mix": {
+        "name": "Hide \"My Mix\" Playlists",
+        "desc": "Hides the My Mix playlist suggestions.",
+        "section": "Appearance"
+      },
+      "hide-artist-card": {
+        "name": "Hide Artist Card",
+        "desc": "Hides the artist card below the searchbar.",
+        "section": "Appearance"
+      },
+      "hide-album-cards": {
+        "name": "Hide Album Cards",
+        "desc": "Hides the album cards below the artist description.",
+        "section": "Appearance"
+      },
+      "comments": {
+        "name": "Hide Comments",
+        "desc": "Hides components related to comments.",
+        "section": "Appearance"
+      },
+      "hide-captions-button": {
+        "name": "Hide Captions Button",
+        "desc": "Hides the Captions button in the video player.",
+        "section": "Appearance"
+      },
+      "hide-crowdfunding-box": {
+        "name": "Hide Crowdfunding Box",
+        "desc": "Hides the crowdfunding box between the player and video description.",
+        "section": "Appearance"
+      },
+      "hide-endscreen-cards": {
+        "name": "Hide Endscreen Cards",
+        "desc": "Hides the suggested video cards at the end of a video in fullscreen.",
+        "section": "Appearance"
+      },
+      "hide-info-cards": {
+        "name": "Hide Info Cards",
+        "desc": "Hides info-cards in videos.",
+        "section": "Appearance"
+      },
+      "hide-watch-in-vr": {
+        "name": "Hide \"Watch in VR\"",
+        "desc": "Hides the Watch in VR option from the player settings flyout panel.",
+        "section": "Appearance"
+      },
       "disable-fullscreen-panels": {
         "name": "Disable Fullscreen Panels",
         "desc": "Disables video description and comments panel in fullscreen view.",
@@ -157,6 +202,11 @@
         "desc": "Adds more video playback speed options.",
         "section": "Controls"
       },
+      "custom-video-speed": {
+          "name": "Custom Video Speed",
+          "desc": "Adds more video speed options.",
+          "section": "Controls"
+      },
       "tablet-mini-player": {
         "name": "Tablet Mini Player",
         "desc": "Enables the tablet mini player layout.",
@@ -171,6 +221,11 @@
         "name": "Disable Auto Popup Panels",
         "desc": "Disable automatic popups (playlist or live chat) on videos.",
         "section": "Appearance"
+      },
+      "open-links-directly": {
+        "name": "Open Links Directly",
+        "desc": "Bypasses redirect links and allows opening links directly.",
+        "section": "Advanced"
       },
       "disable-startup-shorts-player": {
         "name": "Disable Shorts on Startup",
@@ -197,7 +252,7 @@
         "desc": "Hide email address in the account switcher.",
         "section": "Advanced"
       },
-      "enable-debugging": {
+      "debugging": {
         "name": "Enable Debugging (Slows Down App)",
         "desc": "Enables app debugging by patching the manifest file.",
         "section": "Advanced"
