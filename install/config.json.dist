@@ -609,6 +609,40 @@
                 }
             }
         },
+        "Nyx": {
+            "size": "50 MB",
+            "versions": {
+                "2.2.5": {
+                    "enabled": 0,
+                    "rec": 1
+                }
+            },
+            "patches": {
+                "unlock-pro": {
+                    "name": "Unlock Pro (Required)",
+                    "desc": "Unlock all pro features.",
+                    "section": "Patches",
+                    "checked": 1
+                }
+            }
+        },
+        "HexEditor": {
+            "size": "4 MB",
+            "versions": {
+                "2.8.5": {
+                    "enabled": 0,
+                    "rec": 1
+                }
+            },
+            "patches": {
+                "disable-ads": {
+                    "name": "Disable Ads (Required)",
+                    "desc": "Remove all advertisements.",
+                    "section": "Patches",
+                    "checked": 1
+                }
+            }
+        },
         "Pflotsh": {
             "size": "6 MB",
             "versions": {

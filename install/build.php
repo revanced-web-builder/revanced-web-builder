@@ -20,7 +20,7 @@ if (!$_POST) die("NO POST");
 // Make sure builder is online
 if ($config->buildEnabled != 1) die("ERROR:OFFLINE");
 
-$allowedApps = array('YouTube', 'YouTubeMusic', 'Reddit', 'Spotify', 'TikTok', 'Twitter', 'Pflotsh', 'WarnWetter');
+$allowedApps = array('YouTube', 'YouTubeMusic', 'Reddit', 'Spotify', 'TikTok', 'Twitter', 'Pflotsh', 'WarnWetter', 'HexEditor', 'Nyx');
 
 // Make sure submitted App is allowed
 if (!in_array($_POST['appName'], $allowedApps))
@@ -86,7 +86,7 @@ if ($buildApp == "YouTube") {
 }
 
 // App Prefix for $buildID
-$appNameShortcuts = array("YouTube"=>"yt", "YouTubeMusic"=>"ym", "Reddit"=>"re", "Spotify" => "sp", "TikTok"=>"tt", "Twitter"=>"tw", "Pflotsh"=>"pf", "WarnWetter"=>"ww");
+$appNameShortcuts = array("YouTube"=>"yt", "YouTubeMusic"=>"ym", "Reddit"=>"re", "Spotify" => "sp", "TikTok"=>"tt", "Twitter"=>"tw", "Pflotsh"=>"pf", "WarnWetter"=>"ww", "HexEditor"=>"he", "Nyx"=>"nx");
 $appPrefix = $appNameShortcuts[$buildApp];
 
 // Patch Options
@@ -155,7 +155,7 @@ if ($buildApp == "YouTube" || $buildApp == "YouTubeMusic") {
 
   $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" -m \"tools/revanced-integrations.apk\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} {$exclusive}";
 
-} else if ($buildApp == "Reddit" || $buildApp == "Spotify" || $buildApp == "Twitter" || $buildApp == "TikTok" || $buildApp == "Pflotsh" || $buildApp == "WarnWetter") { // These apps don't need integrations or resource patching
+} else if ($buildApp == "Reddit" || $buildApp == "Spotify" || $buildApp == "Twitter" || $buildApp == "TikTok" || $buildApp == "Pflotsh" || $buildApp == "WarnWetter" || $buildApp == "HexEditor" || $buildApp == "Nyx") { // These apps don't need integrations or resource patching
 
   $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} --exclusive";
 
@@ -175,7 +175,7 @@ if ($execJava == "INFO: Finished") { // Success!
   $fileMD5 = md5_file(__DIR__."/../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get MD5 hash of generated build
   $filesize = filesize(__DIR__."/../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get APK file size
 
-  // Don't include MicroG for any version of Twitter or Reddit
+  // Don't include MicroG for any version of Twitter or Reddit, etc
   $microg = ($buildApp == "YouTube" || $buildApp == "YouTubeMusic") ? "vanced-microg.apk":"";
 
   $txtData = array(

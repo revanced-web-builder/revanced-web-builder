@@ -278,7 +278,9 @@ class Config {
       "com.ss.android.ugc.trill" => ["TikTok", "25.8.2"],
       "com.twitter.android" => ["Twitter", "9.52.0"],
       "com.garzotto.pflotsh.ecmwf_a" => ["Pflotsh", "3.5.4"],
-      "de.dwd.warnapp" => ["WarnWetter", "3.7.2"]
+      "de.dwd.warnapp" => ["WarnWetter", "3.7.2"],
+      "com.myprog.hexedit" => ["HexEditor", "2.8.5"],
+      "com.awedea.nyx" => ["Nyx", "2.2.5"]
     );
 
     foreach ($patches as $p => $v) {
