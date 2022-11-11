@@ -604,15 +604,15 @@
     },
     "tools": {
         "CLI": {
-            "latest": "2.14.0",
+            "latest": "2.15.0",
             "enabled": 0
         },
         "Patches": {
-            "latest": "2.82.0",
+            "latest": "2.106.1",
             "enabled": 0
         },
         "Integrations": {
-            "latest": "0.52.0",
+            "latest": "0.68.0",
             "enabled": 0
         },
         "MicroG": {
@@ -620,6 +620,6 @@
             "enabled": 0
         }
     },
-    "version": "0.1.23",
-    "versionLast": "0.1.23"
+    "version": "0.1.24",
+    "versionLast": "0.1.24"
 }
