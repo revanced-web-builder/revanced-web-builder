@@ -403,6 +403,7 @@ if ($query == "config") {
 
     if (config.buildUnsupported != 1) $("p[data-support='0']").hide() // Hide unsupported builds (if necessary)
     if (config.buildBeta != 1) $("p[data-beta='1']").hide() // Hide beta builds (if necessary)
+    $("p[data-old='1']").hide() // Hide old builds
 
     // Focus on password field if admin is not logged in
     if ($("#adminLoginForm").is(":visible")) $("#adminPass").focus()
@@ -413,6 +414,17 @@ if ($query == "config") {
     var parent = $(element).parent().parent()
     var select = (action == "enable") ? "button.btn-orange" : "button.btn-secondary"
     $(parent).find(select).trigger("click") // click only the chosen buttons
+  }
+
+  function moreSection(element) {
+    var action = $(element).attr("data-action")
+    var parent = $(element).parent().parent()
+    if (action == "more") {
+      $(element).attr("data-action", "less").val("- Less")
+    } else {
+      $(element).attr("data-action", "more").val("+ More")
+    }
+    $(parent).find("p[data-old='1']").slideToggle()
   }
 
   function fileToggle(element) {
@@ -687,7 +699,8 @@ if ($query == "config") {
   })
 
   // EVENTS
-  $(document).on("click", ".toggleSection", function(e) { toggleSection($(this)) }) // Download all of a certain App
+  $(document).on("click", ".toggleSection", function(e) { toggleSection($(this)) }) // Download all of certain App
+  $(document).on("click", ".moreSection", function(e) { moreSection($(this)) }) // Toggle old versions of certain app
   $(document).on("click", "#updateHide", function(e) { $("#updateContainer").slideUp() }) // Hide RWB version update box
   </script>
 
@@ -1019,12 +1032,13 @@ if ($query == "config") {
           echo "<p>{$app}&nbsp;&nbsp;[{$val['size']}]{$avgBuildTime}</p>";
 
           $disabledCount = count($val['versions']);
-
+          $x = 1;
           foreach($val['versions'] as $ver => $verVal) {
 
             $beta = $val['versions'][$ver]['beta'] ?? 0;
             $isBeta = ($beta == 1) ? " Beta":"";
-
+            $isOld = ($x > 3) ? 1 : 0;
+            $oldButton = ($isOld == 1) ? "<input type='button' class='btn btn-primary btn-sm moreSection' data-action='more' value='+ More' /> " : "";
 
             $deleteFile = '<button class="fileDelete btn btn-danger btn-sm" data-file="apk" data-name="'.$app.'" data-version="'.$ver.$isBeta.'"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -1045,12 +1059,14 @@ if ($query == "config") {
             $support = $val['versions'][$ver]['support'] ?? 1;
             $isUnsupported = ($support === 1) ? "" : " (Unsupported)";
 
-            echo "<p data-support='{$support}' data-beta='{$beta}'><button class='btn {$btn[0]} btn-sm fileDownload' data-file='apk' data-name='{$app}' data-version='{$ver}{$isBeta}' title='{$btn[3]}'>{$btn[1]}</button>{$btn[2]} {$ver}{$isBeta}{$isUnsupported}</p>";
+            echo "<p data-support='{$support}' data-beta='{$beta}' data-old='{$isOld}'><button class='btn {$btn[0]} btn-sm fileDownload' data-file='apk' data-name='{$app}' data-version='{$ver}{$isBeta}' title='{$btn[3]}'>{$btn[1]}</button>{$btn[2]} {$ver}{$isBeta}{$isUnsupported}</p>";
+
+            $x++;
 
           }
 
           echo "
-            <p><input type='button' class='btn btn-secondary btn-sm toggleSection' data-action='enable' value='&#10003; All' /> <input type='button' class='btn btn-orange btn-sm toggleSection' data-action='disable' value='X All' /></p>
+            <p>{$oldButton}<input type='button' class='btn btn-secondary btn-sm toggleSection' data-action='enable' value='&#10003; All' /> <input type='button' class='btn btn-orange btn-sm toggleSection' data-action='disable' value='X All' /></p>
           </div>";
 
         }
