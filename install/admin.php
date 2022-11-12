@@ -84,6 +84,7 @@ if ($config->autoUpdate == 1 && !isset($_SESSION['updateCheck'])) {
   $config = new Config();
   $versionInstalled = $config->versionLast;
   $version = substr($data['tag_name'], 1);
+  $changelog = nl2br($data['body']);
 
   if (version_compare($versionInstalled, $version) == -1) {
     $versionUpdate = $version;
@@ -738,6 +739,9 @@ if ($query == "config") {
     if ($versionUpdate != null) {
       echo "<div id='updateContainer' class='accentContainer p-2 p-lg-3 mb-4 main-accent'>
         <h2 class='mb-4'>Update Available!</h2>
+        <p>Version: {$versionUpdate}</p>
+        <p>Changelog:</p>
+        <p>{$changelog}</p>
         <a href='{$urlPrefix}/app/update'><input type='button' class='btn btn-primary me-2' value='Update to version {$versionUpdate}' /></a>
       </div>";
     }
