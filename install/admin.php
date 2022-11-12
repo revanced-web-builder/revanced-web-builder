@@ -89,7 +89,6 @@ if (($config->autoUpdate == 1 || isset($_SESSION['updateVersion'])) && !isset($_
     // Download information about the latest RWB release
     $url = "https://api.github.com/repos/revanced-web-builder/revanced-web-builder/releases/latest";
     $dl = fileDownload($url, "update/latestRelease.json");
-    echo 'dloading';
   }
 
   $data = Files::read("update/latestRelease.json");
@@ -807,13 +806,17 @@ if ($query == "config") {
       die();
     }
     ?>
-    <div class="row">
-
-      <div class="col-12 col-lg-4">
-
-
-        <h3>Permissions</h3>
+    <div class='container'>
+    <div class='row'>
         <?php
+        // $sys is going to be the variablef or the entire System Information section so it can be placed below everything if there are no errors
+        $sys = "<div class='container'>
+        <div class='row'>
+        <hr />
+        <div class='col-12 col-lg-4'>
+
+          <h3>System Information</h3>
+          <h4>Permissions</h4>";
 
         // SVGs for File and Folder icons
         $fileIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text me-1" viewBox="0 0 16 16">
@@ -826,11 +829,11 @@ if ($query == "config") {
         </svg>';
 
         // We've already declared that this folder is writable because it's required for anything to work
-        echo "<p>{$folderIcon} app <span class='badge bg-secondary'>Writable</span></p>";
+        $sys .= "<p>{$folderIcon} app <span class='badge bg-secondary'>Writable</span></p>";
 
         // Show info about the Config.json (whether it was created at beginning of the script)
         $permConfig = (is_writable("config.json")) ? "{$created}<span class='badge bg-secondary'>Writable</span>" : "{$created}<span class='badge bg-warning'>Not Writable</span>";
-        echo "<p>{$fileIcon} app/config.json {$permConfig}</p>";
+        $sys .= "<p>{$fileIcon} app/config.json {$permConfig}</p>";
 
         // Loop through folders and check if they exist. Try to create them if they don't.
         // "relativePath" -> "rootPath"
@@ -857,7 +860,7 @@ if ($query == "config") {
             if ($makeFolder) {
               $created = "<span class='badge bg-light'>Created</span> ";
             } else {
-              echo "<p><span class='badge bg-warning'>Error</span> Could not create {$f}.</p>";
+              $sys .= "<p><span class='badge bg-warning'>Error</span> Could not create {$f}.</p>";
             }
           }
 
@@ -869,15 +872,16 @@ if ($query == "config") {
             $setupErrors[] = "{$rootDir} is not writable.";
           }
 
-          echo "<p>{$isFolder} {$rootDir} {$isWritable}</p>";
+          $sys .= "<p>{$isFolder} {$rootDir} {$isWritable}</p>";
 
         }
 
-        echo "</div> <!--end Permission section -->
+        $sys .= "</div> <!--end Permission section -->
         <div class='col-12 col-lg-4'>
-        <h3>Server</h3>";
+        <h3>&nbsp;</h3>
+        <h4>Server</h4>";
 
-        echo "<p>OS <span class='badge bg-secondary'>".PHP_OS_FAMILY."</span></p>";
+        $sys .= "<p>OS <span class='badge bg-secondary'>".PHP_OS_FAMILY."</span></p>";
 
         // Make sure they have the minimum PHP version
         if (version_compare(PHP_VERSION, '7.4') >= 0) {
@@ -887,7 +891,7 @@ if ($query == "config") {
           $setupErrors[] = "PHP must be at least version 7.4";
         }
 
-        echo "<p>PHP {$phpSupport}</p>";
+        $sys .= "<p>PHP {$phpSupport}</p>";
 
         // Check the status of System cURL, PHP cURL, and Wget
         $checkDload = [];
@@ -895,19 +899,19 @@ if ($query == "config") {
         $checkDload['PHP'] = (extension_loaded("curl")) ? true : false;
         $checkDload['Wget'] = (exec("wget --version")) ? true : false;
 
-        echo "<p>Downloaders";
+        $sys .= "<p>Downloaders";
         foreach ($checkDload as $name => $val) {
           $badge = ($val == true) ? "bg-secondary" : "bg-danger";
-          echo "<span class='badge {$badge} me-2'>{$name}</span>";
+          $sys .= "<span class='badge {$badge} me-2'>{$name}</span>";
           if ($val == true) {
             $downloaders[] = $name; // add to list of available downloaders
           }
         }
-        echo "</p>";
+        $sys .= "</p>";
 
         // Make sure they have at least one download tool
         if (count($downloaders) <= 0) {
-          echo "<p>cURL or Wget is <u>required</u> to download tools and APKs.</p>";
+          $sys .= "<p>cURL or Wget is <u>required</u> to download tools and APKs.</p>";
           $setupErrors[] = "You need System cURL, PHP cURL, or Wget to download APKs and Tools.";
         }
 
@@ -920,10 +924,11 @@ if ($query == "config") {
         $isRewrite = ($_SERVER['HTTP_MOD_REWRITE'] == "On") ? "<span class='badge bg-secondary'>Detected</span>" : "<span class='bg bg-danger'>Not Detected</span>";
         echo "<p>mod_rewrite: {$isRewrite}</p>";*/
 
-        echo "</div> <!-- end Server section -->
+        $sys .= "</div> <!-- end Server section -->
 
         <div class='col-12 col-lg-4'>
-        <h3>Java JDK</h3>";
+        <h3>&nbsp;</h3>
+        <h4>Java JDK</h4>";
 
         $output=null;
         $retval=null;
@@ -931,11 +936,11 @@ if ($query == "config") {
         //echo "Returned with status $retval and output:\n";
 
         if (count($output) === 0) {
-          echo "<p>Java <span class='badge bg-danger'> Not Found</span></p>";
-          echo "<p>Install it with <em>sudo apt install openjdk-18-jdk</em></p><p>You may have to restart your web server.</p>";
+          $sys .= "<p>Java <span class='badge bg-danger'> Not Found</span></p>";
+          $sys .= "<p>Install it with <em>sudo apt install openjdk-18-jdk</em></p><p>You may have to restart your web server.</p>";
           $setupErrors[] = "Java is not installed.";
         } else {
-          echo "<p>Java <span class='badge bg-secondary'>".$output[0]."</span></p>";
+          $sys .= "<p>Java <span class='badge bg-secondary'>".$output[0]."</span></p>";
           //$search = array_search_fuzzy($output, "jdk");
 
           $javaVersion = exec("javac --version"); // Check java compiler version to make sure they have JDK and not just JRE
@@ -944,9 +949,9 @@ if ($query == "config") {
             $javaVersion = explode(".", $javaVersion)[0]; // separate by period from previous output to get just the main version number
 
             if ($javaVersion >= 17) {
-              echo "<p>Version <span class='badge bg-secondary'>{$javaVersion}</span></p>";
+              $sys .= "<p>Version <span class='badge bg-secondary'>{$javaVersion}</span></p>";
             } else {
-              echo "<p>Version <span class='badge bg-danger'>{$javaVersion}</span></p>";
+              $sys .= "<p>Version <span class='badge bg-danger'>{$javaVersion}</span></p>";
               $setupErrors[] = "Java JDK >= 17 required";
             }
           } else {
@@ -959,35 +964,33 @@ if ($query == "config") {
         $checkJPS = exec("jps", $output);
 
         if ($checkJPS == "") {
-          echo "<p>JPS: <span class='badge bg-danger'>Not Found</span></p>";
+          $sys .= "<p>JPS: <span class='badge bg-danger'>Not Found</span></p>";
           $setupErrors[] = "JPS Not Found - You may need to install a newer version of Java JDK.";
         }
 
-        echo "</div> <!-- end Java section -->
+        $sys .= "</div> <!-- end Java section -->
         </div> <!-- end row -->
-        <div class='row'>
-        <div id='downloadTools' class='col-12'>
+        </div> <!-- end container -->";
 
-        <hr />";
-
-        // Show errors instead of the rest of the page because we can't continue.
-
+        // Show errors instead of the rest of the page because we can't continue
         if (count($setupErrors) > 0) {
-
-          echo "<h3>Almost there...</h3>
+          $sys .= "<h3>Almost there...</h3>
           <p>It seems you're missing some basic requirements.</p>
           <p>Correct these issues to continue:</p>
           <ul>";
 
           foreach ($setupErrors as $error) {
-            echo "<li>{$error}</li>";
+            $sys .= "<li>{$error}</li>";
           }
 
-          echo "</ul>
+          $sys .= "</ul>
           <p><input type='button' class='btn btn-primary' value='Refresh' onclick='location.reload()' /></p>";
+          echo $sys;
           die();
-
         }
+
+        echo "<div class='row'>
+        <div id='downloadTools' class='col-12'>";
 
         echo "<h3>ReVanced Tools</h3>";
 
@@ -1418,6 +1421,13 @@ if ($query == "config") {
 
     </div>
   </div>
+
+  <?php
+  // Put System Information down here if there were no errors
+  if (count($setupErrors) == 0) {
+    echo $sys;
+  }
+  ?>
 
   <?php
   // Detect if Install folder exists
