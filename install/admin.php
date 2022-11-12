@@ -74,7 +74,7 @@ $themeData = $config->themes;
 
 // Automatically check for RWB updates if enabled
 $versionUpdate = null;
-if ($config->autoUpdate == 1) {
+if ($config->autoUpdate == 1 && !isset($_SESSION['updateCheck'])) {
   // Download information about the latest RWB release
   $url = "https://api.github.com/repos/revanced-web-builder/revanced-web-builder/releases/latest";
   $dl = fileDownload($url, "update/latestRelease.json");
@@ -88,6 +88,8 @@ if ($config->autoUpdate == 1) {
   if (version_compare($versionInstalled, $version) == -1) {
     $versionUpdate = $version;
   }
+
+  $_SESSION['updateCheck'] = 1; // Update has been checked this session, don't do it again
 }
 
 
