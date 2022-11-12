@@ -256,7 +256,7 @@ body .patchContainer .col-md-6:hover { /* Dark theme column hover */
 
 /* INSTALLER */
 .fileDownload, .toggleSection, .fileDelete, .moreSection {
-  margin-right: 10px;
+  margin-right: 8px;
   margin-left: 0px !important;
 }
 

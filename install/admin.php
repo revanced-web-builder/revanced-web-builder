@@ -363,6 +363,7 @@ if ($query == "config") {
 
 
   <script src="<?php echo $urlPrefix; ?>/app/js/jquery-3.6.1.min.js"></script>
+  <script src="<?php echo $urlPrefix; ?>/app/js/popper.min.js"></script>
   <script src="<?php echo $urlPrefix; ?>/app/js/bootstrap.min.js"></script>
 
   <script type="text/javascript">
@@ -389,7 +390,7 @@ if ($query == "config") {
 
   $(document).ready(function(e) {
 
-
+    $('[data-bs-toggle="tooltip"]').tooltip({trigger: "hover"}) // enable tooltips
 
   })
 
@@ -815,8 +816,8 @@ if ($query == "config") {
         <hr />
         <div class='col-12 col-lg-4'>
 
-          <h3>System Information</h3>
-          <h4>Permissions</h4>";
+          <h3 class='mb-3'>System Information</h3>
+          <p><strong>Permissions</strong></p>";
 
         // SVGs for File and Folder icons
         $fileIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text me-1" viewBox="0 0 16 16">
@@ -879,7 +880,7 @@ if ($query == "config") {
         $sys .= "</div> <!--end Permission section -->
         <div class='col-12 col-lg-4'>
         <h3>&nbsp;</h3>
-        <h4>Server</h4>";
+        <p><strong>Server</strong></p>";
 
         $sys .= "<p>OS <span class='badge bg-secondary'>".PHP_OS_FAMILY."</span></p>";
 
@@ -928,7 +929,7 @@ if ($query == "config") {
 
         <div class='col-12 col-lg-4'>
         <h3>&nbsp;</h3>
-        <h4>Java JDK</h4>";
+        <p><strong>Java JDK</strong></p>";
 
         $output=null;
         $retval=null;
@@ -1490,9 +1491,6 @@ if ($query == "config") {
   <?php
   }
   ?>
-
-
-
 
   <div id="footer" class="container mt-3">
     <div class="row">
