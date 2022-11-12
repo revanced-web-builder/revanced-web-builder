@@ -25,10 +25,12 @@ session_start();
 
 // User has requested to log out.
 if (isset($_GET['logout'])) {
+  session_destroy();
+  session_start();
   unset($_SESSION['token']);
 }
 
-set_time_limit(0); // if the file is large set the timeout.
+set_time_limit(0); // ignore timeout
 
 // First of all, the app/ folder has to be writable. End the script because we can't do anything without this.
 if (!is_writable(".")) {
@@ -57,7 +59,6 @@ if (!file_exists("config.json")) {
   $created = "";
 }
 
-
 // Gather all Config and AppData JSON
 $config = new Config();
 
@@ -74,10 +75,23 @@ $themeData = $config->themes;
 
 // Automatically check for RWB updates if enabled
 $versionUpdate = null;
-if ($config->autoUpdate == 1 && !isset($_SESSION['updateCheck'])) {
-  // Download information about the latest RWB release
-  $url = "https://api.github.com/repos/revanced-web-builder/revanced-web-builder/releases/latest";
-  $dl = fileDownload($url, "update/latestRelease.json");
+
+// If query is noupdate, set the updateCancel session var and exit (since this will be done via ajax)
+if (isset($_GET['q']) && $_GET['q'] == "noupdate") {
+  $_SESSION['updateCancel'] = 1;
+  die("OK");
+}
+
+if (($config->autoUpdate == 1 || isset($_SESSION['updateVersion'])) && !isset($_SESSION['updateCancel'])) {
+
+  // Download info about latest update if it hasn't been already
+  if (!isset($_SESSION['updateVersion'])) {
+    // Download information about the latest RWB release
+    $url = "https://api.github.com/repos/revanced-web-builder/revanced-web-builder/releases/latest";
+    $dl = fileDownload($url, "update/latestRelease.json");
+    echo 'dloading';
+  }
+
   $data = Files::read("update/latestRelease.json");
 
   // Check current version
@@ -85,16 +99,15 @@ if ($config->autoUpdate == 1 && !isset($_SESSION['updateCheck'])) {
   $versionInstalled = $config->versionLast;
   $version = substr($data['tag_name'], 1);
   $changelog = nl2br($data['body']);
+  $_SESSION['updateVersion'] = $version;
+  $_SESSION['changelog'] = $changelog;
 
-  if (version_compare($versionInstalled, $version) == -1) {
-    $versionUpdate = $version;
-  }
+  if ($versionInstalled < $version) $versionUpdate = $version;
 
-  $_SESSION['updateCheck'] = 1; // Update has been checked this session, don't do it again
 }
 
 
-// Check if there's an update available
+// Manually check if there's an update available
 $distConfig = Files::read("config.json.dist");
 if ($config->versionLast < $distConfig['versionLast']) {
 
@@ -701,6 +714,17 @@ if ($query == "config") {
     }
   })
 
+  // Dismiss update until next logout or session
+  $(document).on("click", "#updateDismiss", function(e) {
+    $.ajax({
+      type: "GET",
+      url: "<?php echo $urlPrefix; ?>/app/admin.php?q=noupdate",
+      success: function (data) {
+        if (data == "OK") $("#updateContainer").slideUp()
+      }
+    });
+  })
+
   // EVENTS
   $(document).on("click", ".toggleSection", function(e) { toggleSection($(this)) }) // Download all of certain App
   $(document).on("click", ".moreSection", function(e) { moreSection($(this)) }) // Toggle old versions of certain app
@@ -742,7 +766,7 @@ if ($query == "config") {
         <p>Version: {$versionUpdate}</p>
         <p>Changelog:</p>
         <p>{$changelog}</p>
-        <a href='{$urlPrefix}/app/update'><input type='button' class='btn btn-primary me-2' value='Update to version {$versionUpdate}' /></a>
+        <a href='{$urlPrefix}/app/update'><input type='button' class='btn btn-primary me-2' value='Update to version {$versionUpdate}' /></a> <input id='updateDismiss' type='button' class='btn btn-secondary me-2' value='No Thanks' />
       </div>";
     }
 
