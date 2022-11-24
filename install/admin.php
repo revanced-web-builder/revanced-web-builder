@@ -85,7 +85,7 @@ if (isset($_GET['q']) && $_GET['q'] == "noupdate") {
 if (($config->autoUpdate == 1 || isset($_SESSION['updateVersion'])) && !isset($_SESSION['updateCancel'])) {
 
   // Download info about latest update if it hasn't been already
-  if (!isset($_SESSION['updateVersion'])) {
+  if (!isset($_SESSION['updateVersion']) || !file_exists(__DIR__."/update/latestRelease.json")) {
     // Download information about the latest RWB release
     $url = "https://api.github.com/repos/revanced-web-builder/revanced-web-builder/releases/latest";
     $dl = fileDownload($url, "update/latestRelease.json");
