@@ -298,6 +298,16 @@
                     "desc": "Hides progress bar and time counter on videos.",
                     "section": "Appearance"
                 },
+                "disable-auto-player-popup-panels": {
+                    "name": "Disable Auto Popup Panels",
+                    "desc": "Disable automatic popups (playlist or live chat) on videos.",
+                    "section": "Appearance"
+                },
+                "remove-player-button-background": {
+                    "name": "Remove Player Button Background",
+                    "desc": "Removes the background from the video player buttons.",
+                    "section": "Appearance"
+                },
                 "swipe-controls": {
                     "name": "Swipe Controls",
                     "desc": "Adds volume and brightness swipe controls when video is fullscreen.",
@@ -338,11 +348,6 @@
                     "desc": "Disable forced captions from being auto enabled.",
                     "section": "Controls"
                 },
-                "disable-auto-player-popup-panels": {
-                    "name": "Disable Auto Popup Panels",
-                    "desc": "Disable automatic popups (playlist or live chat) on videos.",
-                    "section": "Appearance"
-                },
                 "open-links-directly": {
                     "name": "Open Links Directly",
                     "desc": "Bypasses redirect links and allows opening links directly.",
@@ -371,6 +376,11 @@
                 "hide-email-address": {
                     "name": "Hide E-Mail Address",
                     "desc": "Hide email address in the account switcher.",
+                    "section": "Advanced"
+                },
+                "disable-zoom-haptics": {
+                    "name": "Disable Zoom Haptics",
+                    "desc": "Disables haptics when zooming.",
                     "section": "Advanced"
                 },
                 "debugging": {
