@@ -1038,11 +1038,11 @@ if ($query == "config") {
         ";
 
         if ($revancedDownloaded < 4) {
-          echo "<input id='downloadAll' data-choice='download' type='button' class='downloadAll btn btn-primary' value='Download All' />";
+          echo "<input id='downloadAll' data-choice='download' type='button' class='downloadAll btn btn-primary mb-4' value='Download All' />";
         }
 
         if ($revancedUpdate > 0) {
-          echo " <input id='updateAll' data-choice='update' type='button' class='downloadAll btn btn-primary' value='Update All' />";
+          echo " <input id='updateAll' data-choice='update' type='button' class='downloadAll btn btn-primary mb-4' value='Update All' />";
         }
 
         echo "</div> <!-- end #downloadTools -->
