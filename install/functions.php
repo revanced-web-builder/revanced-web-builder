@@ -295,7 +295,7 @@ class Config {
       $appName = $names[$appPkg][0];
       $versions = $v['compatiblePackages'][0]['versions'];
       $filteredVersions = [];
-      $ignore = array("settings", "client-spoof", "microg-support", "music-microg-support");
+      $ignore = array("settings", "client-spoof", "microg-support", "music-microg-support", "tiktok-settings");
       $thisPatch = $patches[$p]['name'];
 
       // Don't attach any supported app versions that existed before RWB

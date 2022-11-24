@@ -76,13 +76,16 @@ foreach ($patches as $id => $name) {
   $buildID .= $name; // append this patch's name to the buildID string
 }
 
-// Add MicroG  and other patches if it's a YouTube app (required for Non-Root APKs)
+// Add MicroG and other patches if it's a YouTube app (required for Non-Root APKs) or needs ReVanced Integrations
 if ($buildApp == "YouTube") {
   $include .= " -i client-spoof -i microg-support -i settings"; // Also automatically add ReVanced Settings and Spoof Patch (videos are being blocked in some countries using modded apks)
   $exclusive = "--exclusive"; // add the --exclusive tag because we're selecting which patches to include
 } else if ($buildApp == "YouTubeMusic") {
   $include .= " -i music-microg-support";
   $exclusive = "";
+} else if ($buildApp == "TikTok") {
+  $include .= " -i tiktok-settings";
+  $exclusive = "--exclusive";
 } else if ($buildApp == "Twitch") {
   // I'm adding Twitch here because I'm not really sure if the --exclusive flag is still necessary in later ReVanced
   $exclusive = "";
@@ -154,7 +157,7 @@ if ($options != "") {
 }
 
 // Directly execute the revanced-cli.jar file using a command built with all the selected info and patches
-if ($buildApp == "YouTube" || $buildApp == "YouTubeMusic" || $buildApp == "Twitch") { // These apps need the revanced-integrations
+if ($buildApp == "YouTube" || $buildApp == "YouTubeMusic" || $buildApp == "Twitch" || $buildApp == "TikTok") { // These apps need the revanced-integrations
 
   $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" -m \"tools/revanced-integrations.apk\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} {$exclusive}";
 
