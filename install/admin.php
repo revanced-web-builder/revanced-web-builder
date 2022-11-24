@@ -426,7 +426,7 @@ if ($query == "config") {
 
     // Get the height of the YouTube APKs apkDivContent box to know the min height of all the others for visual appearance
     var apkHeight = $(".apkDiv:first").height()
-    $(".apkDivContent").css({"height": apkHeight, "min-height": apkHeight});
+    $(".apkDivContent").css({"min-height": apkHeight});
 
   } // end startupAdmin()
 
