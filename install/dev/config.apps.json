@@ -436,6 +436,41 @@
       }
     }
   },
+  "Twitch": {
+    "size": "135 MB",
+    "versions": {
+      "14.2.0": {
+        "enabled": 0,
+        "rec": 1
+      }
+    },
+    "patches": {
+      "block-audio-ads": {
+        "name": "Block Audio Ads",
+        "desc": "Removes audio ads in streams and VODs.",
+        "section": "Patches",
+        "checked": 1
+      },
+      "block-video-ads": {
+        "name": "Block Video Ads",
+        "desc": "Removes video ads in streams and VODs.",
+        "section": "Patches",
+        "checked": 1
+      },
+      "show-deleted-messages": {
+        "name": "Show Deleted Messages",
+        "desc": "Shows deleted chat messages behind a clickable spoiler.",
+        "section": "Patches",
+        "checked": 1
+      },
+      "debug-mode": {
+        "name": "Debug Mode",
+        "desc": "Enables Twitch's internal debugging mode.",
+        "section": "Patches",
+        "checked": 1
+      }
+    }
+  },
   "Twitter": {
     "size": "110 MB",
     "versions": {

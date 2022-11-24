@@ -20,7 +20,7 @@ if (!$_POST) die("NO POST");
 // Make sure builder is online
 if ($config->buildEnabled != 1) die("ERROR:OFFLINE");
 
-$allowedApps = array('YouTube', 'YouTubeMusic', 'Reddit', 'Spotify', 'TikTok', 'Twitter', 'Pflotsh', 'WarnWetter', 'HexEditor', 'Nyx');
+$allowedApps = array('YouTube', 'YouTubeMusic', 'Reddit', 'Spotify', 'TikTok', 'Twitch', 'Twitter', 'Pflotsh', 'WarnWetter', 'HexEditor', 'Nyx');
 
 // Make sure submitted App is allowed
 if (!in_array($_POST['appName'], $allowedApps))
@@ -83,10 +83,13 @@ if ($buildApp == "YouTube") {
 } else if ($buildApp == "YouTubeMusic") {
   $include .= " -i music-microg-support";
   $exclusive = "";
+} else if ($buildApp == "Twitch") {
+  // I'm adding Twitch here because I'm not really sure if the --exclusive flag is still necessary in later ReVanced
+  $exclusive = "";
 }
 
 // App Prefix for $buildID
-$appNameShortcuts = array("YouTube"=>"yt", "YouTubeMusic"=>"ym", "Reddit"=>"re", "Spotify" => "sp", "TikTok"=>"tt", "Twitter"=>"tw", "Pflotsh"=>"pf", "WarnWetter"=>"ww", "HexEditor"=>"he", "Nyx"=>"nx");
+$appNameShortcuts = array("YouTube"=>"yt", "YouTubeMusic"=>"ym", "Reddit"=>"re", "Spotify" => "sp", "TikTok"=>"tt", "Twitch"=>"tc", "Twitter"=>"tw", "Pflotsh"=>"pf", "WarnWetter"=>"ww", "HexEditor"=>"he", "Nyx"=>"nx");
 $appPrefix = $appNameShortcuts[$buildApp];
 
 // Patch Options
@@ -151,11 +154,11 @@ if ($options != "") {
 }
 
 // Directly execute the revanced-cli.jar file using a command built with all the selected info and patches
-if ($buildApp == "YouTube" || $buildApp == "YouTubeMusic") {
+if ($buildApp == "YouTube" || $buildApp == "YouTubeMusic" || $buildApp == "Twitch") { // These apps need the revanced-integrations
 
   $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" -m \"tools/revanced-integrations.apk\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} {$exclusive}";
 
-} else if ($buildApp == "Reddit" || $buildApp == "Spotify" || $buildApp == "Twitter" || $buildApp == "TikTok" || $buildApp == "Pflotsh" || $buildApp == "WarnWetter" || $buildApp == "HexEditor" || $buildApp == "Nyx") { // These apps don't need integrations or resource patching
+} else { // Other apps don't
 
   $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} --exclusive";
 

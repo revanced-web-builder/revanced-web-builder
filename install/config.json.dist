@@ -573,6 +573,41 @@
                 }
             }
         },
+        "Twitch": {
+            "size": "135 MB",
+            "versions": {
+                "14.2.0": {
+                    "enabled": 0,
+                    "rec": 1
+                }
+            },
+            "patches": {
+                "block-audio-ads": {
+                    "name": "Block Audio Ads",
+                    "desc": "Removes audio ads in streams and VODs.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "block-video-ads": {
+                    "name": "Block Video Ads",
+                    "desc": "Removes video ads in streams and VODs.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "show-deleted-messages": {
+                    "name": "Show Deleted Messages",
+                    "desc": "Shows deleted chat messages behind a clickable spoiler.",
+                    "section": "Patches",
+                    "checked": 1
+                },
+                "debug-mode": {
+                    "name": "Debug Mode",
+                    "desc": "Enables Twitch's internal debugging mode.",
+                    "section": "Patches",
+                    "checked": 1
+                }
+            }
+        },
         "Twitter": {
             "size": "110 MB",
             "versions": {
@@ -680,15 +715,15 @@
     },
     "tools": {
         "CLI": {
-            "latest": "2.15.0",
+            "latest": "2.16.1",
             "enabled": 0
         },
         "Patches": {
-            "latest": "2.106.1",
+            "latest": "2.121.0",
             "enabled": 0
         },
         "Integrations": {
-            "latest": "0.68.0",
+            "latest": "0.76.0",
             "enabled": 0
         },
         "MicroG": {
@@ -696,6 +731,6 @@
             "enabled": 0
         }
     },
-    "version": "0.1.3",
-    "versionLast": "0.1.3"
+    "version": "0.1.24",
+    "versionLast": "0.1.24"
 }

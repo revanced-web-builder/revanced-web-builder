@@ -276,12 +276,16 @@ class Config {
       "com.reddit.frontpage" => ["Reddit", "2022.28.0"],
       "com.spotify.music" => ["Spotify", "8.7.68.568"],
       "com.ss.android.ugc.trill" => ["TikTok", "25.8.2"],
+      "tv.twitch.android.app" => ["Twitch", "14.2.0"],
       "com.twitter.android" => ["Twitter", "9.52.0"],
       "com.garzotto.pflotsh.ecmwf_a" => ["Pflotsh", "3.5.4"],
       "de.dwd.warnapp" => ["WarnWetter", "3.7.2"],
       "com.myprog.hexedit" => ["HexEditor", "2.8.5"],
       "com.awedea.nyx" => ["Nyx", "2.2.5"]
     );
+
+    // Currently not supporting TickTick (ToDo List App) due to not being able to find a Universal APK
+    // Adding this comment here to remind me and in case I need to add any code to ignore the app
 
     foreach ($patches as $p => $v) {
 
