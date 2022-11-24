@@ -2,9 +2,12 @@
   "YouTube": {
     "size": "130 MB",
     "versions": {
+      "17.45.36": {
+        "enabled": 0
+      },
       "17.43.36": {
-        "enabled": 0,
-        "rec": 1
+        "rec": 1,
+        "enabled": 0
       },
       "17.41.37": {
         "enabled": 0
