@@ -678,6 +678,23 @@
                 }
             }
         },
+        "IconPackStudio": {
+            "size": "50 MB",
+            "versions": {
+                "2.1": {
+                    "enabled": 0,
+                    "rec": 1
+                }
+            },
+            "patches": {
+                "unlock-pro": {
+                    "name": "Unlock Pro (Required)",
+                    "desc": "Unlocks all Pro features.",
+                    "section": "Patches",
+                    "checked": 1
+                }
+            }
+        },
         "Pflotsh": {
             "size": "6 MB",
             "versions": {

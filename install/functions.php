@@ -281,6 +281,7 @@ class Config {
       "com.garzotto.pflotsh.ecmwf_a" => ["Pflotsh", "3.5.4"],
       "de.dwd.warnapp" => ["WarnWetter", "3.7.2"],
       "com.myprog.hexedit" => ["HexEditor", "2.8.5"],
+      "ginlemon.iconpackstudio" => ["IconPackStudio", "2.1"],
       "com.awedea.nyx" => ["Nyx", "2.2.5"]
     );
 

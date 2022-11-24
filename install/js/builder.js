@@ -788,7 +788,7 @@ function instructionsToggle() {
 
 // Get the prefix for an application name (or reverse it to get the application name of a prefix)
 function appPrefix(app, reverse=undefined) {
-  var prefixes = {"YouTube": "yt", "YouTubeMusic": "ym", "Reddit": "re", "Spotify": "sp", "TikTok": "tt", "Twitch": "tc", "Twitter": "tw", "Pflotsh": "pf", "WarnWetter": "ww", "HexEditor": "he", "Nyx": "nx"}
+  var prefixes = {"YouTube": "yt", "YouTubeMusic": "ym", "Reddit": "re", "Spotify": "sp", "TikTok": "tt", "Twitch": "tc", "Twitter": "tw", "IconPackStudio":"ip", "Pflotsh": "pf", "WarnWetter": "ww", "HexEditor": "he", "Nyx": "nx"}
   return (reverse == undefined || reverse != 1) ? prefixes[app] : getObjKey(prefixes, app)
 }
 
