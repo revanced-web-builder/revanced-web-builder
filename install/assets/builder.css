@@ -306,3 +306,8 @@ body .patchContainer .col-md-6:hover { /* Dark theme column hover */
 #configThemeContainer input {
   border: none;
 }
+
+.apkDivContent {
+  background: var(--main-accent);
+  border-radius: 10px;
+}

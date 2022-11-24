@@ -423,7 +423,12 @@ if ($query == "config") {
 
     // Focus on password field if admin is not logged in
     if ($("#adminLoginForm").is(":visible")) $("#adminPass").focus()
-  }
+
+    // Get the height of the YouTube APKs apkDivContent box to know the min height of all the others for visual appearance
+    var apkHeight = $(".apkDiv:first").height()
+    $(".apkDivContent").css({"height": apkHeight, "min-height": apkHeight});
+
+  } // end startupAdmin()
 
   function toggleSection(element) {
     var action = $(element).data("action")
@@ -739,187 +744,187 @@ if ($query == "config") {
   <div id="adminBack" title="Back to RWB">
     <a href="<?php echo $urlPrefix;?>" title="Back to RWB">
       <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
-    </svg></a>
-
-    <a id="adminLogout" href="?logout" title="Logout" class="ms-2" style="display: none">
-      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
-        <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
-        <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
       </svg></a>
-  </div>
 
-
-  <div id="adminContainer" class="container">
-    <div id="adminHeader" class="row">
-      <div class="col-12 mb-4">
-        <h1 class="d-none d-md-block">ReVanced Web Builder: Admin Panel</h1>
-        <h1 class="d-block d-md-none">ReVanced Web Builder<br />Admin Panel</h1>
+      <a id="adminLogout" href="?logout" title="Logout" class="ms-2" style="display: none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
+          <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+          <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+        </svg></a>
       </div>
-    </div>
-    <?php
 
-    // Check if RWB needs to be updated
-    if ($versionUpdate != null) {
-      echo "<div id='updateContainer' class='accentContainer p-2 p-lg-3 mb-4 main-accent'>
-        <h2 class='mb-4'>Update Available!</h2>
-        <p>Version: {$versionUpdate}</p>
-        <p>Changelog:</p>
-        <p>{$changelog}</p>
-        <a href='{$urlPrefix}/app/update'><input type='button' class='btn btn-primary me-2' value='Update to version {$versionUpdate}' /></a> <input id='updateDismiss' type='button' class='btn btn-secondary me-2' value='No Thanks' />
-      </div>";
-    }
 
-    // Check if RWB was updated
-    if (isset($_GET['update'])) {
-      echo "<div id='updateContainer' class='accentContainer p-2 p-lg-3 mb-4 main-accent'>
-        <h2 class='mb-4'>Updated to version ".$_GET['update']."!</h2>
-        <a href='https://github.com/revanced-web-builder/revanced-web-builder/releases/tag/v".$_GET['update']."' target='_blank'><input type='button' class='btn btn-primary me-2' value='Changelog' /></a> <input id='updateHide' type='button' class='btn btn-secondary' value='Okay' />
-      </div>";
-    }
-
-    if ($auth->valid !== true) {
-      echo "<div class='container'>
-      <form id='adminLoginForm' method='post' action='{$_SERVER['PHP_SELF']}' class='row justify-content-center'>";
-
-      // Check if an admin password is set
-      if ($auth->configHash() == false) {
-        echo "<div class='col-12 text-center'>
-          <p>You need to set up an Admin Password. Anything you enter here will be your new password.</p>
-        </div>";
-      }
-
-      echo "<div class='col-12 col-md-auto'>
-          <input type='password' class='form-select' id='adminPass' name='adminPass' placeholder='Admin Password' />
+      <div id="adminContainer" class="container">
+        <div id="adminHeader" class="row">
+          <div class="col-12 mb-4">
+            <h1 class="d-none d-md-block">ReVanced Web Builder: Admin Panel</h1>
+            <h1 class="d-block d-md-none">ReVanced Web Builder<br />Admin Panel</h1>
+          </div>
         </div>
-        <div class='col-12 col-md-auto'>
-          <p><input type='submit' class='btn btn-primary w-100 mt-4 mt-md-auto' value='Login' /></p>
-        </div>";
-        // Check if previously entered password is incorrect
-        if (isset($_POST['adminPass']) && $auth->valid == false) {
-          echo "<div class='col-12 text-center'>
-            <h3><span class='badge bg-danger'>Incorrect Password</span></h3>
+        <?php
+
+        // Check if RWB needs to be updated
+        if ($versionUpdate != null) {
+          echo "<div id='updateContainer' class='accentContainer p-2 p-lg-3 mb-4 main-accent'>
+          <h2 class='mb-4'>Update Available!</h2>
+          <p>Version: {$versionUpdate}</p>
+          <p>Changelog:</p>
+          <p>{$changelog}</p>
+          <a href='{$urlPrefix}/app/update'><input type='button' class='btn btn-primary me-2' value='Update to version {$versionUpdate}' /></a> <input id='updateDismiss' type='button' class='btn btn-secondary me-2' value='No Thanks' />
           </div>";
         }
 
-      echo "</form>
-      </div>";
-      die();
-    }
-    ?>
-    <div class='container'>
-    <div class='row'>
-        <?php
-        // $sys is going to be the variablef or the entire System Information section so it can be placed below everything if there are no errors
-        $sys = "<div class='container'>
-        <div class='row'>
-        <hr />
-        <div class='col-12 col-lg-4'>
+        // Check if RWB was updated
+        if (isset($_GET['update'])) {
+          echo "<div id='updateContainer' class='accentContainer p-2 p-lg-3 mb-4 main-accent'>
+          <h2 class='mb-4'>Updated to version ".$_GET['update']."!</h2>
+          <a href='https://github.com/revanced-web-builder/revanced-web-builder/releases/tag/v".$_GET['update']."' target='_blank'><input type='button' class='btn btn-primary me-2' value='Changelog' /></a> <input id='updateHide' type='button' class='btn btn-secondary' value='Okay' />
+          </div>";
+        }
 
-          <h3 class='mb-3'>System Information</h3>
-          <p><strong>Permissions</strong></p>";
+        if ($auth->valid !== true) {
+          echo "<div class='container'>
+          <form id='adminLoginForm' method='post' action='{$_SERVER['PHP_SELF']}' class='row justify-content-center'>";
 
-        // SVGs for File and Folder icons
-        $fileIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text me-1" viewBox="0 0 16 16">
-        <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
-        <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
-        </svg>';
-
-        $folderIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder me-1" viewBox="0 0 16 16">
-        <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
-        </svg>';
-
-        // We've already declared that this folder is writable because it's required for anything to work
-        $sys .= "<p>{$folderIcon} app <span class='badge bg-secondary'>Writable</span></p>";
-
-        // Show info about the Config.json (whether it was created at beginning of the script)
-        $permConfig = (is_writable("config.json")) ? "{$created}<span class='badge bg-secondary'>Writable</span>" : "{$created}<span class='badge bg-warning'>Not Writable</span>";
-        $sys .= "<p>{$fileIcon} app/config.json {$permConfig}</p>";
-
-        // Loop through folders and check if they exist. Try to create them if they don't.
-        // "relativePath" -> "rootPath"
-        $folders = array("apk" => "app/apk", "tools" => "app/tools", "../".$config->buildDirectory => $config->buildDirectory);
-
-        foreach ($folders as $f => $rootDir) {
-
-          $isFolder = (substr($f, -4, -3) != ".") ? $folderIcon : $fileIcon; // lazy way to check if something is a folder or file
-
-          $created = "";
-
-          if (!file_exists($f)) {
-
-            if (substr($f, -4, -3) == ".") {
-              // Write a blank file
-              $file = fopen($f, 'w+') or die("Can't open file.");
-              fwrite($file, "");
-              fclose($file);
-              $makeFolder = true; // it's a file but we made it anyway
-            } else {
-              $makeFolder = @mkdir($f, 0777); // suppress built in error because there's a custom one
-            }
-
-            if ($makeFolder) {
-              $created = "<span class='badge bg-light'>Created</span> ";
-            } else {
-              $sys .= "<p><span class='badge bg-warning'>Error</span> Could not create {$f}.</p>";
-            }
+          // Check if an admin password is set
+          if ($auth->configHash() == false) {
+            echo "<div class='col-12 text-center'>
+            <p>You need to set up an Admin Password. Anything you enter here will be your new password.</p>
+            </div>";
           }
 
-          // Check if folder is writable
-          if (is_writable($f)) {
-            $isWritable = "{$created}<span class='badge bg-secondary'>Writable</span>";
+          echo "<div class='col-12 col-md-auto'>
+          <input type='password' class='form-select' id='adminPass' name='adminPass' placeholder='Admin Password' />
+          </div>
+          <div class='col-12 col-md-auto'>
+          <p><input type='submit' class='btn btn-primary w-100 mt-4 mt-md-auto' value='Login' /></p>
+          </div>";
+          // Check if previously entered password is incorrect
+          if (isset($_POST['adminPass']) && $auth->valid == false) {
+            echo "<div class='col-12 text-center'>
+            <h3><span class='badge bg-danger'>Incorrect Password</span></h3>
+            </div>";
+          }
+
+          echo "</form>
+          </div>";
+          die();
+        }
+        ?>
+        <div class='container'>
+          <div class='row'>
+            <?php
+            // $sys is going to be the variablef or the entire System Information section so it can be placed below everything if there are no errors
+            $sys = "<div class='container'>
+            <div class='row'>
+            <hr />
+            <div class='col-12 col-lg-4'>
+
+            <h3 class='mb-3'>System Information</h3>
+            <p><strong>Permissions</strong></p>";
+
+            // SVGs for File and Folder icons
+            $fileIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text me-1" viewBox="0 0 16 16">
+            <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+            <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+            </svg>';
+
+            $folderIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder me-1" viewBox="0 0 16 16">
+            <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
+            </svg>';
+
+            // We've already declared that this folder is writable because it's required for anything to work
+            $sys .= "<p>{$folderIcon} app <span class='badge bg-secondary'>Writable</span></p>";
+
+            // Show info about the Config.json (whether it was created at beginning of the script)
+            $permConfig = (is_writable("config.json")) ? "{$created}<span class='badge bg-secondary'>Writable</span>" : "{$created}<span class='badge bg-warning'>Not Writable</span>";
+            $sys .= "<p>{$fileIcon} app/config.json {$permConfig}</p>";
+
+            // Loop through folders and check if they exist. Try to create them if they don't.
+            // "relativePath" -> "rootPath"
+            $folders = array("apk" => "app/apk", "tools" => "app/tools", "../".$config->buildDirectory => $config->buildDirectory);
+
+            foreach ($folders as $f => $rootDir) {
+
+              $isFolder = (substr($f, -4, -3) != ".") ? $folderIcon : $fileIcon; // lazy way to check if something is a folder or file
+
+              $created = "";
+
+              if (!file_exists($f)) {
+
+                if (substr($f, -4, -3) == ".") {
+                  // Write a blank file
+                  $file = fopen($f, 'w+') or die("Can't open file.");
+                  fwrite($file, "");
+                  fclose($file);
+                  $makeFolder = true; // it's a file but we made it anyway
+                } else {
+                  $makeFolder = @mkdir($f, 0777); // suppress built in error because there's a custom one
+                }
+
+                if ($makeFolder) {
+                  $created = "<span class='badge bg-light'>Created</span> ";
+                } else {
+                  $sys .= "<p><span class='badge bg-warning'>Error</span> Could not create {$f}.</p>";
+                }
+              }
+
+              // Check if folder is writable
+              if (is_writable($f)) {
+                $isWritable = "{$created}<span class='badge bg-secondary'>Writable</span>";
+              } else {
+                $isWritable = "{$created}<span class='badge bg-danger'>Not Writable</span>";
+                $setupErrors[] = "{$rootDir} is not writable.";
+              }
+
+              $sys .= "<p>{$isFolder} {$rootDir} {$isWritable}</p>";
+
+            }
+
+            $sys .= "</div> <!--end Permission section -->
+            <div class='col-12 col-lg-4'>
+            <h3>&nbsp;</h3>
+            <p><strong>Server</strong></p>";
+
+            $sys .= "<p>OS <span class='badge bg-secondary'>".PHP_OS_FAMILY."</span></p>";
+
+            // Make sure they have the minimum PHP version
+            if (version_compare(PHP_VERSION, '7.4') >= 0) {
+              $phpSupport = "<span class='badge bg-secondary'>".PHP_VERSION."</span>";
+            } else {
+              $phpSupport = "<span class='badge bg-danger'>".PHP_VERSION."</span>";
+              $setupErrors[] = "PHP must be at least version 7.4";
+            }
+
+            $sys .= "<p>PHP {$phpSupport}</p>";
+
+            // Check the status of System cURL, PHP cURL, and Wget
+            $checkDload = [];
+            $checkDload['cURL'] = (exec("curl --version") != "") ? true : false;
+            $checkDload['PHP'] = (extension_loaded("curl")) ? true : false;
+            $checkDload['Wget'] = (exec("wget --version")) ? true : false;
+
+            $sys .= "<p>Downloaders";
+            foreach ($checkDload as $name => $val) {
+              $badge = ($val == true) ? "bg-secondary" : "bg-danger";
+              $sys .= "<span class='badge {$badge} me-2'>{$name}</span>";
+              if ($val == true) {
+                $downloaders[] = $name; // add to list of available downloaders
+              }
+            }
+            $sys .= "</p>";
+
+            // Make sure they have at least one download tool
+            if (count($downloaders) <= 0) {
+              $sys .= "<p>cURL or Wget is <u>required</u> to download tools and APKs.</p>";
+              $setupErrors[] = "You need System cURL, PHP cURL, or Wget to download APKs and Tools.";
+            }
+
+            /* Removing this for now. One works on PHP FPM one doesn't
+            if ($_SERVER['HTTP_MOD_REWRITE'] == 'On') {
+            return TRUE;
           } else {
-            $isWritable = "{$created}<span class='badge bg-danger'>Not Writable</span>";
-            $setupErrors[] = "{$rootDir} is not writable.";
-          }
-
-          $sys .= "<p>{$isFolder} {$rootDir} {$isWritable}</p>";
-
-        }
-
-        $sys .= "</div> <!--end Permission section -->
-        <div class='col-12 col-lg-4'>
-        <h3>&nbsp;</h3>
-        <p><strong>Server</strong></p>";
-
-        $sys .= "<p>OS <span class='badge bg-secondary'>".PHP_OS_FAMILY."</span></p>";
-
-        // Make sure they have the minimum PHP version
-        if (version_compare(PHP_VERSION, '7.4') >= 0) {
-          $phpSupport = "<span class='badge bg-secondary'>".PHP_VERSION."</span>";
-        } else {
-          $phpSupport = "<span class='badge bg-danger'>".PHP_VERSION."</span>";
-          $setupErrors[] = "PHP must be at least version 7.4";
-        }
-
-        $sys .= "<p>PHP {$phpSupport}</p>";
-
-        // Check the status of System cURL, PHP cURL, and Wget
-        $checkDload = [];
-        $checkDload['cURL'] = (exec("curl --version") != "") ? true : false;
-        $checkDload['PHP'] = (extension_loaded("curl")) ? true : false;
-        $checkDload['Wget'] = (exec("wget --version")) ? true : false;
-
-        $sys .= "<p>Downloaders";
-        foreach ($checkDload as $name => $val) {
-          $badge = ($val == true) ? "bg-secondary" : "bg-danger";
-          $sys .= "<span class='badge {$badge} me-2'>{$name}</span>";
-          if ($val == true) {
-            $downloaders[] = $name; // add to list of available downloaders
-          }
-        }
-        $sys .= "</p>";
-
-        // Make sure they have at least one download tool
-        if (count($downloaders) <= 0) {
-          $sys .= "<p>cURL or Wget is <u>required</u> to download tools and APKs.</p>";
-          $setupErrors[] = "You need System cURL, PHP cURL, or Wget to download APKs and Tools.";
-        }
-
-        /* Removing this for now. One works on PHP FPM one doesn't
-        if ($_SERVER['HTTP_MOD_REWRITE'] == 'On') {
-          return TRUE;
-        } else {
           return FALSE;
         }
         $isRewrite = ($_SERVER['HTTP_MOD_REWRITE'] == "On") ? "<span class='badge bg-secondary'>Detected</span>" : "<span class='bg bg-danger'>Not Detected</span>";
@@ -1060,10 +1065,12 @@ if ($query == "config") {
 
         foreach($appData as $app => $val) {
 
-          echo "<div class='col-12 col-md-6 col-lg-3 mb-3 mt-2 p-0'>";
+          echo "<div class='col-12 col-md-6 col-lg-3 mb-3 mt-2 ps-0 pe-4 apkDiv'>
+          <div class='apkDivContent p-3'>";
 
-          $avgBuildTime = (isset($val['stats']['avg'])) ? "<br />Avg Build: {$val['stats']['avg']} sec" : "";
-          echo "<p>{$app}&nbsp;&nbsp;[{$val['size']}]{$avgBuildTime}</p>";
+          //$avgBuildTime = (isset($val['stats']['avg'])) ? "<br />Avg Build: {$val['stats']['avg']} sec" : "";
+          //echo "<p>{$app}&nbsp;&nbsp;[{$val['size']}]{$avgBuildTime}</p>";
+          echo "<p>{$app}&nbsp;&nbsp;[{$val['size']}]</p>";
 
           $disabledCount = count($val['versions']);
           $x = 1;
@@ -1100,8 +1107,9 @@ if ($query == "config") {
           }
 
           echo "
-            <p>{$oldButton}<input type='button' class='btn btn-secondary btn-sm toggleSection' data-action='enable' value='&#10003; All' /> <input type='button' class='btn btn-orange btn-sm toggleSection' data-action='disable' value='X All' /></p>
-          </div>";
+          {$oldButton}<input type='button' class='btn btn-secondary btn-sm toggleSection' data-action='enable' value='&#10003; All' /> <input type='button' class='btn btn-orange btn-sm toggleSection' data-action='disable' value='X All' />
+          </div> <!-- end apkDivContent -->
+          </div> <!-- end apkDiv -->";
 
         }
 
@@ -1123,298 +1131,298 @@ if ($query == "config") {
 
         <form id="configForm">
 
-        <h3 class="mb-4">Configuration</h3>
+          <h3 class="mb-4">Configuration</h3>
 
-        <div class="py-2 row">
-          <label for="buildEnabled" class="col-12 col-md-4 col-lg-2 col-form-label">Builder Online</label>
-          <div class="col-sm-10">
-            <label><input type="checkbox" class="mt-3 me-2" id="buildEnabled" name="buildEnabled" value="1" <?php echo ($config->buildEnabled == 1) ? "checked='checked'":""; ?>/> Disable this to prevent new builds from being made.</label>
-          </div>
-        </div>
-
-        <div class="py-2 row">
-          <label for="downloads" class="col-12 col-md-4 col-lg-2 col-form-label">Downloads</label>
-          <div class="col-sm-10">
-            <label><input type="checkbox" class="mt-3 me-2" id="downloads" name="downloads" value="1" <?php echo ($config->downloads == 1) ? "checked='checked'":""; ?>/> Disable this to prevent builds from being downloaded.</label>
-          </div>
-        </div>
-
-        <div class="py-2 row">
-          <label for="buildDirectoryPublic" class="col-12 col-md-4 col-lg-2 col-form-label">Public Build Directory</label>
-          <div class="col-sm-10">
-            <label><input type="checkbox" class="mt-3 me-2" id="buildDirectoryPublic" name="buildDirectoryPublic" value="1" <?php echo ($config->buildDirectoryPublic == 1) ? "checked='checked'":""; ?>/> Allow build list to be accessed publicly from builds directory. (If downloads enabled)</label>
-          </div>
-        </div>
-
-        <div class="py-3 row">
-          <label for="buildDirectory" class="col-12 col-md-4 col-lg-2 col-form-label">Build Directory</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-6 col-lg-3">
-                <input type="text" class="form-control mb-2" id="buildDirectory" name="buildDirectory" value="<?php echo $config->buildDirectory; ?>" />
-              </div>
-              <label class="col-12 col-lg-9 mt-2" for="buildDirectory">Build folder from root directory. (ex: root/<em>builds</em>)</label>
-              </div>
-            </div>
-        </div>
-
-        <div class="py-3 row">
-          <label for="buildIDLength" class="col-12 col-md-4 col-lg-2 col-form-label">Build ID Length</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-6 col-lg-3">
-                <input type="number" class="form-control mb-2 w-100" id="buildIDLength" name="buildIDLength" value="<?php echo $config->buildIDLength; ?>" min="6" max="34" />
-              </div>
-              <label class="col-12 col-lg-9 mt-2" for="buildIDLength">Character length of unique Build IDs. At least 6 for less chance of collision.</label>
+          <div class="py-2 row">
+            <label for="buildEnabled" class="col-12 col-md-4 col-lg-2 col-form-label">Builder Online</label>
+            <div class="col-sm-10">
+              <label><input type="checkbox" class="mt-3 me-2" id="buildEnabled" name="buildEnabled" value="1" <?php echo ($config->buildEnabled == 1) ? "checked='checked'":""; ?>/> Disable this to prevent new builds from being made.</label>
             </div>
           </div>
-        </div>
 
-        <div class="py-3 row">
-          <label for="buildDirectory" class="col-12 col-md-4 col-lg-2 col-form-label">Build Suffix</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-6 col-lg-3">
-                <input type="text" class="form-control mb-2" id="buildSuffix" name="buildSuffix" value="<?php echo $config->buildSuffix; ?>" maxlength="64" />
-              </div>
-              <label class="col-12 col-lg-9 mt-2">Optional text after app name in build. (ex: YouTube <em>ReVanced</em>-yt1010.apk)</label>
+          <div class="py-2 row">
+            <label for="downloads" class="col-12 col-md-4 col-lg-2 col-form-label">Downloads</label>
+            <div class="col-sm-10">
+              <label><input type="checkbox" class="mt-3 me-2" id="downloads" name="downloads" value="1" <?php echo ($config->downloads == 1) ? "checked='checked'":""; ?>/> Disable this to prevent builds from being downloaded.</label>
             </div>
           </div>
-        </div>
 
-        <div class="py-3 row">
-          <label for="pageTitle" class="col-12 col-md-4 col-lg-2 col-form-label">Page Title</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-6 col-lg-3">
-                <input type="text" class="form-control" id="pageTitle" name="pageTitle" value="<?php echo $config->pageTitle; ?>" />
-              </div>
-              <div class="col-12 col-lg-9 mt-2"></div>
+          <div class="py-2 row">
+            <label for="buildDirectoryPublic" class="col-12 col-md-4 col-lg-2 col-form-label">Public Build Directory</label>
+            <div class="col-sm-10">
+              <label><input type="checkbox" class="mt-3 me-2" id="buildDirectoryPublic" name="buildDirectoryPublic" value="1" <?php echo ($config->buildDirectoryPublic == 1) ? "checked='checked'":""; ?>/> Allow build list to be accessed publicly from builds directory. (If downloads enabled)</label>
             </div>
           </div>
-        </div>
 
-        <div class="py-3 row">
-          <label for="checkinInterval" class="col-12 col-md-4 col-lg-2 col-form-label">Checkin Interval</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-6 col-lg-3">
-                <input type="number" class="form-control mb-2" id="checkinInterval" name="checkinInterval" step="1" min="0" value="<?php echo $config->checkinInterval; ?>" />
+          <div class="py-3 row">
+            <label for="buildDirectory" class="col-12 col-md-4 col-lg-2 col-form-label">Build Directory</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-6 col-lg-3">
+                  <input type="text" class="form-control mb-2" id="buildDirectory" name="buildDirectory" value="<?php echo $config->buildDirectory; ?>" />
+                </div>
+                <label class="col-12 col-lg-9 mt-2" for="buildDirectory">Build folder from root directory. (ex: root/<em>builds</em>)</label>
               </div>
-              <label class="col-12 col-lg-9 mt-2">Seconds between checking if builder is busy. (0 to disable)</label>
             </div>
           </div>
-        </div>
 
-        <div class="py-3 row">
-          <label for="timezone" class="col-12 col-md-4 col-lg-2 col-form-label">Timezone</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-6 col-lg-3">
-                <?php
-                $timezones = array(
-                  "Etc/GMT+12" => "GMT-12:00",
-                  "Pacific/Midway" => "GMT-11:00",
-                  "Pacific/Honolulu" => "GMT-10:00",
-                  "US/Alaska" => "GMT-09:00",
-                  "America/Los_Angeles" => "GMT-08:00",
-                  "US/Arizona" => "GMT-07:00",
-                  "US/Central" => "GMT-06:00",
-                  "US/Eastern" => "GMT-05:00",
-                  "Canada/Atlantic" => "GMT-04:00",
-                  "America/Argentina/Buenos_Aires" => "GMT-03:00",
-                  "America/Noronha" => "GMT-02:00",
-                  "Atlantic/Azores" => "GMT-01:00",
-                  "Etc/Greenwich" => "GMT+00:00",
-                  "Europe/Amsterdam" => "GMT+01:00",
-                  "Europe/Helsinki" => "GMT+02:00",
-                  "Europe/Moscow" => "GMT+03:00",
-                  "Asia/Tehran" => "GMT+03:30",
-                  "Asia/Yerevan" => "GMT+04:00",
-                  "Asia/Kabul" => "GMT+04:30",
-                  "Asia/Karachi" => "GMT+05:00",
-                  "Asia/Calcutta" => "GMT+05:30",
-                  "Asia/Katmandu" => "GMT+05:45",
-                  "Asia/Dhaka" => "GMT+06:00",
-                  "Asia/Rangoon" => "GMT+06:30",
-                  "Asia/Bangkok" => "GMT+07:00",
-                  "Asia/Hong_Kong" => "GMT+08:00",
-                  "Asia/Seoul" => "GMT+09:00",
-                  "Australia/Adelaide" => "GMT+09:30",
-                  "Australia/Canberra" => "GMT+10:00",
-                  "Asia/Magadan" => "GMT+11:00",
-                  "Pacific/Auckland" => "GMT+12:00",
-                  "Pacific/Tongatapu" => "GMT+13:00"
-                );
+          <div class="py-3 row">
+            <label for="buildIDLength" class="col-12 col-md-4 col-lg-2 col-form-label">Build ID Length</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-6 col-lg-3">
+                  <input type="number" class="form-control mb-2 w-100" id="buildIDLength" name="buildIDLength" value="<?php echo $config->buildIDLength; ?>" min="6" max="34" />
+                </div>
+                <label class="col-12 col-lg-9 mt-2" for="buildIDLength">Character length of unique Build IDs. At least 6 for less chance of collision.</label>
+              </div>
+            </div>
+          </div>
 
-                echo "<select id='timezone' name='timezone' class='form-select'>";
+          <div class="py-3 row">
+            <label for="buildDirectory" class="col-12 col-md-4 col-lg-2 col-form-label">Build Suffix</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-6 col-lg-3">
+                  <input type="text" class="form-control mb-2" id="buildSuffix" name="buildSuffix" value="<?php echo $config->buildSuffix; ?>" maxlength="64" />
+                </div>
+                <label class="col-12 col-lg-9 mt-2">Optional text after app name in build. (ex: YouTube <em>ReVanced</em>-yt1010.apk)</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="py-3 row">
+            <label for="pageTitle" class="col-12 col-md-4 col-lg-2 col-form-label">Page Title</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-6 col-lg-3">
+                  <input type="text" class="form-control" id="pageTitle" name="pageTitle" value="<?php echo $config->pageTitle; ?>" />
+                </div>
+                <div class="col-12 col-lg-9 mt-2"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="py-3 row">
+            <label for="checkinInterval" class="col-12 col-md-4 col-lg-2 col-form-label">Checkin Interval</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-6 col-lg-3">
+                  <input type="number" class="form-control mb-2" id="checkinInterval" name="checkinInterval" step="1" min="0" value="<?php echo $config->checkinInterval; ?>" />
+                </div>
+                <label class="col-12 col-lg-9 mt-2">Seconds between checking if builder is busy. (0 to disable)</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="py-3 row">
+            <label for="timezone" class="col-12 col-md-4 col-lg-2 col-form-label">Timezone</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-6 col-lg-3">
+                  <?php
+                  $timezones = array(
+                    "Etc/GMT+12" => "GMT-12:00",
+                    "Pacific/Midway" => "GMT-11:00",
+                    "Pacific/Honolulu" => "GMT-10:00",
+                    "US/Alaska" => "GMT-09:00",
+                    "America/Los_Angeles" => "GMT-08:00",
+                    "US/Arizona" => "GMT-07:00",
+                    "US/Central" => "GMT-06:00",
+                    "US/Eastern" => "GMT-05:00",
+                    "Canada/Atlantic" => "GMT-04:00",
+                    "America/Argentina/Buenos_Aires" => "GMT-03:00",
+                    "America/Noronha" => "GMT-02:00",
+                    "Atlantic/Azores" => "GMT-01:00",
+                    "Etc/Greenwich" => "GMT+00:00",
+                    "Europe/Amsterdam" => "GMT+01:00",
+                    "Europe/Helsinki" => "GMT+02:00",
+                    "Europe/Moscow" => "GMT+03:00",
+                    "Asia/Tehran" => "GMT+03:30",
+                    "Asia/Yerevan" => "GMT+04:00",
+                    "Asia/Kabul" => "GMT+04:30",
+                    "Asia/Karachi" => "GMT+05:00",
+                    "Asia/Calcutta" => "GMT+05:30",
+                    "Asia/Katmandu" => "GMT+05:45",
+                    "Asia/Dhaka" => "GMT+06:00",
+                    "Asia/Rangoon" => "GMT+06:30",
+                    "Asia/Bangkok" => "GMT+07:00",
+                    "Asia/Hong_Kong" => "GMT+08:00",
+                    "Asia/Seoul" => "GMT+09:00",
+                    "Australia/Adelaide" => "GMT+09:30",
+                    "Australia/Canberra" => "GMT+10:00",
+                    "Asia/Magadan" => "GMT+11:00",
+                    "Pacific/Auckland" => "GMT+12:00",
+                    "Pacific/Tongatapu" => "GMT+13:00"
+                  );
+
+                  echo "<select id='timezone' name='timezone' class='form-select'>";
                   foreach($timezones as $key => $val) {
                     echo "<option value='{$key}' ".(($config->timezone == $key) ? "selected":"").">{$val}</option>";
                   }
-                echo "</select>";
-                ?>
-              </div>
-              <div class="col-12 col-lg-9 mt-2"></div>
-            </div>
-          </div>
-        </div>
-
-        <?php
-        // Allow user to choose APK/Tool download method if both System and PHP cURL were detected
-        if (count($downloaders) >= 2) { ?>
-        <div class="py-3 row">
-          <label for="downloadMethod" class="col-12 col-md-4 col-lg-2 col-form-label">APK Download Method</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-6 col-lg-3">
-                <select id="downloadMethod" name="downloadMethod" class="form-control">
-                  <option id="downloadauto" value="auto" <?php echo ($config->downloadMethod == "auto") ? "selected":""; ?>>Auto</option>
-                  <?php
-                  // Only make choices if these were detected
-                  foreach($downloaders as $cd) {
-                    echo '<option id="download'.$cd.'" value="'.strtolower($cd).'" '.($config->downloadMethod == strtolower($cd) ? "selected":"").'>'.$cd.'</option>';
-                  }
+                  echo "</select>";
                   ?>
-                </select>
+                </div>
+                <div class="col-12 col-lg-9 mt-2"></div>
               </div>
             </div>
           </div>
-        </div>
-      <?php } else { echo "<input type='hidden' name='downloadMethod' value='auto' checked='checked' />"; } // set "auto" to default if user can't choose ?>
-
-        <div class="py-2 row">
-          <label for="configautoUpdate" class="col-12 col-md-4 col-lg-2 col-form-label">Auto Update</label>
-          <div class="col-sm-10">
-            <label><input type="checkbox" class="mt-3 me-2" id="configautoUpdate" name="autoUpdate" value="1" <?php echo ($config->autoUpdate == 1) ? "checked='checked'":""; ?>/> Automatically check for ReVanced Web Builder updates.</label>
-          </div>
-        </div>
-
-        <div class="py-2 row">
-          <label for="configfooter" class="col-12 col-md-4 col-lg-2 col-form-label">Footer</label>
-          <div class="col-sm-10">
-            <label><input type="checkbox" class="mt-3 me-2" id="configfooter" name="footer" value="1" <?php echo ($config->footer == 1) ? "checked='checked'":""; ?>/> Display footer to support ReVanced and Web Builder.</label>
-          </div>
-        </div>
-
-        <div class="py-2 row">
-          <label for="buildBeta" class="col-12 col-md-4 col-lg-2 col-form-label">Beta Builds</label>
-          <div class="col-sm-10">
-            <label><input type="checkbox" class="mt-3 me-2" id="buildBeta" name="buildBeta" value="1" <?php echo ($config->buildBeta == 1) ? "checked='checked'":""; ?>/> Allow users to make beta builds.</label>
-          </div>
-        </div>
-
-        <div class="py-2 row">
-          <label for="buildUnsupported" class="col-12 col-md-4 col-lg-2 col-form-label">Unsupported Builds</label>
-          <div class="col-sm-10">
-            <label><input type="checkbox" class="mt-3 me-2" id="buildUnsupported" name="buildUnsupported" value="1" <?php echo ($config->buildUnsupported == 1) ? "checked='checked'":""; ?>/> Allow users to make builds RWB no longer supports.</label>
-          </div>
-        </div>
-
-        <div class="py-2 row">
-          <label for="configdebugMenu" class="col-12 col-md-4 col-lg-2 col-form-label">Debug Menu</label>
-          <div class="col-sm-10">
-            <label><input type="checkbox" class="mt-3 me-2" id="configdebugMenu" name="debugMenu" value="1" <?php echo ($config->debugMenu == 1) ? "checked='checked'":""; ?>/> Allow access to the hidden debug menu.</label>
-          </div>
-        </div>
-
-        <div class="py-2 row">
-          <label for="configthemeSwitcher" class="col-12 col-md-4 col-lg-2 col-form-label">Theme Switcher</label>
-          <div class="col-sm-10">
-            <label><input type="checkbox" class="mt-3 me-2" id="configthemeSwitcher" name="themeSwitcher" value="1" <?php echo ($config->themeSwitcher == 1) ? "checked='checked'":""; ?>/> Allow user to toggle between themes.</label>
-          </div>
-        </div>
-
-
-        <div class="py-3 row">
-          <label for="themeDefault" class="col-12 col-md-4 col-lg-2 col-form-label">Default Theme</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-6 col-lg-3">
-                <select id="themeDefault" name="themeDefault" class="form-control">
-                  <option value="dark" <?php echo ($config->themeDefault == "dark") ? "selected":""; ?>>Dark</option>
-                  <option value="light" <?php echo ($config->themeDefault == "light") ? "selected":""; ?>>Light</option>
-                  <option value="custom" <?php echo ($config->themeDefault == "custom") ? "selected":""; ?>>Custom</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="configThemeContainer" class="px-3" style="display: none">
 
           <?php
-          // Customizable buttons and their defaults
-          $buttons = array(
-            "main" => "Custom Theme",
-            "input" => "Input/Select Boxes",
-            "primary" => "Primary Button",
-            "secondary" => "Secondary Button",
-            "warning" => "Warning Button",
-            "danger" => "Danger Button"
-          );
-
-          foreach ($buttons as $b => $v) {
-            $bg = $themeData['custom'][$b]['bg'];
-            $font = $themeData['custom'][$b]['font'];
-
-            echo "
-            <div class='py-3 row'>
-              <label class='col-12 col-md-4 col-lg-2 col-form-label'>{$v}</label>
-              <div class='col-12 col-md-8 col-lg-10'>
-                <div class='row'>
-                  <div class='col-sm-auto'>
-                    <label>Background <input type='color' class='ms-1' id='{$b}bg' name='{$b}bg' value='{$bg}' /></label>
+          // Allow user to choose APK/Tool download method if both System and PHP cURL were detected
+          if (count($downloaders) >= 2) { ?>
+            <div class="py-3 row">
+              <label for="downloadMethod" class="col-12 col-md-4 col-lg-2 col-form-label">APK Download Method</label>
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-6 col-lg-3">
+                    <select id="downloadMethod" name="downloadMethod" class="form-control">
+                      <option id="downloadauto" value="auto" <?php echo ($config->downloadMethod == "auto") ? "selected":""; ?>>Auto</option>
+                      <?php
+                      // Only make choices if these were detected
+                      foreach($downloaders as $cd) {
+                        echo '<option id="download'.$cd.'" value="'.strtolower($cd).'" '.($config->downloadMethod == strtolower($cd) ? "selected":"").'>'.$cd.'</option>';
+                      }
+                      ?>
+                    </select>
                   </div>
-                  <div class='col-sm-auto'>
-                    <label>Font <input type='color' class='ms-1' id='{$b}font' name='{$b}font' value='{$font}' /></label>
-                  </div>";
-
-                  if ($b != "main") {
-                    $border = $themeData['custom'][$b]['border'];
-                    $radius = $themeData['custom'][$b]['radius'];
-                    echo "
-                    <div class='col-sm-auto'>
-                      <label>Border <input type='color' class='ms-1' id='{$b}border' name='{$b}border' value='{$border}' /></label>
-                    </div>
-                    <div class='col-sm-auto pe-0'><label for='{$b}radius'>Radius</label></div>
-                    <div class='col-sm-1'>
-                      <input type='number' class='form-control btn-sm' id='{$b}radius' name='{$b}radius' min='0' max='100' value='{$radius}' />
-                    </div>";
-                    if ($b != "Input") {
-                      echo "
-                      <div class='col-sm-auto'>
-                        <button id='example".$b."' class='form-control btn btn-sm btn-{$b}'>Example</button>
-                      </div>";
-                    }
-                  }
-
-                  if ($b == "main") {
-                    $accent = $themeData['custom'][$b]['accent'];
-                    $url = $themeData['custom'][$b]['url'];
-                    echo "
-                    <div class='col-sm-auto'>
-                      <label>Accent <input type='color' class='ms-1' name='{$b}accent' value='{$accent}' /></label>
-                    </div>
-                    <div class='col-sm-auto'>
-                      <label>URL <input type='color' class='ms-1' name='{$b}url' value='{$url}' /></label>
-                    </div>";
-                  }
-
-
-                echo "
-                </div> <!-- end .row -->
+                </div>
               </div>
-            </div> <!-- end main .row -->";
-          }
-          ?>
+            </div>
+          <?php } else { echo "<input type='hidden' name='downloadMethod' value='auto' checked='checked' />"; } // set "auto" to default if user can't choose ?>
 
-          <div class="row">
-            <div class="col-12">
-              <p><input id="customThemeReset" type="button" class="btn btn-primary" name="customThemeReset" value="Reset Custom Theme" /> <input type="hidden" id="themeReset" name="themeReset" value="0" /></p>
+          <div class="py-2 row">
+            <label for="configautoUpdate" class="col-12 col-md-4 col-lg-2 col-form-label">Auto Update</label>
+            <div class="col-sm-10">
+              <label><input type="checkbox" class="mt-3 me-2" id="configautoUpdate" name="autoUpdate" value="1" <?php echo ($config->autoUpdate == 1) ? "checked='checked'":""; ?>/> Automatically check for ReVanced Web Builder updates.</label>
             </div>
           </div>
 
-        </div> <!-- end #configThemeContainer -->
+          <div class="py-2 row">
+            <label for="configfooter" class="col-12 col-md-4 col-lg-2 col-form-label">Footer</label>
+            <div class="col-sm-10">
+              <label><input type="checkbox" class="mt-3 me-2" id="configfooter" name="footer" value="1" <?php echo ($config->footer == 1) ? "checked='checked'":""; ?>/> Display footer to support ReVanced and Web Builder.</label>
+            </div>
+          </div>
+
+          <div class="py-2 row">
+            <label for="buildBeta" class="col-12 col-md-4 col-lg-2 col-form-label">Beta Builds</label>
+            <div class="col-sm-10">
+              <label><input type="checkbox" class="mt-3 me-2" id="buildBeta" name="buildBeta" value="1" <?php echo ($config->buildBeta == 1) ? "checked='checked'":""; ?>/> Allow users to make beta builds.</label>
+            </div>
+          </div>
+
+          <div class="py-2 row">
+            <label for="buildUnsupported" class="col-12 col-md-4 col-lg-2 col-form-label">Unsupported Builds</label>
+            <div class="col-sm-10">
+              <label><input type="checkbox" class="mt-3 me-2" id="buildUnsupported" name="buildUnsupported" value="1" <?php echo ($config->buildUnsupported == 1) ? "checked='checked'":""; ?>/> Allow users to make builds RWB no longer supports.</label>
+            </div>
+          </div>
+
+          <div class="py-2 row">
+            <label for="configdebugMenu" class="col-12 col-md-4 col-lg-2 col-form-label">Debug Menu</label>
+            <div class="col-sm-10">
+              <label><input type="checkbox" class="mt-3 me-2" id="configdebugMenu" name="debugMenu" value="1" <?php echo ($config->debugMenu == 1) ? "checked='checked'":""; ?>/> Allow access to the hidden debug menu.</label>
+            </div>
+          </div>
+
+          <div class="py-2 row">
+            <label for="configthemeSwitcher" class="col-12 col-md-4 col-lg-2 col-form-label">Theme Switcher</label>
+            <div class="col-sm-10">
+              <label><input type="checkbox" class="mt-3 me-2" id="configthemeSwitcher" name="themeSwitcher" value="1" <?php echo ($config->themeSwitcher == 1) ? "checked='checked'":""; ?>/> Allow user to toggle between themes.</label>
+            </div>
+          </div>
+
+
+          <div class="py-3 row">
+            <label for="themeDefault" class="col-12 col-md-4 col-lg-2 col-form-label">Default Theme</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-6 col-lg-3">
+                  <select id="themeDefault" name="themeDefault" class="form-control">
+                    <option value="dark" <?php echo ($config->themeDefault == "dark") ? "selected":""; ?>>Dark</option>
+                    <option value="light" <?php echo ($config->themeDefault == "light") ? "selected":""; ?>>Light</option>
+                    <option value="custom" <?php echo ($config->themeDefault == "custom") ? "selected":""; ?>>Custom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="configThemeContainer" class="px-3" style="display: none">
+
+            <?php
+            // Customizable buttons and their defaults
+            $buttons = array(
+              "main" => "Custom Theme",
+              "input" => "Input/Select Boxes",
+              "primary" => "Primary Button",
+              "secondary" => "Secondary Button",
+              "warning" => "Warning Button",
+              "danger" => "Danger Button"
+            );
+
+            foreach ($buttons as $b => $v) {
+              $bg = $themeData['custom'][$b]['bg'];
+              $font = $themeData['custom'][$b]['font'];
+
+              echo "
+              <div class='py-3 row'>
+              <label class='col-12 col-md-4 col-lg-2 col-form-label'>{$v}</label>
+              <div class='col-12 col-md-8 col-lg-10'>
+              <div class='row'>
+              <div class='col-sm-auto'>
+              <label>Background <input type='color' class='ms-1' id='{$b}bg' name='{$b}bg' value='{$bg}' /></label>
+              </div>
+              <div class='col-sm-auto'>
+              <label>Font <input type='color' class='ms-1' id='{$b}font' name='{$b}font' value='{$font}' /></label>
+              </div>";
+
+              if ($b != "main") {
+                $border = $themeData['custom'][$b]['border'];
+                $radius = $themeData['custom'][$b]['radius'];
+                echo "
+                <div class='col-sm-auto'>
+                <label>Border <input type='color' class='ms-1' id='{$b}border' name='{$b}border' value='{$border}' /></label>
+                </div>
+                <div class='col-sm-auto pe-0'><label for='{$b}radius'>Radius</label></div>
+                <div class='col-sm-1'>
+                <input type='number' class='form-control btn-sm' id='{$b}radius' name='{$b}radius' min='0' max='100' value='{$radius}' />
+                </div>";
+                if ($b != "Input") {
+                  echo "
+                  <div class='col-sm-auto'>
+                  <button id='example".$b."' class='form-control btn btn-sm btn-{$b}'>Example</button>
+                  </div>";
+                }
+              }
+
+              if ($b == "main") {
+                $accent = $themeData['custom'][$b]['accent'];
+                $url = $themeData['custom'][$b]['url'];
+                echo "
+                <div class='col-sm-auto'>
+                <label>Accent <input type='color' class='ms-1' name='{$b}accent' value='{$accent}' /></label>
+                </div>
+                <div class='col-sm-auto'>
+                <label>URL <input type='color' class='ms-1' name='{$b}url' value='{$url}' /></label>
+                </div>";
+              }
+
+
+              echo "
+              </div> <!-- end .row -->
+              </div>
+              </div> <!-- end main .row -->";
+            }
+            ?>
+
+            <div class="row">
+              <div class="col-12">
+                <p><input id="customThemeReset" type="button" class="btn btn-primary" name="customThemeReset" value="Reset Custom Theme" /> <input type="hidden" id="themeReset" name="themeReset" value="0" /></p>
+              </div>
+            </div>
+
+          </div> <!-- end #configThemeContainer -->
 
         </form>
 
@@ -1435,17 +1443,17 @@ if ($query == "config") {
   if (file_exists("../install"))
   { ?>
 
-  <div id="adminInstallFound" class="container configComplete" <?php echo ($revancedDownloaded < 4) ? "style='display: none'":""; ?>>
-    <div class="row">
-      <hr />
-      <div class="col-12">
-        <h3 class="mb-4">Install Folder Detected</h3>
-        <p>You should delete the /install/ folder for security purposes.</p>
+    <div id="adminInstallFound" class="container configComplete" <?php echo ($revancedDownloaded < 4) ? "style='display: none'":""; ?>>
+      <div class="row">
+        <hr />
+        <div class="col-12">
+          <h3 class="mb-4">Install Folder Detected</h3>
+          <p>You should delete the /install/ folder for security purposes.</p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <?php
+    <?php
   }
   ?>
 
@@ -1454,18 +1462,18 @@ if ($query == "config") {
   if (file_exists("docs/index.html"))
   { ?>
 
-  <div id="adminDocs" class="container configComplete" <?php echo ($revancedDownloaded < 4) ? "style='display: none'":""; ?>>
-    <div class="row">
-      <hr />
-      <div class="col-12">
-        <h3 class="mb-4">Documentation</h3>
-        <p>RWB has documentation that includes information about build info/stats, build durations, known issues, mod_rewrite, dev tools, and more.</p>
-        <p><a href="docs/" target="_blank" class="me-2"><input type="button" class="btn btn-primary" value="Go to Documentation" /></a> <a href="https://github.com/revanced-web-builder/revanced-web-builder/" target="_blank"><input type="button" class="btn btn-primary" value="Go to Github" /></a></p>
+    <div id="adminDocs" class="container configComplete" <?php echo ($revancedDownloaded < 4) ? "style='display: none'":""; ?>>
+      <div class="row">
+        <hr />
+        <div class="col-12">
+          <h3 class="mb-4">Documentation</h3>
+          <p>RWB has documentation that includes information about build info/stats, build durations, known issues, mod_rewrite, dev tools, and more.</p>
+          <p><a href="docs/" target="_blank" class="me-2"><input type="button" class="btn btn-primary" value="Go to Documentation" /></a> <a href="https://github.com/revanced-web-builder/revanced-web-builder/" target="_blank"><input type="button" class="btn btn-primary" value="Go to Github" /></a></p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <?php
+    <?php
   }
   ?>
 
@@ -1475,20 +1483,20 @@ if ($query == "config") {
   if (file_exists("dev/index.php"))
   { ?>
 
-  <div id="adminDev" class="container configComplete" <?php echo ($revancedDownloaded < 4) ? "style='display: none'":""; ?>>
-    <div class="row">
-      <hr />
-      <div class="col-12">
-        <h3 class="mb-4">Development Tools</h3>
-        <p class="badge bg-danger">Dev Tools have been detected</p>
-        <p>Even though your Admin Password will protect the Dev Tools, it is highly suggested that you do not include the /app/dev folder on your public instance of RWB.</p>
+    <div id="adminDev" class="container configComplete" <?php echo ($revancedDownloaded < 4) ? "style='display: none'":""; ?>>
+      <div class="row">
+        <hr />
+        <div class="col-12">
+          <h3 class="mb-4">Development Tools</h3>
+          <p class="badge bg-danger">Dev Tools have been detected</p>
+          <p>Even though your Admin Password will protect the Dev Tools, it is highly suggested that you do not include the /app/dev folder on your public instance of RWB.</p>
 
-        <p><a href="dev/index.php"><input type="button" class="btn btn-primary" value="Go to Dev Tools" /></a></p>
+          <p><a href="dev/index.php"><input type="button" class="btn btn-primary" value="Go to Dev Tools" /></a></p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <?php
+    <?php
   }
   ?>
 
