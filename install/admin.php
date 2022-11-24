@@ -1065,7 +1065,7 @@ if ($query == "config") {
 
         foreach($appData as $app => $val) {
 
-          echo "<div class='col-12 col-md-6 col-lg-3 mb-3 mt-2 ps-0 pe-4 apkDiv'>
+          echo "<div class='col-12 col-md-6 col-lg-3 mb-3 mt-2 ps-0 pe-0 pe-md-2 pe-lg-4 apkDiv'>
           <div class='apkDivContent p-3'>";
 
           //$avgBuildTime = (isset($val['stats']['avg'])) ? "<br />Avg Build: {$val['stats']['avg']} sec" : "";
