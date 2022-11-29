@@ -140,6 +140,7 @@ if ($query == "dl" || $query == "del" || $query == "toggle") {
 
   $file = $_GET['file'];
   $name = (isset($_GET['name'])) ? $_GET['name'] : "";
+  $nameEncoded = preg_replace('/\s+/', '.', $name); // GitHub filenames have . instead of space
   $version = (isset($_GET['version'])) ? $_GET['version'] : "";
   $toggleOnly = (isset($_GET['toggleOnly'])) ? $_GET['toggleOnly'] : 0;
   $isBeta = "";
@@ -157,7 +158,6 @@ if ($query == "dl" || $query == "del" || $query == "toggle") {
 
     // Only show array with apk info if this isn't a tool. Otherwise, show main $tools array
     if ($file == "apk") {
-      $nameEncoded = preg_replace('/\s+/', '.', $name); // GitHub filenames have . instead of space
       $files = array(
         "apk" => array("download" => "https://github.com/revanced-web-builder/revanced-web-builder/releases/download/apks/{$nameEncoded}-{$version}{$isBeta2}.apk", "output" => "apk/{$nameEncoded}-{$version}{$isBeta2}.apk")
       );
@@ -197,7 +197,7 @@ if ($query == "dl" || $query == "del" || $query == "toggle") {
       $config->tool($file, "enabled", 0);
       die("1");
     } else {
-      unlink("apk/".$name."-".$version.$isBeta.".apk");
+      unlink("apk/".$nameEncoded."-".$version.$isBeta.".apk");
 
       // Mark as not enabled
       $config->app($name, $version, "enabled", 0);
