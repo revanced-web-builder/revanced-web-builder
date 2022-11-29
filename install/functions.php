@@ -282,7 +282,7 @@ class Config {
       "de.dwd.warnapp" => ["WarnWetter", "3.7.2"],
       "com.myprog.hexedit" => ["HexEditor", "2.8.5"],
       "ginlemon.iconpackstudio" => ["IconPackStudio", "2.1"],
-      "com.awedea.nyx" => ["Nyx", "2.2.5"],
+      "com.awedea.nyx" => ["Nyx Music", "2.2.5"],
       "com.crunchyroll.crunchyroid" => ["Crunchyroll", "3.26.1"],
       "org.totschnig.myexpenses" => ["My Expenses", "3.4.6.3"]
     );
