@@ -595,6 +595,11 @@ function statsUpdate() {
     $currentApp = explode("-", $file)[0]; // Split filename by first hyphen
     $currentApp = explode(" ", $currentApp)[0]; // Split filename by first space in case there's a build suffix
 
+    // Okay it's really silly how I did all this but I'm going to just build on it right now and I'll maybe rewrite it later
+    // At this point the .apk name has been split by a - to just get the app name, but it may include "ReVanced" or the build suffix so it was split by a space.
+    // Since the file name uses a period for things like YouTube Music (YouTube.Music) we now need to turn that . into a space.... yeah...
+    $currentApp = str_replace(".", " ", $currentApp);
+
     if (!isset($stats[$currentApp])) $stats[$currentApp] = [];
 
     array_push($stats[$currentApp], $json['buildDuration']);

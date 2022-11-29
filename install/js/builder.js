@@ -280,12 +280,14 @@ function buildSetup(urlHash) {
   // Check which app they requested
   var prefix = urlHash.substr(0,2)
   var appName = appPrefix(prefix, 1) // reverse lookup prefix -> appname
+  var appNameEncoded = appName.replace(/\s/g, '.') // Replace spaces with periods for filenames
+
   var buildSuffix = (config.buildSuffix != "") ? " "+config.buildSuffix : ""
   var buildDirPrefix = (urlPrefix == "") ? "../" : "" // build directory is one directory back if not mod_rewritten
 
   $.ajax({
     type: "GET",
-    url: buildDirPrefix+config.buildDirectory+"/"+appName+buildSuffix+"-"+urlHash+".info.txt",
+    url: buildDirPrefix+config.buildDirectory+"/"+appNameEncoded+buildSuffix+"-"+urlHash+".info.txt",
     cache: false
   }).done(function (data, textStatus, errorThrown) {
 
@@ -498,6 +500,7 @@ function checkBuildID(buildID=undefined, updateStatus=undefined) {
   var buildString = ""
   var appName = $("#appName").val()
   var appNameDiv = appName.replace(/\s+/g, '') // Remove spaces from appName for the DIV IDs
+  var appNameEncoded = appName.replace(/\s/g, '.') // Replace spaces with periods for filenames
   var appVersion = $("#appVersion").val()
   var buildString = appName+appVersion
   var buildSuffix = (config.buildSuffix != "") ? " "+config.buildSuffix : ""
@@ -535,7 +538,7 @@ function checkBuildID(buildID=undefined, updateStatus=undefined) {
 
   var checkBuild = $.ajax({
     type: "GET",
-    url: buildDirPrefix+config.buildDirectory+"/"+appName+buildSuffix+"-"+buildID+".info.txt",
+    url: buildDirPrefix+config.buildDirectory+"/"+appNameEncoded+buildSuffix+"-"+buildID+".info.txt",
     cache: false
   }).done(function (data, textStatus, errorThrown) {
     // only update the page if updateStatus is false

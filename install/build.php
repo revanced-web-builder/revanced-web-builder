@@ -145,15 +145,15 @@ $buildSuffix = ($config->buildSuffix != "") ? " ".$config->buildSuffix : "";
 
 // Check if file already exists with this build name
 // If it does, send the user the build information instead
-if (file_exists("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk")) {
-  $cur = Files::read("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.info.txt");
+if (file_exists("../{$buildDirectory}/{$buildAppEncoded}{$buildSuffix}-{$buildID}.apk")) {
+  $cur = Files::read("../{$buildDirectory}/{$buildAppEncoded}{$buildSuffix}-{$buildID}.info.txt");
   die(json_encode($cur));
 }
 
 // Write options file if necessary
 if ($options != "") {
-  $createOptions = Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt", $options);
-  $optionsFile = "--options=\"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.options.txt\"";
+  $createOptions = Files::write("../{$buildDirectory}/{$buildAppEncoded}{$buildSuffix}-{$buildID}.options.txt", $options);
+  $optionsFile = "--options=\"../{$buildDirectory}/{$buildAppEncoded}{$buildSuffix}-{$buildID}.options.txt\"";
 } else {
   $optionsFile = "--options=\"tools/options.toml\"";
 }
@@ -161,11 +161,11 @@ if ($options != "") {
 // Directly execute the revanced-cli.jar file using a command built with all the selected info and patches
 if ($buildApp == "YouTube" || $buildApp == "YouTube Music" || $buildApp == "Twitch" || $buildApp == "TikTok") { // These apps need the revanced-integrations
 
-  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildAppEncoded}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" -m \"tools/revanced-integrations.apk\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} {$exclusive}";
+  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildAppEncoded}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildAppEncoded}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" -m \"tools/revanced-integrations.apk\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildAppEncoded}.keystore\" {$include} {$optionsFile} {$exclusive}";
 
 } else { // Other apps don't
 
-  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildAppEncoded}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} --exclusive";
+  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildAppEncoded}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildAppEncoded}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildAppEncoded}.keystore\" {$include} {$optionsFile} --exclusive";
 
 }
 
@@ -180,8 +180,8 @@ $execJava = exec($javaCMD, $javaOutput);
 if ($execJava == "INFO: Finished") { // Success!
 
   $timeTotal = time() - $buildDate; // Calculate how long build took to make
-  $fileMD5 = md5_file(__DIR__."/../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get MD5 hash of generated build
-  $filesize = filesize(__DIR__."/../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get APK file size
+  $fileMD5 = md5_file(__DIR__."/../{$buildDirectory}/{$buildAppEncoded}{$buildSuffix}-{$buildID}.apk"); // Get MD5 hash of generated build
+  $filesize = filesize(__DIR__."/../{$buildDirectory}/{$buildAppEncoded}{$buildSuffix}-{$buildID}.apk"); // Get APK file size
 
   // Don't include MicroG for any version of Twitter or Reddit, etc
   $microg = ($buildApp == "YouTube" || $buildApp == "YouTube Music") ? "vanced-microg.apk":"";
@@ -201,7 +201,7 @@ if ($execJava == "INFO: Finished") { // Success!
     'options' => $optionsArray
   );
 
-  Files::write("../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.info.txt", json_encode($txtData, JSON_PRETTY_PRINT)); // Write text file with all the build information
+  Files::write("../{$buildDirectory}/{$buildAppEncoded}{$buildSuffix}-{$buildID}.info.txt", json_encode($txtData, JSON_PRETTY_PRINT)); // Write text file with all the build information
 
   statsUpdate(); // Update duration averages for each app
 
