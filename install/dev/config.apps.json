@@ -272,9 +272,6 @@
       "5.23.50": {
         "enabled": 0
       },
-      "5.23.50": {
-        "enabled": 0
-      },
       "5.21.52": {
         "enabled": 0
       }
@@ -421,51 +418,51 @@
       }
     },
     "patches": {
-      "tiktok-ads": {
+      "hide-ads": {
         "name": "Block Ads (Required)",
         "desc": "Removes Ads from the entire TikTok app.",
         "section": "Patches",
         "checked": 1
       },
-      "tiktok-seekbar": {
+      "show-seekbar": {
         "name": "Seekbar",
         "desc": "Show progress bar for all videos.",
         "section": "Patches",
         "checked": 1
       },
-      "tiktok-download": {
+      "downloads": {
         "name": "Downloads",
         "desc": "Remove restrictions on video downloads.",
         "section": "Patches",
         "checked": 1
       },
-      "tiktok-force-login": {
+      "disable-login-requirement": {
         "name": "Optional Login",
         "desc": "Do not force login.",
         "section": "Patches",
         "checked": 0
       },
-      "tiktok-speed": {
+      "playback-speed": {
         "name": "Playback Speed",
         "desc": "Enables the playback speed option for all videos.",
         "section": "Patches",
         "checked": 0
       },
-      "tiktok-feed-filter": {
+      "feed-filter": {
         "name": "Feed Filter",
         "desc": "Filter videos (Removing ads and livestreams.)",
-        "section": "Patches",
-        "checked": 0
-      },
-      "tiktok-web-login": {
-        "name": "Web Login",
-        "desc": "Allows logging in from a Google account.",
         "section": "Patches",
         "checked": 0
       },
       "sim-spoof": {
         "name": "SIM Spoof",
         "desc": "Spoofs the information which is retrieved from the sim-card.",
+        "section": "Patches",
+        "checked": 0
+      },
+      "fix-google-login": {
+        "name": "Web Login",
+        "desc": "Allows logging in from a Google account.",
         "section": "Patches",
         "checked": 0
       }
