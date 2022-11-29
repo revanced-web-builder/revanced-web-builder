@@ -333,6 +333,23 @@
       }
     }
   },
+  "Crunchyroll": {
+    "size": "80 MB",
+    "versions": {
+      "3.26.1": {
+        "enabled": 0,
+        "rec": 1
+      }
+    },
+    "patches": {
+      "enable-downloads": {
+        "name": "Enable Downloads (Required)",
+        "desc": "Enable video downloads.",
+        "section": "Patches",
+        "checked": 1
+      }
+    }
+  },
   "Reddit": {
     "size": "205 MB",
     "versions": {
@@ -444,6 +461,12 @@
       "tiktok-web-login": {
         "name": "Web Login",
         "desc": "Allows logging in from a Google account.",
+        "section": "Patches",
+        "checked": 0
+      },
+      "sim-spoof": {
+        "name": "SIM Spoof",
+        "desc": "Spoofs the information which is retrieved from the sim-card.",
         "section": "Patches",
         "checked": 0
       }

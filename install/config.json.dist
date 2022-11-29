@@ -470,6 +470,23 @@
                 }
             }
         },
+        "Crunchyroll": {
+            "size": "80 MB",
+            "versions": {
+                "3.26.1": {
+                    "enabled": 0,
+                    "rec": 1
+                }
+            },
+            "patches": {
+                "enable-downloads": {
+                    "name": "Enable Downloads (Required)",
+                    "desc": "Enable video downloads.",
+                    "section": "Patches",
+                    "checked": 1
+                }
+            }
+        },
         "Reddit": {
             "size": "205 MB",
             "versions": {
@@ -583,6 +600,12 @@
                     "desc": "Allows logging in from a Google account.",
                     "section": "Patches",
                     "checked": 0
+                },
+                "sim-spoof": {
+                    "name": "SIM Spoof",
+                    "desc": "Spoofs the information which is retrieved from the sim-card.",
+                    "section": "Patches",
+                    "checked": 0
                 }
             }
         },
@@ -617,7 +640,7 @@
                     "name": "Debug Mode",
                     "desc": "Enables Twitch's internal debugging mode.",
                     "section": "Patches",
-                    "checked": 1
+                    "checked": 0
                 }
             }
         },
@@ -749,11 +772,11 @@
             "enabled": 0
         },
         "Patches": {
-            "latest": "2.121.0",
+            "latest": "2.130.0",
             "enabled": 0
         },
         "Integrations": {
-            "latest": "0.76.0",
+            "latest": "0.78.0",
             "enabled": 0
         },
         "MicroG": {
