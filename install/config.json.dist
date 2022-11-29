@@ -680,6 +680,23 @@
                 }
             }
         },
+        "My Expenses": {
+            "size": "20 MB",
+            "versions": {
+                "3.4.6.3": {
+                    "enabled": 0,
+                    "rec": 1
+                }
+            },
+            "patches": {
+                "unlock-pro": {
+                    "name": "Unlock Pro (Required)",
+                    "desc": "Unlock all pro features.",
+                    "section": "Patches",
+                    "checked": 1
+                }
+            }
+        },
         "Nyx": {
             "size": "50 MB",
             "versions": {
