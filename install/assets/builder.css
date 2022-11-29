@@ -311,3 +311,8 @@ body .patchContainer .col-md-6:hover { /* Dark theme column hover */
   background: var(--main-accent);
   border-radius: 10px;
 }
+
+/* SVGs in Admin Panel APK section all have a pointer since they have a hover tooltip */
+.apkDivContent svg {
+  cursor: pointer;
+}
