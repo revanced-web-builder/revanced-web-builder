@@ -425,9 +425,7 @@ if ($query == "config") {
     // Focus on password field if admin is not logged in
     if ($("#adminLoginForm").is(":visible")) $("#adminPass").focus()
 
-    // Get the height of the YouTube APKs apkDivContent box to know the min height of all the others for visual appearance
-    var apkHeight = $(".apkDiv:first").height()
-    $(".apkDivContent").css({"min-height": apkHeight});
+    apkHeight()
 
   } // end startupAdmin()
 
@@ -502,6 +500,7 @@ if ($query == "config") {
           if (dloaded == 4) {
             $("#downloadAll,#toolsNotice").slideUp()
             $(".configComplete").slideDown()
+            apkHeight() // recalculate APK Div heights
           }
 
         } else if (data.substr(0, 7) == "toggled") {
@@ -707,6 +706,12 @@ if ($query == "config") {
     } else {
       return "rgb(" + r + ", " + g + ", " + b + ")";
     }
+  }
+
+  // Get the height of the YouTube APKs apkDivContent box to know the min height of all the others for visual appearance
+  function apkHeight() {
+    var apkHeight = $(".apkDiv:first").height()
+    $(".apkDivContent").css({"min-height": apkHeight});
   }
 
 
