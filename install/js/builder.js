@@ -55,8 +55,10 @@ function startup() {
       var appName = appData[appNames]['fullName']
     }
 
+    var bit64Only = (appData[appNames]['64bit']) ? 1 : 0 // Check if app is 64-bit only
+
     // Add App to Applications select box
-    $("#appName").append("<option id='option"+prefix+"' value='"+appNames+"'>"+appName+"</option>")
+    $("#appName").append("<option id='option"+prefix+"' value='"+appNames+"' data-bit64='"+bit64Only+"'>"+appName+"</option>")
 
     // Load versions into select box
     for (ver in appData[appNames]['versions']) {
@@ -467,7 +469,7 @@ function checkMyBuilds() {
 }
 
 // When Application Name is changed, re-arrange the page to show patches for that app
-function appChange() {
+function appChange(element=undefined) {
 
   var appName = $("#appName").val() // Selected Application
   var appNameDiv = appName.replace(/\s+/g, '') // Remove spaces from appName for the DIV IDs
@@ -487,6 +489,13 @@ function appChange() {
   // Show appName and Version in Package Build section
   $(".appName").text($("#appName option:selected").text())
   $(".appVersion").text($("#appVersion").val())
+
+  // Show/hide the "64-bit Only" box
+  if (appName != "YouTube" && $("#appName option:selected").data("bit64")) {
+    $("#general64Bit").show()
+  } else {
+    $("#general64Bit").hide()
+  }
 
   checkBuildID()
 
@@ -713,7 +722,7 @@ $(document).on("click", "#instructDownloads", function(e) {
 })
 
 // When Application Name is changed, show which versions of that App are supported
-$(document).on("change", "#appName", function(e) { appChange() })
+$(document).on("change", "#appName", function(e) { appChange($(this)) })
 $(document).on("change", "#appVersion", function(e) { $(".appVersion").text($("#appVersion").val()) })
 
 // Check new BuildID for each input changed
@@ -796,7 +805,7 @@ function instructionsToggle() {
 
 // Get the prefix for an application name (or reverse it to get the application name of a prefix)
 function appPrefix(app, reverse=undefined) {
-  var prefixes = {"YouTube": "yt", "YouTube Music": "ym", "Crunchyroll": "cr", "Reddit": "re", "Spotify": "sp", "TikTok": "tt", "Twitch": "tc", "Twitter": "tw", "IconPackStudio":"ip", "Pflotsh": "pf", "WarnWetter": "ww", "HexEditor": "he", "My Expenses": "my", "Nyx Music": "nx"}
+  var prefixes = {"YouTube": "yt", "YouTube Music": "ym", "Citra Emulator":"ci", "Crunchyroll": "cr", "Reddit": "re", "Spotify": "sp", "TikTok": "tt", "Twitch": "tc", "Twitter": "tw", "IconPackStudio":"ip", "Pflotsh": "pf", "WarnWetter": "ww", "HexEditor": "he", "My Expenses": "my", "Nyx Music": "nx"}
   return (reverse == undefined || reverse != 1) ? prefixes[app] : getObjKey(prefixes, app)
 }
 

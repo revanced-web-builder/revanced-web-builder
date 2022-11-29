@@ -20,7 +20,7 @@ if (!$_POST) die("NO POST");
 // Make sure builder is online
 if ($config->buildEnabled != 1) die("ERROR:OFFLINE");
 
-$allowedApps = array('YouTube', 'YouTube Music', 'Crunchyroll', 'Reddit', 'Spotify', 'TikTok', 'Twitch', 'Twitter', 'Pflotsh', 'WarnWetter', 'HexEditor', 'IconPackStudio', 'My Expenses', 'Nyx Music');
+$allowedApps = array('YouTube', 'YouTube Music', 'Crunchyroll', 'Citra Emulator', 'Reddit', 'Spotify', 'TikTok', 'Twitch', 'Twitter', 'Pflotsh', 'WarnWetter', 'HexEditor', 'IconPackStudio', 'My Expenses', 'Nyx Music');
 
 // Make sure submitted App is allowed
 if (!in_array($_POST['appName'], $allowedApps))
@@ -94,7 +94,7 @@ if ($buildApp == "YouTube") {
 }
 
 // App Prefix for $buildID
-$appNameShortcuts = array("YouTube"=>"yt", "YouTube Music"=>"ym", "Crunchyroll"=>"cr", "Reddit"=>"re", "Spotify" => "sp", "TikTok"=>"tt", "Twitch"=>"tc", "Twitter"=>"tw", "IconPackStudio"=>"ip", "Pflotsh"=>"pf", "WarnWetter"=>"ww", "HexEditor"=>"he", "My Expenses"=>"my", "Nyx Music"=>"nx");
+$appNameShortcuts = array("YouTube"=>"yt", "YouTube Music"=>"ym", "Citra Emulator"=>"ci", "Crunchyroll"=>"cr", "Reddit"=>"re", "Spotify" => "sp", "TikTok"=>"tt", "Twitch"=>"tc", "Twitter"=>"tw", "IconPackStudio"=>"ip", "Pflotsh"=>"pf", "WarnWetter"=>"ww", "HexEditor"=>"he", "My Expenses"=>"my", "Nyx Music"=>"nx");
 $appPrefix = $appNameShortcuts[$buildApp];
 
 // Patch Options

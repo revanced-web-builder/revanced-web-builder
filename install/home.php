@@ -129,6 +129,13 @@ $urlPrefix = substr($protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'], 0, -14
       </select>
     </div>
 
+    <div id="general64Bit" class="col-auto" style="display: none">
+      <label class="form-label" for="bit64"><strong>&nbsp;</strong></label>
+      <select class="form-select" name="bit64" id="bit64">
+        <option>64-bit Only</option>
+      </select>
+    </div>
+
   </div>
 
 </div> <!-- end #patchesGeneral -->

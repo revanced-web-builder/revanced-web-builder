@@ -542,6 +542,24 @@
       }
     }
   },
+  "Citra Emulator": {
+    "size": "35 MB",
+    "64bit": 1,
+    "versions": {
+      "bed6a4f12": {
+        "enabled": 0,
+        "rec": 1
+      }
+    },
+    "patches": {
+      "premium-unlock": {
+        "name": "Unlock Premium (Required)",
+        "desc": "Unlock all premium features.",
+        "section": "Patches",
+        "checked": 1
+      }
+    }
+  },
   "My Expenses": {
     "size": "20 MB",
     "versions": {

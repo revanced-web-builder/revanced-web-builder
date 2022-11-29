@@ -284,7 +284,8 @@ class Config {
       "ginlemon.iconpackstudio" => ["IconPackStudio", "2.1"],
       "com.awedea.nyx" => ["Nyx Music", "2.2.5"],
       "com.crunchyroll.crunchyroid" => ["Crunchyroll", "3.26.1"],
-      "org.totschnig.myexpenses" => ["My Expenses", "3.4.6.3"]
+      "org.totschnig.myexpenses" => ["My Expenses", "3.4.6.3"],
+      "org.citra.citra_emu" => ["Citra Emulator", "bed6a4f12"]
     );
 
     // Currently not supporting TickTick (ToDo List App) due to not being able to find a Universal APK

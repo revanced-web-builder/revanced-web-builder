@@ -1077,8 +1077,9 @@ if ($query == "config") {
           // Show APK Size, Average Build Time, and 64-bit only information in the info icon
           $apkSize = (isset($val['size'])) ? "Download Size: ".$val['size'] : "";
           $avgBuildTime = (isset($val['stats']['avg'])) ? "<br />Avg Build Time: ".$val['stats']['avg']." sec" : "";
+          $bit64Only = (isset($val['64bit'])) ? "<br />64-bit Only":"";
 
-          $infoIcon = '<svg data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="'.$apkSize.''.$avgBuildTime.'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+          $infoIcon = '<svg data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="'.$apkSize.''.$avgBuildTime.''.$bit64Only.'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
   <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
 </svg>';
           //echo "<p>{$app}&nbsp;&nbsp;[{$val['size']}]{$avgBuildTime}</p>";
@@ -1090,7 +1091,7 @@ if ($query == "config") {
 
             $beta = $val['versions'][$ver]['beta'] ?? 0;
             $isBeta = ($beta == 1) ? ".Beta":"";
-            $isOld = ($x > 3) ? 1 : 0;
+            $isOld = ($x > 2) ? 1 : 0;
             $oldButton = ($isOld == 1) ? "<input type='button' class='btn btn-primary btn-sm moreSection' data-action='more' value='+ More' /> " : "";
 
             $deleteFile = '<button class="fileDelete btn btn-danger btn-sm" data-file="apk" data-name="'.$app.'" data-version="'.$ver.$isBeta.'"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">

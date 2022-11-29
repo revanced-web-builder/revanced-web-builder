@@ -599,12 +599,6 @@
                     "desc": "Allows logging in from a Google account.",
                     "section": "Patches",
                     "checked": 0
-                },
-                "sim-spoof": {
-                    "name": "SIM Spoof",
-                    "desc": "Spoofs the information which is retrieved from the sim-card.",
-                    "section": "Patches",
-                    "checked": 0
                 }
             }
         },
@@ -676,6 +670,24 @@
                     "desc": "Replace the default Twitter Blue with your Android\/Material You palette.",
                     "section": "Patches",
                     "checked": 0
+                }
+            }
+        },
+        "Citra Emulator": {
+            "size": "35 MB",
+            "64bit": 1,
+            "versions": {
+                "bed6a4f12": {
+                    "enabled": 0,
+                    "rec": 1
+                }
+            },
+            "patches": {
+                "premium-unlock": {
+                    "name": "Unlock Premium (Required)",
+                    "desc": "Unlock all premium features.",
+                    "section": "Patches",
+                    "checked": 1
                 }
             }
         },
