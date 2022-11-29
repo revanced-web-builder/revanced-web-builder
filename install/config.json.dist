@@ -393,9 +393,8 @@
                 }
             }
         },
-        "YouTubeMusic": {
+        "YouTube Music": {
             "size": "30 MB",
-            "fullName": "YouTube Music",
             "versions": {
                 "5.31.50": {
                     "enabled": 0,

@@ -20,7 +20,7 @@ if (!$_POST) die("NO POST");
 // Make sure builder is online
 if ($config->buildEnabled != 1) die("ERROR:OFFLINE");
 
-$allowedApps = array('YouTube', 'YouTubeMusic', 'Crunchyroll', 'Reddit', 'Spotify', 'TikTok', 'Twitch', 'Twitter', 'Pflotsh', 'WarnWetter', 'HexEditor', 'IconPackStudio', 'My Expenses', 'Nyx');
+$allowedApps = array('YouTube', 'YouTube Music', 'Crunchyroll', 'Reddit', 'Spotify', 'TikTok', 'Twitch', 'Twitter', 'Pflotsh', 'WarnWetter', 'HexEditor', 'IconPackStudio', 'My Expenses', 'Nyx');
 
 // Make sure submitted App is allowed
 if (!in_array($_POST['appName'], $allowedApps))
@@ -37,6 +37,8 @@ if (isBuilding() === 1) {
 $buildDate = time(); // UNIX timestamp of when this build started
 $buildDateFull = date("c");
 $buildApp = $_POST['appName'];
+$buildAppTrim = preg_replace("/\s+/", "", $buildApp);
+$buildAppEncoded = preg_replace("/\s+/", ".", $buildApp);
 $buildVersion = $_POST['appVersion'];
 $buildVersionNoBeta = (substr($buildVersion, -5) == " Beta") ? substr($_POST['appVersion'], 0, -5) : $_POST['appVersion'];
 $buildID = $buildApp.$buildVersion; // Start build ID with app info. patches will be added to the build_id later
@@ -55,7 +57,7 @@ $buildSupported = $appData[$buildApp]['versions'][$buildVersionNoBeta]['support'
 if ($buildSupported !== 1 && $config->buildUnsupported != 1) die("ERROR:UNSUPPORTED");
 
 // Check which patches we'll be using
-$patches = $_POST["patches_{$buildApp}"]; // Form names we'll be using for this app's patches
+$patches = $_POST["patches_{$buildAppTrim}"]; // Form names we'll be using for this app's patches
 
 // These names will be appended to the buildID that will be put at the end of the apk name so we can detect if someone has already built this exact APK.
 /*
@@ -80,7 +82,7 @@ foreach ($patches as $id => $name) {
 if ($buildApp == "YouTube") {
   $include .= " -i client-spoof -i microg-support -i settings"; // Also automatically add ReVanced Settings and Spoof Patch (videos are being blocked in some countries using modded apks)
   $exclusive = "--exclusive"; // add the --exclusive tag because we're selecting which patches to include
-} else if ($buildApp == "YouTubeMusic") {
+} else if ($buildApp == "YouTube Music") {
   $include .= " -i music-microg-support";
   $exclusive = "";
 } else if ($buildApp == "TikTok") {
@@ -92,7 +94,7 @@ if ($buildApp == "YouTube") {
 }
 
 // App Prefix for $buildID
-$appNameShortcuts = array("YouTube"=>"yt", "YouTubeMusic"=>"ym", "Crunchyroll"=>"cr", "Reddit"=>"re", "Spotify" => "sp", "TikTok"=>"tt", "Twitch"=>"tc", "Twitter"=>"tw", "IconPackStudio"=>"ip", "Pflotsh"=>"pf", "WarnWetter"=>"ww", "HexEditor"=>"he", "My Expenses"=>"my", "Nyx"=>"nx");
+$appNameShortcuts = array("YouTube"=>"yt", "YouTube Music"=>"ym", "Crunchyroll"=>"cr", "Reddit"=>"re", "Spotify" => "sp", "TikTok"=>"tt", "Twitch"=>"tc", "Twitter"=>"tw", "IconPackStudio"=>"ip", "Pflotsh"=>"pf", "WarnWetter"=>"ww", "HexEditor"=>"he", "My Expenses"=>"my", "Nyx"=>"nx");
 $appPrefix = $appNameShortcuts[$buildApp];
 
 // Patch Options
@@ -157,13 +159,13 @@ if ($options != "") {
 }
 
 // Directly execute the revanced-cli.jar file using a command built with all the selected info and patches
-if ($buildApp == "YouTube" || $buildApp == "YouTubeMusic" || $buildApp == "Twitch" || $buildApp == "TikTok") { // These apps need the revanced-integrations
+if ($buildApp == "YouTube" || $buildApp == "YouTube Music" || $buildApp == "Twitch" || $buildApp == "TikTok") { // These apps need the revanced-integrations
 
-  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" -m \"tools/revanced-integrations.apk\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} {$exclusive}";
+  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildAppEncoded}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" -m \"tools/revanced-integrations.apk\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} {$exclusive}";
 
 } else { // Other apps don't
 
-  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildApp}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} --exclusive";
+  $javaCMD = "java -jar \"tools/revanced-cli.jar\" -a \"apk/{$buildAppEncoded}-{$buildVersion}.apk\" -c -o \"../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk\" -b \"tools/revanced-patches.jar\" --temp-dir=\"cache\" --keystore=\"../{$buildDirectory}/RWB-{$buildApp}.keystore\" {$include} {$optionsFile} --exclusive";
 
 }
 
@@ -182,7 +184,7 @@ if ($execJava == "INFO: Finished") { // Success!
   $filesize = filesize(__DIR__."/../{$buildDirectory}/{$buildApp}{$buildSuffix}-{$buildID}.apk"); // Get APK file size
 
   // Don't include MicroG for any version of Twitter or Reddit, etc
-  $microg = ($buildApp == "YouTube" || $buildApp == "YouTubeMusic") ? "vanced-microg.apk":"";
+  $microg = ($buildApp == "YouTube" || $buildApp == "YouTube Music") ? "vanced-microg.apk":"";
 
   $txtData = array(
     'app' => $buildApp,

@@ -50,6 +50,7 @@ function startup() {
     var appName = appNames
 
     // Check if app has a full name
+    // This code may need to be deprecated
     if (appData[appNames]['fullName']) {
       var appName = appData[appNames]['fullName']
     }
@@ -67,10 +68,12 @@ function startup() {
       $("#appVersion").append("<option value='"+ver+isBeta+"' data-app='"+appNames+"' data-isdefault='"+isDefault+"'>"+ver+isBeta+isUnsupported+"</option>")
     }
 
+    var appNameDiv = appName.replace(/\s+/g, '') // Remove spaces from appName for the DIV IDs
+
     // Create div for this app
     var mainDiv = `
     <!-- `+appNames+` patches -->
-    <div id="patches`+appNames+`" class="container patchContainer">
+    <div id="patches`+appNameDiv+`" class="container patchContainer">
     <div class="row patchRow"></div>
     </div>
     `
@@ -84,37 +87,37 @@ function startup() {
       var thisPatch = appData[appNames]['patches'][patch]
 
       // Check if this section already exists
-      if ($("#section"+appNames+thisPatch.section).is(":visible") != true) {
+      if ($("#section"+appNameDiv+thisPatch.section).is(":visible") != true) {
         var patchDiv = `
-        <div class="row patchSection" id="section`+appNames+thisPatch.section+`">
+        <div class="row patchSection" id="section`+appNameDiv+thisPatch.section+`">
           <div class="col-12 mt-3">
             <h3>`+thisPatch.section+` <input type="button" value="Select All" class="btn btn-primary btn-sm selectButton" /> <input type="button" value="Select None" class="btn btn-primary btn-sm selectButton" /></h3>
           </div>
         </div>
         `
-        $("#patches"+appNames).find(".patchRow").append(patchDiv)
+        $("#patches"+appNameDiv).find(".patchRow").append(patchDiv)
       }
 
       var isChecked = (thisPatch.checked == 1) ? "checked":""
       patchDivs += `
       <div class="patch col-12 col-md-6" data-versions="`+thisPatch.versions+`">
-      <input type="checkbox" name="patches_`+appNames+`[]" value="`+patch+`" `+isChecked+` /> <strong>`+thisPatch.name+`</strong><br />
+      <input type="checkbox" name="patches_`+appNameDiv+`[]" value="`+patch+`" `+isChecked+` /> <strong>`+thisPatch.name+`</strong><br />
       `+thisPatch.desc+`
       </div>
       `
 
-      $("#section"+appNames+thisPatch.section).append(patchDivs)
+      $("#section"+appNameDiv+thisPatch.section).append(patchDivs)
       patchDivs = ""
 
       // Add stats of this app to the page
       var avgs = (appData[appNames]['stats']) ? appData[appNames]['stats']['avg']+" Seconds" : "an unknown amount of time (no builds have been made)"
-      $("#buildAverages").after('<strong id="buildAvg'+appNames+'" class="buildAvg" style="display: none"> '+avgs+'</strong>')
+      $("#buildAverages").after('<strong id="buildAvg'+appNameDiv+'" class="buildAvg" style="display: none"> '+avgs+'</strong>')
 
     }
 
     // Remove app entirely if no versions for it are enabled
     var versionsVisible = $("#appVersion option[data-app='"+appNames+"']").length
-    if (versionsVisible <= 0) $("#appName option[value='"+appNames+"'], #patches"+appNames).remove()
+    if (versionsVisible <= 0) $("#appName option[value='"+appNames+"'], #patches"+appNameDiv).remove()
 
 
 
@@ -465,6 +468,7 @@ function checkMyBuilds() {
 function appChange() {
 
   var appName = $("#appName").val() // Selected Application
+  var appNameDiv = appName.replace(/\s+/g, '') // Remove spaces from appName for the DIV IDs
 
   // Hide all versions and show only ones for this app
   $("#appVersion option[data-app!='"+appName+"']").hide() // hide all app versions that aren't this one
@@ -473,10 +477,10 @@ function appChange() {
 
   // Show average build time for this app
   $("strong.buildAvg").hide()
-  $("#buildAvg"+$("#appName").val()).show() // Show the build time of the currently selected App
+  $("#buildAvg"+appNameDiv).show() // Show the build time of the currently selected App
 
   $("div.patchContainer").slideUp()
-  $("#patches"+appName).slideDown()
+  $("#patches"+appNameDiv).slideDown()
 
   // Show appName and Version in Package Build section
   $(".appName").text($("#appName option:selected").text())
@@ -493,23 +497,24 @@ function checkBuildID(buildID=undefined, updateStatus=undefined) {
 
   var buildString = ""
   var appName = $("#appName").val()
+  var appNameDiv = appName.replace(/\s+/g, '') // Remove spaces from appName for the DIV IDs
   var appVersion = $("#appVersion").val()
   var buildString = appName+appVersion
   var buildSuffix = (config.buildSuffix != "") ? " "+config.buildSuffix : ""
 
-  $("#patches"+appName+" div.patch").show() // Show all patches that may be hidden
+  $("#patches"+appNameDiv+" div.patch").show() // Show all patches that may be hidden
   // Hide all patches that don't belong to this version
-  $("#patches"+appName+" div.patch:not([data-versions*='"+appVersion+"'])").each(function(key,val) {
+  $("#patches"+appNameDiv+" div.patch:not([data-versions*='"+appVersion+"'])").each(function(key,val) {
     // Only hide if it's a patch that has supported versions (otherwise it supports all versions)
     if ($(this).data("versions") != "") $(this).hide()
   })
 
   // Loop through the patches of the currently selected App that are checked
-  $("#patches"+appName+" input[type='checkbox']:checked").each(function(index, value) {
+  $("#patches"+appNameDiv+" input[type='checkbox']:checked").each(function(index, value) {
     buildString = buildString+$(this).val()
   })
 
-  $("#patches"+appName+" .patchOption").each(function(index, value) {
+  $("#patches"+appNameDiv+" .patchOption").each(function(index, value) {
     var patchID = $(this).attr("id")
     var patchVal = $(this).val()
     buildString = buildString+patchID+"="+patchVal
@@ -788,7 +793,7 @@ function instructionsToggle() {
 
 // Get the prefix for an application name (or reverse it to get the application name of a prefix)
 function appPrefix(app, reverse=undefined) {
-  var prefixes = {"YouTube": "yt", "YouTubeMusic": "ym", "Crunchyroll": "cr", "Reddit": "re", "Spotify": "sp", "TikTok": "tt", "Twitch": "tc", "Twitter": "tw", "IconPackStudio":"ip", "Pflotsh": "pf", "WarnWetter": "ww", "HexEditor": "he", "My Expenses": my", "Nyx": "nx"}
+  var prefixes = {"YouTube": "yt", "YouTube Music": "ym", "Crunchyroll": "cr", "Reddit": "re", "Spotify": "sp", "TikTok": "tt", "Twitch": "tc", "Twitter": "tw", "IconPackStudio":"ip", "Pflotsh": "pf", "WarnWetter": "ww", "HexEditor": "he", "My Expenses": "my", "Nyx": "nx"}
   return (reverse == undefined || reverse != 1) ? prefixes[app] : getObjKey(prefixes, app)
 }
 
